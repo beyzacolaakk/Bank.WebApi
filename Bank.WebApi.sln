@@ -5,13 +5,13 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.WebApi", "Bank.WebApi\Banka.WebApi.csproj", "{A789E478-74FE-41AD-B818-C49AB941249D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.Varlıklar", "Bank.Entity\Banka.Varlıklar.csproj", "{CD456A7C-C12C-44E0-8A7B-2E1B35349D89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.İs", "Banka.İs\Banka.İs.csproj", "{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.İs", "Banka.İs\Banka.İs.csproj", "{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.Cekirdek", "Banka.Cekirdek\Banka.Cekirdek.csproj", "{B52050FC-9A59-47F7-BE55-138FAA6B58A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.Cekirdek", "Banka.Cekirdek\Banka.Cekirdek.csproj", "{B52050FC-9A59-47F7-BE55-138FAA6B58A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.VeriErisimi", "Banka.VeriErisimi\Banka.VeriErisimi.csproj", "{290F6F3D-445C-44E2-9C03-DCB025A46EDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.VeriErisimi", "Banka.VeriErisimi\Banka.VeriErisimi.csproj", "{290F6F3D-445C-44E2-9C03-DCB025A46EDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.Varlıklar", "Banka.Varlıklar\Banka.Varlıklar.csproj", "{7E648AD5-BED1-437E-A825-6E9448777641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{A789E478-74FE-41AD-B818-C49AB941249D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A789E478-74FE-41AD-B818-C49AB941249D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A789E478-74FE-41AD-B818-C49AB941249D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD456A7C-C12C-44E0-8A7B-2E1B35349D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD456A7C-C12C-44E0-8A7B-2E1B35349D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD456A7C-C12C-44E0-8A7B-2E1B35349D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD456A7C-C12C-44E0-8A7B-2E1B35349D89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{290F6F3D-445C-44E2-9C03-DCB025A46EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{290F6F3D-445C-44E2-9C03-DCB025A46EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{290F6F3D-445C-44E2-9C03-DCB025A46EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E648AD5-BED1-437E-A825-6E9448777641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E648AD5-BED1-437E-A825-6E9448777641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E648AD5-BED1-437E-A825-6E9448777641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E648AD5-BED1-437E-A825-6E9448777641}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
