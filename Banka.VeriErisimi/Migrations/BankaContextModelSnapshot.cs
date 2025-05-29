@@ -360,7 +360,7 @@ namespace Banka.VeriErisimi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("RoleAdi")
+                    b.Property<string>("RolAdi")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

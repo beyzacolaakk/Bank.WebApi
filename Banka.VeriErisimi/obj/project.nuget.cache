@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pp7T1cFJMkw=",
+  "dgSpecHash": "AH/T3On6I3A=",
   "success": true,
   "projectFilePath": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.VeriErisimi\\Banka.VeriErisimi.csproj",
   "expectedPackageFiles": [
@@ -28,6 +28,7 @@
     "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.5\\microsoft.extensions.caching.abstractions.9.0.5.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.5\\microsoft.extensions.caching.memory.9.0.5.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.5\\microsoft.extensions.configuration.abstractions.9.0.5.nupkg.sha512",
+    "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.configuration.binder\\9.0.5\\microsoft.extensions.configuration.binder.9.0.5.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.5\\microsoft.extensions.dependencyinjection.9.0.5.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.5\\microsoft.extensions.dependencyinjection.abstractions.9.0.5.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.extensions.dependencymodel\\9.0.5\\microsoft.extensions.dependencymodel.9.0.5.nupkg.sha512",

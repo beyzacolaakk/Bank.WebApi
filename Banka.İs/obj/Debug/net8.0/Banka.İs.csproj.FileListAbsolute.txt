@@ -10,3 +10,11 @@ C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\refint\Banka.
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.pdb
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\ref\Banka.İs.dll
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.sourcelink.json
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.csproj.AssemblyReference.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.Varlıklar.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.Cekirdek.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.Varlıklar.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.csproj.Up2Date
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.VeriErisimi.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.VeriErisimi.pdb

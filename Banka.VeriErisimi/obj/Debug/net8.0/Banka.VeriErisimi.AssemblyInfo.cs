@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Banka.VeriErisimi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be25c0d99517d80f42c276f96e3d62256b5a6241")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dd02bf46b3189df7da59612c4775e732fc79095")]
 [assembly: System.Reflection.AssemblyProductAttribute("Banka.VeriErisimi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Banka.VeriErisimi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

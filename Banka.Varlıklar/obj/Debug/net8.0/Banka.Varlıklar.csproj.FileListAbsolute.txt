@@ -10,3 +10,7 @@ C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\refint\Banka.Varlıklar.dll
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.pdb
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\ref\Banka.Varlıklar.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\bin\Debug\net8.0\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\bin\Debug\net8.0\Banka.Cekirdek.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.csproj.AssemblyReference.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Va.BE754C5F.Up2Date

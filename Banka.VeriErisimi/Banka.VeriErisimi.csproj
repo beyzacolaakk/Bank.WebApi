@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bank.Entity\Banka.Varlıklar.csproj" />
+    <ProjectReference Include="..\Banka.Cekirdek\Banka.Cekirdek.csproj" />
     <ProjectReference Include="..\Banka.Varlıklar\Banka.Varlıklar.csproj" />
   </ItemGroup>
 

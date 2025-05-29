@@ -1,4 +1,5 @@
-﻿using Banka.Varlıklar.Somut;
+﻿using Banka.Cekirdek.Varlıklar.Somut;
+using Banka.Varlıklar.Somut;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,10 +40,7 @@ namespace Banka.VeriErisim.Somut.EntityFramework
                 .WithMany(h => h.AliciIslemler)
                 .HasForeignKey(i => i.AliciHesapId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Kullanici>()
-    .HasOne(k => k.Sube)
-    .WithMany(s => s.Kullanicilar)
-    .HasForeignKey(k => k.SubeId);
+
 
         }
     }

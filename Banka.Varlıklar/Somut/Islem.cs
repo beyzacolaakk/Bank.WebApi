@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Banka.Cekirdek.Varlıklar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Banka.Varlıklar.Somut
 {
-    public class Islem
+    public class Islem : IEntity
     {
         public int Id { get; set; }
         public int? GonderenHesapId { get; set; }

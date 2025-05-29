@@ -16,3 +16,5 @@ C:\Users\fb_go\source\repos\Bank.WebApi\Banka.VeriErisimi\obj\Debug\net8.0\ref\B
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.VeriErisimi\bin\Debug\net8.0\Banka.VeriErisimi.runtimeconfig.json
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.VeriErisimi\obj\Debug\net8.0\Banka.VeriErisimi.genruntimeconfig.cache
 C:\Users\fb_go\source\repos\Bank.WebApi\Banka.VeriErisimi\obj\Debug\net8.0\Banka.VeriErisimi.sourcelink.json
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.VeriErisimi\bin\Debug\net8.0\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.VeriErisimi\bin\Debug\net8.0\Banka.Cekirdek.pdb
