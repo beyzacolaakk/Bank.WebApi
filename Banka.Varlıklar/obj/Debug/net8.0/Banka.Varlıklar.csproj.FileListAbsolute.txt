@@ -1,0 +1,12 @@
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\bin\Debug\net8.0\Banka.Varlıklar.deps.json
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\bin\Debug\net8.0\Banka.Varlıklar.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\bin\Debug\net8.0\Banka.Varlıklar.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.AssemblyInfoInputs.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.AssemblyInfo.cs
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.csproj.CoreCompileInputs.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.sourcelink.json
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\refint\Banka.Varlıklar.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\Banka.Varlıklar.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Varlıklar\obj\Debug\net8.0\ref\Banka.Varlıklar.dll

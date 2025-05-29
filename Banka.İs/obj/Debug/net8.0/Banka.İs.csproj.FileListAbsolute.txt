@@ -1,0 +1,12 @@
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.İs.deps.json
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.İs.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\bin\Debug\net8.0\Banka.İs.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.AssemblyInfoInputs.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.AssemblyInfo.cs
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.csproj.CoreCompileInputs.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\refint\Banka.İs.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\ref\Banka.İs.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.İs\obj\Debug\net8.0\Banka.İs.sourcelink.json

@@ -1,0 +1,12 @@
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\bin\Debug\net8.0\Banka.Cekirdek.deps.json
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\bin\Debug\net8.0\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\bin\Debug\net8.0\Banka.Cekirdek.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.AssemblyInfoInputs.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.AssemblyInfo.cs
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.csproj.CoreCompileInputs.cache
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\refint\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.pdb
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\ref\Banka.Cekirdek.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Banka.Cekirdek\obj\Debug\net8.0\Banka.Cekirdek.sourcelink.json
