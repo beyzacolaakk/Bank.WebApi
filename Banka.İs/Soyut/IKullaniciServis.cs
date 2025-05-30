@@ -3,6 +3,7 @@ using Banka.Cekirdek.YardımcıHizmetler.Results;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace Banka.İs.Soyut
 
         IResult Sil(Kullanici kullanici);
 
-        IDataResult<Kullanici> IdIleGetir(int id); 
+        IDataResult<Kullanici> IdIleGetir(int id);
+
+        Kullanici MaileGoreGetir(string telefon);
+
+        List<Rol> YetkileriGetir(Kullanici kullanici);
     }
 }

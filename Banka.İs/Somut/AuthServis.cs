@@ -17,24 +17,28 @@ namespace Banka.İs.Somut
 {
     public class AuthServis : IAuthServis
     {
-        private IKullaniciDal _kullaniciDal;
+
          private IKullaniciServis _kullaniciServis; 
         private ITokenHelper _tokenHelper;
         private IKullaniciRolServis _kullaniciRolServis;   
 
-        public AuthServis(IKullaniciServis kullaniciServis, ITokenHelper tokenHelper) 
+        public AuthServis(IKullaniciServis kullaniciServis, ITokenHelper tokenHelper,IKullaniciRolServis kullaniciRolServis) 
         {
             _kullaniciServis = kullaniciServis;
             _tokenHelper = tokenHelper;
+            _kullaniciRolServis = kullaniciRolServis;
         }
-        public IDataResult<AccessToken> ErisimTokenEkle(IDataResult<Kullanici> kullanici)
+        public IDataResult<AccessToken> ErisimTokenOlustur(IDataResult<Kullanici> kullanici) 
         {
-            throw new NotImplementedException();
+            var claims = _kullaniciServis.YetkileriGetir(kullanici.Data);
+            var accessToken = _tokenHelper.TokenOlustur(kullanici.Data, claims);
+
+            return new SuccessDataResult<AccessToken>(accessToken, kullanici.Message);
         }
 
         public IDataResult<Kullanici> Giris(KullaniciGirisDto kullaniciGirisDto)
         {
-            var kontrolEdilenTelefon = GetByMail(kullaniciGirisDto.Telefon);  
+            var kontrolEdilenTelefon = _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);  
             if (kontrolEdilenTelefon == null)
             {
                 return new ErrorDataResult<Kullanici>(Mesajlar.KullanıcıBulunamadı);
@@ -47,11 +51,27 @@ namespace Banka.İs.Somut
 
             return new SuccessDataResult<Kullanici>(kontrolEdilenTelefon, Mesajlar.GirisBasarili);
         }
-        public Kullanici GetByMail(string telefon)
+        public IDataResult<AccessToken> KayitIslemi(KullaniciKayitDto kullaniciKayitDto)
         {
-            var result = _kullaniciDal.Getir(u => u.Telefon == telefon); 
-            return result;
+            var kullaniciMevcut = KullaniciMevcut(kullaniciKayitDto.Telefon);
+            if (!kullaniciMevcut.Success)
+                return new ErrorDataResult<AccessToken>(kullaniciMevcut.Message);
+
+            var kayitSonuc = Kayit(kullaniciKayitDto, kullaniciKayitDto.Sifre);
+            if (!kayitSonuc.Success)
+                return new ErrorDataResult<AccessToken>(kayitSonuc.Message);
+
+            var tokenSonuc = ErisimTokenOlustur(kayitSonuc);
+            if (!tokenSonuc.Success)
+                return new ErrorDataResult<AccessToken>(tokenSonuc.Message);
+
+            var rolSonuc = KullaniciRolEkle(kayitSonuc);
+            if (!rolSonuc.Success)
+                return new ErrorDataResult<AccessToken>(rolSonuc.Message);
+
+            return new SuccessDataResult<AccessToken>(tokenSonuc.Data, tokenSonuc.Message);
         }
+
         public IDataResult<Kullanici> Kayit(KullaniciKayitDto kullaniciKayitDto, string sifre)
         {
             byte[] sifreHash, sifreSalt; 
@@ -73,7 +93,7 @@ namespace Banka.İs.Somut
                 };
 
                 var number = _kullaniciServis.Ekle(kullanici);
-                if (number.Success)
+                if(number.Success)
                 {
                     return new SuccessDataResult<Kullanici>(kullanici, Mesajlar.KullaniciEklemeBasarili);
                 }
@@ -81,15 +101,56 @@ namespace Banka.İs.Somut
            
             return new ErrorDataResult<Kullanici>(Mesajlar.KullaniciEklemeBasarisiz);
         }
+        public IDataResult<KullaniciVeTokenDto> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto)
+        {
+            var kullaniciGiris = Giris(kullaniciGirisDto);
+            if (!kullaniciGiris.Success)
+            {
+                return new ErrorDataResult<KullaniciVeTokenDto>(kullaniciGiris.Message);
+            }
 
+            var tokenResult = ErisimTokenOlustur(kullaniciGiris);
+            if (!tokenResult.Success)
+            {
+                return new ErrorDataResult<KullaniciVeTokenDto>(tokenResult.Message);
+            }
+
+            var kullaniciBilgisi = _kullaniciServis.IdIleGetir(kullaniciGiris.Data.Id);
+            if (kullaniciBilgisi == null)
+            {
+                return new ErrorDataResult<KullaniciVeTokenDto>("Kullanıcı bilgileri bulunamadı.");
+            }
+
+            var kullaniciVeTokenDto = new KullaniciVeTokenDto
+            {
+                Token = tokenResult.Data
+            };
+
+            return new SuccessDataResult<KullaniciVeTokenDto>(kullaniciVeTokenDto, "Giriş ve token oluşturma başarılı.");
+        }
         public IResult KullaniciMevcut(string email)
         {
-            throw new NotImplementedException();
+            if (_kullaniciServis.MaileGoreGetir(email) != null)
+            {
+                return new ErrorResult(Mesajlar.ZatenVar);
+            }
+            return new SuccessResult();
         }
 
         public IResult KullaniciRolEkle(IDataResult<Kullanici> kullanici)
         {
-            throw new NotImplementedException();
+            var kullaniciRol = new KullaniciRol
+            {
+                KullaniciId = kullanici.Data.Id,
+                RolId = 1
+            };
+            var result = _kullaniciRolServis.Ekle(kullaniciRol);
+            if (!result.Success)
+            { 
+                new ErrorResult(Mesajlar.HataliEkleme);
+
+            }
+            return new SuccessResult();
         }
     }
 }

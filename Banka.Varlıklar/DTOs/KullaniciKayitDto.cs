@@ -14,6 +14,6 @@ namespace Banka.Varlıklar.DTOs
         public string Email { get; set; } 
         public string Sifre { get; set; }
         public int Sube { get; set; }  
-        public string Aktif { get; set; }
+        public bool Aktif { get; set; }
     }
 }

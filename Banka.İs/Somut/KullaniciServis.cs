@@ -36,7 +36,11 @@ namespace Banka.İs.Somut
             _kullaniciDal.Guncelle(kullanici);
             return new SuccessResult(Mesajlar.KullaniciGuncellemeBasarili);
         }
-
+        public Kullanici MaileGoreGetir(string telefon) 
+        {
+            var result = _kullaniciDal.Getir(u => u.Telefon == telefon);
+            return result;
+        }
         public IDataResult<List<Kullanici>> HepsiniGetir()
         {
             return new SuccessDataResult<List<Kullanici>>(_kullaniciDal.HepsiniGetir(), "Kullanıcılar Getirildi");
@@ -47,6 +51,9 @@ namespace Banka.İs.Somut
             return new SuccessDataResult<Kullanici>( _kullaniciDal.Getir(u => u.Id == id), "Kullanıcı Getirildi");
         }
 
-    
+        public List<Rol> YetkileriGetir(Kullanici kullanici)
+        {
+            return _kullaniciDal.YetkileriGetir(kullanici);
+        }
     }
 }

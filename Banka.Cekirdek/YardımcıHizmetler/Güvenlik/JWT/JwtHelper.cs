@@ -27,12 +27,12 @@ namespace Banka.Cekirdek.YardımcıHizmetler.Güvenlik.JWT
             .Get<TokenOptions>();
 
         }
-        public AccessToken CreateToken(Kullanici kullanici, List<Rol> role)
+        public AccessToken TokenOlustur(Kullanici kullanici, List<Rol> rol)  
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
-            var jwt = CreateJwtSecurityToken(_tokenOptions, kullanici, signingCredentials, role);
+            var jwt = CreateJwtSecurityToken(_tokenOptions, kullanici, signingCredentials, rol);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var token = jwtSecurityTokenHandler.WriteToken(jwt);
 

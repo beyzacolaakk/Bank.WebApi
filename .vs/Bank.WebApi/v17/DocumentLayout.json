@@ -3,48 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.cekirdek\\verierisimi\\entityframework\\efentityrepositorybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|solutionrelative:banka.cekirdek\\verierisimi\\entityframework\\efentityrepositorybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A789E478-74FE-41AD-B818-C49AB941249D}|Bank.WebApi\\Banka.WebApi.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\bank.webapi\\controllers\\subecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A789E478-74FE-41AD-B818-C49AB941249D}|Bank.WebApi\\Banka.WebApi.csproj|solutionrelative:bank.webapi\\controllers\\subecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.\u0130s\\somut\\authservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|solutionrelative:banka.\u0130s\\somut\\authservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.\u0130s\\somut\\kullaniciservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|solutionrelative:banka.\u0130s\\somut\\kullaniciservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.\u0130s\\sabitler\\mesajlar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|solutionrelative:banka.\u0130s\\sabitler\\mesajlar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.\u0130s\\soyut\\iauthservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|solutionrelative:banka.\u0130s\\soyut\\iauthservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.cekirdek\\verierisimi\\ientityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|solutionrelative:banka.cekirdek\\verierisimi\\ientityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{290F6F3D-445C-44E2-9C03-DCB025A46EDA}|Banka.VeriErisimi\\Banka.VeriErisimi.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.verierisimi\\somut\\entityframework\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{290F6F3D-445C-44E2-9C03-DCB025A46EDA}|Banka.VeriErisimi\\Banka.VeriErisimi.csproj|solutionrelative:banka.verierisimi\\somut\\entityframework\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.cekirdek\\yard\u0131mc\u0131hizmetler\\g\u00FCvenlik\\jwt\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|solutionrelative:banka.cekirdek\\yard\u0131mc\u0131hizmetler\\g\u00FCvenlik\\jwt\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.cekirdek\\yard\u0131mc\u0131hizmetler\\g\u00FCvenlik\\jwt\\itokenhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B52050FC-9A59-47F7-BE55-138FAA6B58A9}|Banka.Cekirdek\\Banka.Cekirdek.csproj|solutionrelative:banka.cekirdek\\yard\u0131mc\u0131hizmetler\\g\u00FCvenlik\\jwt\\itokenhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.\u0130s\\soyut\\ikullanicirolservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|solutionrelative:banka.\u0130s\\soyut\\ikullanicirolservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\banka.\u0130s\\soyut\\ikullaniciservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73B5B53C-EB47-4C11-B649-ADF9AFC315E7}|Banka.\u0130s\\Banka.\u0130s.csproj|solutionrelative:banka.\u0130s\\soyut\\ikullaniciservis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A789E478-74FE-41AD-B818-C49AB941249D}|Bank.WebApi\\Banka.WebApi.csproj|c:\\users\\fb_go\\source\\repos\\bank.webapi\\bank.webapi\\controllers\\hesapcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A789E478-74FE-41AD-B818-C49AB941249D}|Bank.WebApi\\Banka.WebApi.csproj|solutionrelative:bank.webapi\\controllers\\hesapcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,153 +18,40 @@
       "DocumentGroups": [
         {
           "DockedWidth": 302,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EfEntityRepositoryBase.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\VeriErisimi\\EntityFramework\\EfEntityRepositoryBase.cs",
-              "RelativeDocumentMoniker": "Banka.Cekirdek\\VeriErisimi\\EntityFramework\\EfEntityRepositoryBase.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\VeriErisimi\\EntityFramework\\EfEntityRepositoryBase.cs",
-              "RelativeToolTip": "Banka.Cekirdek\\VeriErisimi\\EntityFramework\\EfEntityRepositoryBase.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T21:52:20.206Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IEntityRepository.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\VeriErisimi\\IEntityRepository.cs",
-              "RelativeDocumentMoniker": "Banka.Cekirdek\\VeriErisimi\\IEntityRepository.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\VeriErisimi\\IEntityRepository.cs",
-              "RelativeToolTip": "Banka.Cekirdek\\VeriErisimi\\IEntityRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T21:40:19.629Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Context.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.VeriErisimi\\Somut\\EntityFramework\\Context.cs",
-              "RelativeDocumentMoniker": "Banka.VeriErisimi\\Somut\\EntityFramework\\Context.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.VeriErisimi\\Somut\\EntityFramework\\Context.cs",
-              "RelativeToolTip": "Banka.VeriErisimi\\Somut\\EntityFramework\\Context.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T21:38:57.261Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "KullaniciServis.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Somut\\KullaniciServis.cs",
-              "RelativeDocumentMoniker": "Banka.\u0130s\\Somut\\KullaniciServis.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Somut\\KullaniciServis.cs",
-              "RelativeToolTip": "Banka.\u0130s\\Somut\\KullaniciServis.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAB8AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T21:32:13.271Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Mesajlar.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Sabitler\\Mesajlar.cs",
-              "RelativeDocumentMoniker": "Banka.\u0130s\\Sabitler\\Mesajlar.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Sabitler\\Mesajlar.cs",
-              "RelativeToolTip": "Banka.\u0130s\\Sabitler\\Mesajlar.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T21:22:18.721Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SubeController.cs",
+              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Bank.WebApi\\Controllers\\SubeController.cs",
+              "RelativeDocumentMoniker": "Bank.WebApi\\Controllers\\SubeController.cs",
+              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Bank.WebApi\\Controllers\\SubeController.cs",
+              "RelativeToolTip": "Bank.WebApi\\Controllers\\SubeController.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAIAwwC0AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T20:37:24.651Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AuthServis.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Somut\\AuthServis.cs",
-              "RelativeDocumentMoniker": "Banka.\u0130s\\Somut\\AuthServis.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Somut\\AuthServis.cs",
-              "RelativeToolTip": "Banka.\u0130s\\Somut\\AuthServis.cs",
-              "ViewState": "AQIAAE8AAAAAAAAAAAAowC8AAABVAAAA",
+              "Title": "HesapController.cs",
+              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Bank.WebApi\\Controllers\\HesapController.cs",
+              "RelativeDocumentMoniker": "Bank.WebApi\\Controllers\\HesapController.cs",
+              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Bank.WebApi\\Controllers\\HesapController.cs",
+              "RelativeToolTip": "Bank.WebApi\\Controllers\\HesapController.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAewEAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T19:59:11.102Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IKullaniciRolServis.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Soyut\\IKullaniciRolServis.cs",
-              "RelativeDocumentMoniker": "Banka.\u0130s\\Soyut\\IKullaniciRolServis.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Soyut\\IKullaniciRolServis.cs",
-              "RelativeToolTip": "Banka.\u0130s\\Soyut\\IKullaniciRolServis.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T20:10:09.498Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "IKullaniciServis.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Soyut\\IKullaniciServis.cs",
-              "RelativeDocumentMoniker": "Banka.\u0130s\\Soyut\\IKullaniciServis.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Soyut\\IKullaniciServis.cs",
-              "RelativeToolTip": "Banka.\u0130s\\Soyut\\IKullaniciServis.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T20:08:49.591Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IAuthServis.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Soyut\\IAuthServis.cs",
-              "RelativeDocumentMoniker": "Banka.\u0130s\\Soyut\\IAuthServis.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.\u0130s\\Soyut\\IAuthServis.cs",
-              "RelativeToolTip": "Banka.\u0130s\\Soyut\\IAuthServis.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T19:59:15.041Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "JwtHelper.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\JwtHelper.cs",
-              "RelativeDocumentMoniker": "Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\JwtHelper.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\JwtHelper.cs",
-              "RelativeToolTip": "Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\JwtHelper.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAEAAAA7AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T19:59:04.157Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ITokenHelper.cs",
-              "DocumentMoniker": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\ITokenHelper.cs",
-              "RelativeDocumentMoniker": "Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\ITokenHelper.cs",
-              "ToolTip": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\ITokenHelper.cs",
-              "RelativeToolTip": "Banka.Cekirdek\\Yard\u0131mc\u0131Hizmetler\\G\u00FCvenlik\\JWT\\ITokenHelper.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T19:58:54.641Z",
+              "WhenOpened": "2025-05-30T20:37:19.089Z",
               "EditorCaption": ""
             }
           ]

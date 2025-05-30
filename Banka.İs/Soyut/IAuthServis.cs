@@ -15,7 +15,10 @@ namespace Banka.İs.Soyut
         IDataResult<Kullanici> Kayit(KullaniciKayitDto kullaniciKayitDto, string sifre);  
         IDataResult<Kullanici> Giris(KullaniciGirisDto kullaniciGirisDto);  
         IResult KullaniciMevcut(string email); 
-        IDataResult<AccessToken> ErisimTokenEkle(IDataResult<Kullanici> kullanici);   
-        IResult KullaniciRolEkle(IDataResult<Kullanici> kullanici);  
+        IDataResult<AccessToken> ErisimTokenOlustur(IDataResult<Kullanici> kullanici);    
+        IResult KullaniciRolEkle(IDataResult<Kullanici> kullanici);
+        IDataResult<KullaniciVeTokenDto> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto);
+
+        IDataResult<AccessToken> KayitIslemi(KullaniciKayitDto kullaniciKayitDto);
     }
 }

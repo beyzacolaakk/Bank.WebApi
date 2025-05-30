@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Banka.Varlıklar")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dd02bf46b3189df7da59612c4775e732fc79095")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4cdeebd47be38c27d2ed8a69982ace85bfef164")]
 [assembly: System.Reflection.AssemblyProductAttribute("Banka.Varlıklar")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Banka.Varlıklar")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -10,6 +10,6 @@ namespace Banka.Cekirdek.YardımcıHizmetler.Güvenlik.JWT
 {
     public interface ITokenHelper
     {
-        AccessToken CreateToken(Kullanici kullanici, List<Rol> roles); 
+        AccessToken TokenOlustur(Kullanici kullanici, List<Rol> roller);   
     }
 }
