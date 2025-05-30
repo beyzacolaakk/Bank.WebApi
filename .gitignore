@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Bank.WebApi/FileContentIndex/39809c77-5616-487a-81ab-0e71a9345bba.vsidx
+/.vs/Bank.WebApi/DesignTimeBuild/.dtbcache.v2
+/.vs/Bank.WebApi/FileContentIndex/6ad93830-aa65-45ba-a444-b56fc272e3a6.vsidx
+*.vsidx
+/.vs/Bank.WebApi/FileContentIndex/ec319352-e135-43dc-94f8-49e0d3466f81.vsidx
+/.vs/Bank.WebApi/v17/.suo
+/.vs/Bank.WebApi/v17/DocumentLayout.json
+/Bank.Entity/obj/Banka.Varlıklar.csproj.nuget.dgspec.json
+/Bank.Entity/obj/Banka.Varlıklar.csproj.nuget.g.props
+/Bank.Entity/obj/Banka.Varlıklar.csproj.nuget.g.targets
+/Banka.VeriErisimi/obj/Debug/net8.0/Banka.VeriErisimi.AssemblyInfo.cs
+/Banka.VeriErisimi/obj/Debug/net8.0/Banka.VeriErisimi.AssemblyInfoInputs.cache
+/Bank.Entity/obj/project.nuget.cache
+/Bank.Entity/obj/project.assets.json
