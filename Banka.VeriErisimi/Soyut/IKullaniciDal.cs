@@ -12,14 +12,14 @@ namespace Banka.VeriErisimi.Soyut
 {
     public interface IKullaniciDal : IEntityRepository<Kullanici>
     {
-        List<Rol> YetkileriGetir(Kullanici kullanici);
-       // List<UsersDetailDto> KullaniciDetaylariniGetir();
+        Task<List<Rol>> YetkileriGetir(Kullanici kullanici);
+        // List<UsersDetailDto> KullaniciDetaylariniGetir();
 
 
-       // UserById IdIleKullaniciGetir(int id);
+        // UserById IdIleKullaniciGetir(int id);
 
 
-        Kullanici EkleVeIdGetir(Kullanici kullanici);
+        Task<Kullanici> EkleVeIdGetirAsync(Kullanici kullanici);
 
 
     }

@@ -13,45 +13,42 @@ namespace Banka.İs.Somut
 {
     public class IslemServis : IIslemServis
     {
-        IIslemDal _islemDal;
+        private readonly IIslemDal _islemDal;
 
         public IslemServis(IIslemDal islemDal)
         {
             _islemDal = islemDal;
         }
 
-        public IResult Ekle(Islem islem)
+        public async Task<IResult> Ekle(Islem islem)
         {
-            _islemDal.Ekle(islem);
+            await _islemDal.Ekle(islem);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(Islem islem)
+        public async Task<IResult> Guncelle(Islem islem)
         {
-            _islemDal.Guncelle(islem);
+            await _islemDal.Guncelle(islem);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<Islem>> HepsiniGetir()
+        public async Task<IResult> Sil(Islem islem)
         {
-            return new SuccessDataResult<List<Islem>>(
-                _islemDal.HepsiniGetir(),
-                Mesajlar.HepsiniGetirmeBasarili
-            );
-        }
-
-        public IDataResult<Islem> IdIleGetir(int id)
-        {
-            return new SuccessDataResult<Islem>(
-                _islemDal.Getir(i => i.Id == id),
-                Mesajlar.IdIleGetirmeBasarili
-            );
-        }
-
-        public IResult Sil(Islem islem)
-        {
-            _islemDal.Sil(islem);
+            await _islemDal.Sil(islem);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
+
+        public async Task<IDataResult<List<Islem>>> HepsiniGetir()
+        {
+            var islemler = await _islemDal.HepsiniGetir();
+            return new SuccessDataResult<List<Islem>>(islemler, Mesajlar.HepsiniGetirmeBasarili);
+        }
+
+        public async Task<IDataResult<Islem>> IdIleGetir(int id)
+        {
+            var islem = await _islemDal.Getir(i => i.Id == id);
+            return new SuccessDataResult<Islem>(islem, Mesajlar.IdIleGetirmeBasarili);
+        }
     }
+
 }

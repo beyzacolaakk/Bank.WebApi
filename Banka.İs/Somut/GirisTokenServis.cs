@@ -13,45 +13,42 @@ namespace Banka.İs.Somut
 {
     public class GirisTokenServis : IGirisTokenServis
     {
-        IGirisTokenDal _girisTokenDal;
+        private readonly IGirisTokenDal _girisTokenDal;
 
         public GirisTokenServis(IGirisTokenDal girisTokenDal)
         {
             _girisTokenDal = girisTokenDal;
         }
 
-        public IResult Ekle(GirisToken girisToken)
+        public async Task<IResult> Ekle(GirisToken girisToken)
         {
-            _girisTokenDal.Ekle(girisToken);
+            await _girisTokenDal.Ekle(girisToken);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(GirisToken girisToken)
+        public async Task<IResult> Guncelle(GirisToken girisToken)
         {
-            _girisTokenDal.Guncelle(girisToken);
+            await _girisTokenDal.Guncelle(girisToken);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<GirisToken>> HepsiniGetir()
+        public async Task<IResult> Sil(GirisToken girisToken)
         {
-            return new SuccessDataResult<List<GirisToken>>(
-                _girisTokenDal.HepsiniGetir(),
-                Mesajlar.HepsiniGetirmeBasarili
-            );
-        }
-
-        public IDataResult<GirisToken> IdIleGetir(int id)
-        {
-            return new SuccessDataResult<GirisToken>(
-                _girisTokenDal.Getir(g => g.Id == id),
-                Mesajlar.IdIleGetirmeBasarili
-            );
-        }
-
-        public IResult Sil(GirisToken girisToken)
-        {
-            _girisTokenDal.Sil(girisToken);
+            await _girisTokenDal.Sil(girisToken);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
+
+        public async Task<IDataResult<List<GirisToken>>> HepsiniGetir()
+        {
+            var liste = await _girisTokenDal.HepsiniGetir();
+            return new SuccessDataResult<List<GirisToken>>(liste, Mesajlar.HepsiniGetirmeBasarili);
+        }
+
+        public async Task<IDataResult<GirisToken>> IdIleGetir(int id)
+        {
+            var veri = await _girisTokenDal.Getir(g => g.Id == id);
+            return new SuccessDataResult<GirisToken>(veri, Mesajlar.IdIleGetirmeBasarili);
+        }
     }
+
 }

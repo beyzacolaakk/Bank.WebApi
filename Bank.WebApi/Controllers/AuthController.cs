@@ -20,9 +20,9 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpPost("giris")]
-        public ActionResult Giris(KullaniciGirisDto kullaniciGirisDto)
+        public async Task<ActionResult> Giris([FromBody] KullaniciGirisDto kullaniciGirisDto)
         {
-            var result = _authServis.GirisVeTokenOlustur(kullaniciGirisDto);
+            var result = await _authServis.GirisVeTokenOlustur(kullaniciGirisDto);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -41,9 +41,9 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpPost("kayit")]
-        public ActionResult Kayit(KullaniciKayitDto kullaniciKayitDto)
+        public async Task<ActionResult> Kayit([FromBody] KullaniciKayitDto kullaniciKayitDto)
         {
-            var result = _authServis.KayitIslemi(kullaniciKayitDto);
+            var result = await _authServis.KayitIslemi(kullaniciKayitDto);
             if (result.Success)
                 return Ok(result);
 
@@ -51,7 +51,7 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("kimlikdogrulama")]
-        public IActionResult KimlikDogrulama() 
+        public async Task<ActionResult> KimlikDogrulama() 
         {
             var token = Request.Cookies["AuthToken"];
 
@@ -65,7 +65,7 @@ namespace Banka.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost("cikis")]
-        public IActionResult Cikis() 
+        public async Task<ActionResult> Cikis() 
         {
             var cookieOptions = new CookieOptions
             {

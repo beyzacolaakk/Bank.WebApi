@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IIslemServis
     {
-        IDataResult<List<Islem>> HepsiniGetir();
+        Task<IDataResult<List<Islem>>> HepsiniGetir();
 
-        IResult Ekle(Islem islem); 
+        Task<IResult> Ekle(Islem islem);
 
-        IResult Guncelle(Islem islem);
+        Task<IResult> Guncelle(Islem islem);
 
-        IResult Sil(Islem islem); 
+        Task<IResult> Sil(Islem islem); 
 
-        IDataResult<Islem> IdIleGetir(int id);
+        Task<IDataResult<Islem>> IdIleGetir(int id);
     }
 }

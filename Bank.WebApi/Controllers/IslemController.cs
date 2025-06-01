@@ -17,48 +17,49 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _islemServis.HepsiniGetir();
+            var sonuc = await _islemServis.HepsiniGetir();
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _islemServis.IdIleGetir(id);
+            var sonuc = await _islemServis.IdIleGetir(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(Islem islem)
+        public async Task<IActionResult> Ekle([FromBody] Islem islem)
         {
-            var sonuc = _islemServis.Ekle(islem);
+            var sonuc = await Task.Run(() => _islemServis.Ekle(islem));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(Islem islem)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] Islem islem)
         {
-            var sonuc = _islemServis.Guncelle(islem);
+            var sonuc = await Task.Run(() => _islemServis.Guncelle(islem));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(Islem islem)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] Islem islem)
         {
-            var sonuc = _islemServis.Sil(islem);
+            var sonuc = await Task.Run(() => _islemServis.Sil(islem));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
     }
-    }
+
+}

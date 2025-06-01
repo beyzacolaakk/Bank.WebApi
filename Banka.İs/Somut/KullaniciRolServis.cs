@@ -13,45 +13,42 @@ namespace Banka.İs.Somut
 {
     public class KullaniciRolServis : IKullaniciRolServis
     {
-        IKullaniciRolDal _kullaniciRolDal;
+        private readonly IKullaniciRolDal _kullaniciRolDal;
 
         public KullaniciRolServis(IKullaniciRolDal kullaniciRolDal)
         {
             _kullaniciRolDal = kullaniciRolDal;
         }
 
-        public IResult Ekle(KullaniciRol kullaniciRol)
+        public async Task<IResult> Ekle(KullaniciRol kullaniciRol)
         {
-            _kullaniciRolDal.Ekle(kullaniciRol);
+            await _kullaniciRolDal.Ekle(kullaniciRol);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(KullaniciRol kullaniciRol)
+        public async Task<IResult> Guncelle(KullaniciRol kullaniciRol)
         {
-            _kullaniciRolDal.Guncelle(kullaniciRol);
+            await _kullaniciRolDal.Guncelle(kullaniciRol);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<KullaniciRol>> HepsiniGetir()
+        public async Task<IDataResult<List<KullaniciRol>>> HepsiniGetir()
         {
-            return new SuccessDataResult<List<KullaniciRol>>(
-                _kullaniciRolDal.HepsiniGetir(),
-                Mesajlar.HepsiniGetirmeBasarili
-            );
+            var roller = await _kullaniciRolDal.HepsiniGetir();
+            return new SuccessDataResult<List<KullaniciRol>>(roller, Mesajlar.HepsiniGetirmeBasarili);
         }
 
-        public IDataResult<KullaniciRol> IdIleGetir(int id)
+        public async Task<IDataResult<KullaniciRol>> IdIleGetir(int id)
         {
-            return new SuccessDataResult<KullaniciRol>(
-                _kullaniciRolDal.Getir(kr => kr.Id == id),
-                Mesajlar.IdIleGetirmeBasarili
-            );
+            var rol = await _kullaniciRolDal.Getir(kr => kr.Id == id);
+            return new SuccessDataResult<KullaniciRol>(rol, Mesajlar.IdIleGetirmeBasarili);
         }
 
-        public IResult Sil(KullaniciRol kullaniciRol)
+        public async Task<IResult> Sil(KullaniciRol kullaniciRol)
         {
-            _kullaniciRolDal.Sil(kullaniciRol);
+            await _kullaniciRolDal.Sil(kullaniciRol);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
     }
+
 }

@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IGirisTokenServis
     {
-        IDataResult<List<GirisToken>> HepsiniGetir(); 
+        Task<IDataResult<List<GirisToken>>> HepsiniGetir(); 
 
-        IResult Ekle(GirisToken girisToken);  
+        Task<IResult> Ekle(GirisToken girisToken);
 
-        IResult Guncelle(GirisToken girisToken); 
+        Task<IResult> Guncelle(GirisToken girisToken);
 
-        IResult Sil(GirisToken girisToken);  
+        Task<IResult> Sil(GirisToken girisToken);  
 
-        IDataResult<GirisToken> IdIleGetir(int id); 
+        Task<IDataResult<GirisToken>> IdIleGetir(int id); 
     }
 }

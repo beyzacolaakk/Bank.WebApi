@@ -11,15 +11,15 @@ namespace Banka.İs.Soyut
 {
     public interface IDestekTalebiServis
     {
-        IDataResult<List<DestekTalebi>> HepsiniGetir(); 
+        Task<IDataResult<List<DestekTalebi>>> HepsiniGetir(); 
 
-        IResult Ekle(DestekTalebi destekTalebi); 
+        Task<IResult> Ekle(DestekTalebi destekTalebi); 
 
-        IResult Guncelle(DestekTalebi destekTalebi);  
+        Task<IResult> Guncelle(DestekTalebi destekTalebi);  
 
-        IResult Sil(DestekTalebi destekTalebi);  
+        Task<IResult> Sil(DestekTalebi destekTalebi);  
 
-        IDataResult<DestekTalebi> IdIleGetir(int id); 
+        Task<IDataResult<DestekTalebi>> IdIleGetir(int id); 
 
     }
 }

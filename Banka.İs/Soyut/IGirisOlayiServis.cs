@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IGirisOlayiServis
     {
-        IDataResult<List<GirisOlayi>> HepsiniGetir();
+        Task<IDataResult<List<GirisOlayi>>> HepsiniGetir();
 
-        IResult Ekle(GirisOlayi girisOlayi); 
+        Task<IResult> Ekle(GirisOlayi girisOlayi);
 
-        IResult Guncelle(GirisOlayi girisOlayi); 
+        Task<IResult> Guncelle(GirisOlayi girisOlayi);
 
-        IResult Sil(GirisOlayi girisOlayi);  
+        Task<IResult> Sil(GirisOlayi girisOlayi);  
 
-        IDataResult<GirisOlayi> IdIleGetir(int id);  
+        Task<IDataResult<GirisOlayi>> IdIleGetir(int id);  
     }
 }

@@ -6,6 +6,8 @@ using Banka.İs.Soyut;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,39 +18,82 @@ namespace Banka.İs.Somut
 {
     public class DestekTalebiServis : IDestekTalebiServis
     {
-        IDestekTalebiDal _destekTalebiDal;
+        private readonly IDestekTalebiDal _destekTalebiDal;
+        private readonly IMemoryCache _cache;
+        private readonly ILogger<KullaniciServis> _logger;
 
-        public DestekTalebiServis(IDestekTalebiDal destekTalebiDal)
+        public DestekTalebiServis(IDestekTalebiDal destekTalebiDal, IMemoryCache cache, ILogger<KullaniciServis> logger)
         {
             _destekTalebiDal = destekTalebiDal;
+            _cache = cache; 
+            _logger = logger;   
         }
 
-        public IResult Ekle(DestekTalebi destekTalebi)
+        public async Task<IResult> Ekle(DestekTalebi destekTalebi)
         {
-            _destekTalebiDal.Ekle(destekTalebi);
+            await _destekTalebiDal.Ekle(destekTalebi);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(DestekTalebi destekTalebi)
+        public async Task<IResult> Guncelle(DestekTalebi destekTalebi)
         {
-            _destekTalebiDal.Guncelle(destekTalebi);
+            await _destekTalebiDal.Guncelle(destekTalebi);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<DestekTalebi>> HepsiniGetir()
+        public async Task<IResult> Sil(DestekTalebi destekTalebi)
         {
-            return new SuccessDataResult<List<DestekTalebi>>(_destekTalebiDal.HepsiniGetir(), Mesajlar.HepsiniGetirmeBasarili);
-        }
-
-        public IDataResult<DestekTalebi> IdIleGetir(int id)
-        {
-            return new SuccessDataResult<DestekTalebi>(_destekTalebiDal.Getir(u => u.Id == id), Mesajlar.IdIleGetirmeBasarili);
-        }
-
-        public IResult Sil(DestekTalebi destekTalebi)
-        {
-            _destekTalebiDal.Sil(destekTalebi);
+            await _destekTalebiDal.Sil(destekTalebi);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
+
+        public async Task<IDataResult<List<DestekTalebi>>> HepsiniGetir()
+        {
+            string key = "tum_destek_talepleri";
+
+            if (_cache.TryGetValue(key, out List<DestekTalebi> cachedListe))
+            {
+                _logger.LogInformation("[CACHE] Tüm destek talepleri cache'ten getirildi.");
+                return new SuccessDataResult<List<DestekTalebi>>(cachedListe, Mesajlar.HepsiniGetirmeBasarili);
+            }
+
+            var liste = await _destekTalebiDal.HepsiniGetir();
+
+            _cache.Set(key, liste, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
+                SlidingExpiration = TimeSpan.FromMinutes(2),
+                Priority = CacheItemPriority.Normal
+            });
+
+            return new SuccessDataResult<List<DestekTalebi>>(liste, Mesajlar.HepsiniGetirmeBasarili);
+        }
+
+        public async Task<IDataResult<DestekTalebi>> IdIleGetir(int id)
+        {
+            string key = $"destek_talebi_{id}";
+
+            if (_cache.TryGetValue(key, out DestekTalebi cachedenGelen))
+            {
+                _logger.LogInformation($"[CACHE] Destek Talebi {id} cache'ten getirildi.");
+                return new SuccessDataResult<DestekTalebi>(cachedenGelen, Mesajlar.IdIleGetirmeBasarili);
+            }
+
+            var destekTalebi = await _destekTalebiDal.Getir(x => x.Id == id);
+
+            if (destekTalebi != null)
+            {
+                _cache.Set(key, destekTalebi, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5),
+                    SlidingExpiration = TimeSpan.FromMinutes(1),
+                    Priority = CacheItemPriority.Normal
+                });
+            }
+
+            return new SuccessDataResult<DestekTalebi>(destekTalebi, Mesajlar.IdIleGetirmeBasarili);
+        }
     }
+
+
 }

@@ -13,45 +13,42 @@ namespace Banka.İs.Somut
 {
     public class KayitServis : IKayitServis
     {
-        IKayitDal _kayitDal;
+        private readonly IKayitDal _kayitDal;
 
         public KayitServis(IKayitDal kayitDal)
         {
             _kayitDal = kayitDal;
         }
 
-        public IResult Ekle(Kayit kayit)
+        public async Task<IResult> Ekle(Kayit kayit)
         {
-            _kayitDal.Ekle(kayit);
+            await _kayitDal.Ekle(kayit);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(Kayit kayit)
+        public async Task<IResult> Guncelle(Kayit kayit)
         {
-            _kayitDal.Guncelle(kayit);
+            await _kayitDal.Guncelle(kayit);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<Kayit>> HepsiniGetir()
+        public async Task<IDataResult<List<Kayit>>> HepsiniGetir()
         {
-            return new SuccessDataResult<List<Kayit>>(
-                _kayitDal.HepsiniGetir(),
-                Mesajlar.HepsiniGetirmeBasarili
-            );
+            var veriler = await _kayitDal.HepsiniGetir();
+            return new SuccessDataResult<List<Kayit>>(veriler, Mesajlar.HepsiniGetirmeBasarili);
         }
 
-        public IDataResult<Kayit> IdIleGetir(int id)
+        public async Task<IDataResult<Kayit>> IdIleGetir(int id)
         {
-            return new SuccessDataResult<Kayit>(
-                _kayitDal.Getir(k => k.Id == id),
-                Mesajlar.IdIleGetirmeBasarili
-            );
+            var veri = await _kayitDal.Getir(k => k.Id == id);
+            return new SuccessDataResult<Kayit>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
 
-        public IResult Sil(Kayit kayit)
+        public async Task<IResult> Sil(Kayit kayit)
         {
-            _kayitDal.Sil(kayit);
+            await _kayitDal.Sil(kayit);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
     }
+
 }

@@ -17,49 +17,50 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _hesapServis.HepsiniGetir();
+            var sonuc = await _hesapServis.HepsiniGetir();
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _hesapServis.IdIleGetir(id);
+            var sonuc = await _hesapServis.IdIleGetir(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(Hesap hesap)
+        public async Task<IActionResult> Ekle([FromBody] Hesap hesap)
         {
-            var sonuc = _hesapServis.Ekle(hesap);
+            var sonuc = await _hesapServis.Ekle(hesap);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(Hesap hesap)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] Hesap hesap)
         {
-            var sonuc = _hesapServis.Guncelle(hesap);
+            var sonuc = await _hesapServis.Guncelle(hesap);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(Hesap hesap)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] Hesap hesap)
         {
-            var sonuc = _hesapServis.Sil(hesap);
+            var sonuc = await _hesapServis.Sil(hesap);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
     }
+
 }
 

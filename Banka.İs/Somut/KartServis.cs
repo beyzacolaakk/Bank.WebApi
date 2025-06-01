@@ -13,45 +13,42 @@ namespace Banka.İs.Somut
 {
     public class KartServis : IKartServis
     {
-        IKartDal _kartDal;
+        private readonly IKartDal _kartDal;
 
         public KartServis(IKartDal kartDal)
         {
             _kartDal = kartDal;
         }
 
-        public IResult Ekle(Kart kart)
+        public async Task<IResult> Ekle(Kart kart)
         {
-            _kartDal.Ekle(kart);
+            await _kartDal.Ekle(kart);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(Kart kart)
+        public async Task<IResult> Guncelle(Kart kart)
         {
-            _kartDal.Guncelle(kart);
+            await _kartDal.Guncelle(kart);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<Kart>> HepsiniGetir()
+        public async Task<IDataResult<List<Kart>>> HepsiniGetir()
         {
-            return new SuccessDataResult<List<Kart>>(
-                _kartDal.HepsiniGetir(),
-                Mesajlar.HepsiniGetirmeBasarili
-            );
+            var veriler = await _kartDal.HepsiniGetir();
+            return new SuccessDataResult<List<Kart>>(veriler, Mesajlar.HepsiniGetirmeBasarili);
         }
 
-        public IDataResult<Kart> IdIleGetir(int id)
+        public async Task<IDataResult<Kart>> IdIleGetir(int id)
         {
-            return new SuccessDataResult<Kart>(
-                _kartDal.Getir(k => k.Id == id),
-                Mesajlar.IdIleGetirmeBasarili
-            );
+            var veri = await _kartDal.Getir(k => k.Id == id);
+            return new SuccessDataResult<Kart>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
 
-        public IResult Sil(Kart kart)
+        public async Task<IResult> Sil(Kart kart)
         {
-            _kartDal.Sil(kart);
+            await _kartDal.Sil(kart);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
     }
+
 }

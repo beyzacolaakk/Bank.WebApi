@@ -14,58 +14,48 @@ namespace Banka.Cekirdek.VeriErisimi.EntityFramework
        where TEntity : class, IEntity, new()
        where TContext : DbContext, new()
     {
-        public void Ekle(TEntity entity)
+        public async Task Ekle(TEntity entity)
         {
-            using (TContext context = new TContext()) 
+            using (var context = new TContext())
             {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
-
-            }
-
-        }
-
-        public void Sil(TEntity entity)
-        {
-            using (TContext context = new TContext())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-
+                context.Entry(entity).State = EntityState.Added;
+                await context.SaveChangesAsync();
             }
         }
 
-        public TEntity Getir(Expression<Func<TEntity, bool>> filter = null)
+        public async Task Sil(TEntity entity)
         {
-            using (TContext context = new TContext())
+            using (var context = new TContext())
             {
-                return context.Set<TEntity>().SingleOrDefault(filter);
-
-            }
-
-        }
-
-        public List<TEntity> HepsiniGetir(Expression<Func<TEntity, bool>> filter = null)
-        {
-            using (TContext context = new TContext())
-            {
-                return filter == null ?
-                    context.Set<TEntity>().ToList() :
-                    context.Set<TEntity>().Where(filter).ToList();
-
+                context.Entry(entity).State = EntityState.Deleted;
+                await context.SaveChangesAsync();
             }
         }
 
-        public void Guncelle(TEntity entity)
-        { 
-            using (TContext context = new TContext())
+        public async Task Guncelle(TEntity entity)
+        {
+            using (var context = new TContext())
             {
-                var updateEntity = context.Entry(entity);
-                updateEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                context.Entry(entity).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+            }
+        }
 
+        public async Task<TEntity> Getir(Expression<Func<TEntity, bool>> filter = null)
+        {
+            using (var context = new TContext())
+            {
+                return await context.Set<TEntity>().FirstOrDefaultAsync(filter);
+            }
+        }
+
+        public async Task<List<TEntity>> HepsiniGetir(Expression<Func<TEntity, bool>> filter = null) 
+        {
+            using (var context = new TContext())
+            {
+                return filter == null
+                    ? await context.Set<TEntity>().ToListAsync()
+                    : await context.Set<TEntity>().Where(filter).ToListAsync();
             }
         }
     }

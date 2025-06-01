@@ -3,6 +3,7 @@ using Banka.Cekirdek.VeriErisimi.EntityFramework;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisim.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,42 +15,40 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 {
     public class EfKullaniciDal : EfEntityRepositoryBase<Kullanici, BankaContext>, IKullaniciDal
     {
-        public List<Rol> YetkileriGetir(Kullanici kullanici)
+        public async Task<List<Rol>> YetkileriGetir(Kullanici kullanici)
         {
             using (var context = new BankaContext())
-            { 
+            {
                 var result = from rol in context.Roller
-                             join KullaniciRol in context.KullaniciRolleri 
-                                 on rol.Id equals KullaniciRol.Id
-                             where KullaniciRol.Id == kullanici.Id
+                             join kullaniciRol in context.KullaniciRolleri
+                                 on rol.Id equals kullaniciRol.RolId  // burada muhtemelen join id eşleşmesi RolId olmalı
+                             where kullaniciRol.KullaniciId == kullanici.Id  // doğru karşılaştırma için
                              select new Rol { Id = rol.Id, RolAdi = rol.RolAdi };
-                return result.ToList();
 
+                return await result.ToListAsync();
             }
         }
-        public Kullanici EkleVeIdGetir(Kullanici kullanici)
+
+        public async Task<Kullanici> EkleVeIdGetirAsync(Kullanici kullanici)
         {
-            using (BankaContext context = new BankaContext())
+            using (var context = new BankaContext())
             {
-                context.Kullanicilar.Add(kullanici);
-                context.SaveChanges();
+                await context.Kullanicilar.AddAsync(kullanici);
+                await context.SaveChangesAsync();
                 return kullanici;
             }
         }
 
-
-        public string IdIleKullaniciAdiGetir(int id)
+        public async Task<string> IdIleKullaniciAdiGetirAsync(int id)
         {
-            using (BankaContext context = new BankaContext())
+            using (var context = new BankaContext())
             {
-                return context.Kullanicilar
-                              .Where(k => k.Id == id)
-                              .Select(k => k.Telefon)
-                              .FirstOrDefault();
+                return await context.Kullanicilar
+                                    .Where(k => k.Id == id)
+                                    .Select(k => k.Telefon)
+                                    .FirstOrDefaultAsync();
             }
         }
-
-
 
 
 

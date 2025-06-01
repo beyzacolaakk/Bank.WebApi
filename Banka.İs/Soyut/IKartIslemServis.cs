@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IKartIslemServis
     {
-        IDataResult<List<KartIslem>> HepsiniGetir(); 
+        Task<IDataResult<List<KartIslem>>> HepsiniGetir(); 
 
-        IResult Ekle(KartIslem kartIslem); 
+        Task<IResult> Ekle(KartIslem kartIslem);
 
-        IResult Guncelle(KartIslem kartIslem);
+        Task<IResult> Guncelle(KartIslem kartIslem);
 
-        IResult Sil(KartIslem kartIslem);
+        Task<IResult> Sil(KartIslem kartIslem);
 
-        IDataResult<KartIslem> IdIleGetir(int id);
+        Task<IDataResult<KartIslem>> IdIleGetir(int id);
     }
 }

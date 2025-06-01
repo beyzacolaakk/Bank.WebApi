@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IHesapServis
     {
-        IDataResult<List<Hesap>> HepsiniGetir();
+        Task<IDataResult<List<Hesap>>> HepsiniGetir();
 
-        IResult Ekle(Hesap hesap); 
+        Task<IResult> Ekle(Hesap hesap);
 
-        IResult Guncelle(Hesap hesap); 
+        Task<IResult> Guncelle(Hesap hesap);
 
-        IResult Sil(Hesap hesap); 
+        Task<IResult> Sil(Hesap hesap);
 
-        IDataResult<Hesap> IdIleGetir(int id);
+        Task<IDataResult<Hesap>> IdIleGetir(int id);
     }
 }

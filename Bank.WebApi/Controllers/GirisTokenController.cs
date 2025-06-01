@@ -17,48 +17,49 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _girisTokenServis.HepsiniGetir();
+            var sonuc = await _girisTokenServis.HepsiniGetir();
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _girisTokenServis.IdIleGetir(id);
+            var sonuc = await _girisTokenServis.IdIleGetir(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(GirisToken token)
+        public async Task<IActionResult> Ekle([FromBody] GirisToken token)
         {
-            var sonuc = _girisTokenServis.Ekle(token);
+            var sonuc = await _girisTokenServis.Ekle(token);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(GirisToken token)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] GirisToken token)
         {
-            var sonuc = _girisTokenServis.Guncelle(token);
+            var sonuc = await _girisTokenServis.Guncelle(token);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(GirisToken token)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] GirisToken token)
         {
-            var sonuc = _girisTokenServis.Sil(token);
+            var sonuc = await _girisTokenServis.Sil(token);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
     }
+
 }

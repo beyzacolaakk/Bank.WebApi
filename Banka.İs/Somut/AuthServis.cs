@@ -7,6 +7,7 @@ using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,24 +22,27 @@ namespace Banka.İs.Somut
          private IKullaniciServis _kullaniciServis; 
         private ITokenHelper _tokenHelper;
         private IKullaniciRolServis _kullaniciRolServis;   
-
-        public AuthServis(IKullaniciServis kullaniciServis, ITokenHelper tokenHelper,IKullaniciRolServis kullaniciRolServis) 
+        private IGirisOlayiServis _girisOlayiServis;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AuthServis(IKullaniciServis kullaniciServis, ITokenHelper tokenHelper, IHttpContextAccessor httpContextAccessor,IKullaniciRolServis kullaniciRolServis, IGirisOlayiServis girisOlayiServis) 
         {
             _kullaniciServis = kullaniciServis;
             _tokenHelper = tokenHelper;
             _kullaniciRolServis = kullaniciRolServis;
+            _girisOlayiServis = girisOlayiServis;
+            _httpContextAccessor = httpContextAccessor;
         }
-        public IDataResult<AccessToken> ErisimTokenOlustur(IDataResult<Kullanici> kullanici) 
+        public async Task<IDataResult<AccessToken>> ErisimTokenOlustur(IDataResult<Kullanici> kullanici) 
         {
-            var claims = _kullaniciServis.YetkileriGetir(kullanici.Data);
-            var accessToken = _tokenHelper.TokenOlustur(kullanici.Data, claims);
+            var claims = await _kullaniciServis.YetkileriGetir(kullanici.Data);
+            var accessToken =  _tokenHelper.TokenOlustur(kullanici.Data, claims);
 
             return new SuccessDataResult<AccessToken>(accessToken, kullanici.Message);
         }
 
-        public IDataResult<Kullanici> Giris(KullaniciGirisDto kullaniciGirisDto)
+        public async Task<IDataResult<Kullanici>> Giris(KullaniciGirisDto kullaniciGirisDto)
         {
-            var kontrolEdilenTelefon = _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);  
+            var kontrolEdilenTelefon = await _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);  
             if (kontrolEdilenTelefon == null)
             {
                 return new ErrorDataResult<Kullanici>(Mesajlar.KullanıcıBulunamadı);
@@ -51,28 +55,28 @@ namespace Banka.İs.Somut
 
             return new SuccessDataResult<Kullanici>(kontrolEdilenTelefon, Mesajlar.GirisBasarili);
         }
-        public IDataResult<AccessToken> KayitIslemi(KullaniciKayitDto kullaniciKayitDto)
+        public async Task<IDataResult<AccessToken>> KayitIslemi(KullaniciKayitDto kullaniciKayitDto)
         {
-            var kullaniciMevcut = KullaniciMevcut(kullaniciKayitDto.Telefon);
+            var kullaniciMevcut =await  KullaniciMevcut(kullaniciKayitDto.Telefon);
             if (!kullaniciMevcut.Success)
                 return new ErrorDataResult<AccessToken>(kullaniciMevcut.Message);
 
-            var kayitSonuc = Kayit(kullaniciKayitDto, kullaniciKayitDto.Sifre);
+            var kayitSonuc = await  Kayit(kullaniciKayitDto, kullaniciKayitDto.Sifre);
             if (!kayitSonuc.Success)
                 return new ErrorDataResult<AccessToken>(kayitSonuc.Message);
 
-            var tokenSonuc = ErisimTokenOlustur(kayitSonuc);
+            var tokenSonuc = await ErisimTokenOlustur(kayitSonuc);
             if (!tokenSonuc.Success)
                 return new ErrorDataResult<AccessToken>(tokenSonuc.Message);
 
-            var rolSonuc = KullaniciRolEkle(kayitSonuc);
+            var rolSonuc = await KullaniciRolEkle(kayitSonuc);
             if (!rolSonuc.Success)
                 return new ErrorDataResult<AccessToken>(rolSonuc.Message);
 
             return new SuccessDataResult<AccessToken>(tokenSonuc.Data, tokenSonuc.Message);
         }
 
-        public IDataResult<Kullanici> Kayit(KullaniciKayitDto kullaniciKayitDto, string sifre)
+        public async Task<IDataResult<Kullanici>> Kayit(KullaniciKayitDto kullaniciKayitDto, string sifre)
         {
             byte[] sifreHash, sifreSalt; 
             HashingHelper.HashSifreOlustur(sifre, out sifreHash, out sifreSalt);   
@@ -92,7 +96,7 @@ namespace Banka.İs.Somut
                    
                 };
 
-                var number = _kullaniciServis.Ekle(kullanici);
+                var number = await _kullaniciServis.Ekle(kullanici);
                 if(number.Success)
                 {
                     return new SuccessDataResult<Kullanici>(kullanici, Mesajlar.KullaniciEklemeBasarili);
@@ -101,17 +105,36 @@ namespace Banka.İs.Somut
            
             return new ErrorDataResult<Kullanici>(Mesajlar.KullaniciEklemeBasarisiz);
         }
-        public IDataResult<KullaniciVeTokenDto> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto)
+        public async Task<IDataResult<KullaniciVeTokenDto>> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto)
         {
-            var kullaniciGiris = Giris(kullaniciGirisDto);
+            var kullaniciGiris = await Giris(kullaniciGirisDto);
             if (!kullaniciGiris.Success)
             {
+                // Başarısız giriş, logla ve dön
+                var girisOlayiBasarisiz = new GirisOlayi
+                {
+                    KullaniciId = 0, // kullanıcı yoksa 0 veya -1 verilebilir
+                    IpAdresi = GetClientIp(),
+                    Basarili = false,
+                    Zaman = DateTime.Now
+                };
+                await _girisOlayiServis.Ekle(girisOlayiBasarisiz);
+
                 return new ErrorDataResult<KullaniciVeTokenDto>(kullaniciGiris.Message);
             }
 
-            var tokenResult = ErisimTokenOlustur(kullaniciGiris);
+            var tokenResult = await ErisimTokenOlustur(kullaniciGiris);
             if (!tokenResult.Success)
             {
+                var girisOlayiBasarisizToken = new GirisOlayi
+                {
+                    KullaniciId = kullaniciGiris.Data.Id,
+                    IpAdresi = GetClientIp(),
+                    Basarili = false,
+                    Zaman = DateTime.Now
+                };
+                await _girisOlayiServis.Ekle(girisOlayiBasarisizToken);
+
                 return new ErrorDataResult<KullaniciVeTokenDto>(tokenResult.Message);
             }
 
@@ -121,6 +144,15 @@ namespace Banka.İs.Somut
                 return new ErrorDataResult<KullaniciVeTokenDto>("Kullanıcı bilgileri bulunamadı.");
             }
 
+            var girisOlayi = new GirisOlayi
+            {
+                KullaniciId = kullaniciGiris.Data.Id,
+                IpAdresi = GetClientIp(),
+                Basarili = true,
+                Zaman = DateTime.Now
+            };
+            await _girisOlayiServis.Ekle(girisOlayi);
+
             var kullaniciVeTokenDto = new KullaniciVeTokenDto
             {
                 Token = tokenResult.Data
@@ -128,29 +160,39 @@ namespace Banka.İs.Somut
 
             return new SuccessDataResult<KullaniciVeTokenDto>(kullaniciVeTokenDto, "Giriş ve token oluşturma başarılı.");
         }
-        public IResult KullaniciMevcut(string email)
+
+        public async Task<IResult> KullaniciMevcut(string email)
         {
-            if (_kullaniciServis.MaileGoreGetir(email) != null)
+            if (await _kullaniciServis.MaileGoreGetir(email) != null)
             {
                 return new ErrorResult(Mesajlar.ZatenVar);
             }
             return new SuccessResult();
         }
 
-        public IResult KullaniciRolEkle(IDataResult<Kullanici> kullanici)
+        public async Task<IResult> KullaniciRolEkle(IDataResult<Kullanici> kullanici)
         {
             var kullaniciRol = new KullaniciRol
             {
                 KullaniciId = kullanici.Data.Id,
                 RolId = 1
             };
-            var result = _kullaniciRolServis.Ekle(kullaniciRol);
+            var result = await _kullaniciRolServis.Ekle(kullaniciRol);
             if (!result.Success)
             { 
                 new ErrorResult(Mesajlar.HataliEkleme);
 
             }
             return new SuccessResult();
+        }
+        private string GetClientIp()
+        {
+            var forwardedHeader = _httpContextAccessor.HttpContext?.Request?.Headers["X-Forwarded-For"].FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(forwardedHeader))
+                return forwardedHeader;
+
+            return _httpContextAccessor?.HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "Bilinmiyor";
         }
     }
 }

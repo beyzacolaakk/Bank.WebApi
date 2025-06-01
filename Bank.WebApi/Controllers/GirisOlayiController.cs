@@ -17,45 +17,44 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _girisOlayiServis.HepsiniGetir();
+            var sonuc = await _girisOlayiServis.HepsiniGetir();
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _girisOlayiServis.IdIleGetir(id);
+            var sonuc = await _girisOlayiServis.IdIleGetir(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(GirisOlayi girisOlayi)
+        public async Task<IActionResult> Ekle([FromBody] GirisOlayi girisOlayi)
         {
-            var sonuc = _girisOlayiServis.Ekle(girisOlayi);
+            var sonuc =await _girisOlayiServis.Ekle(girisOlayi);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(GirisOlayi girisOlayi)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] GirisOlayi girisOlayi)
         {
-            var sonuc = _girisOlayiServis.Guncelle(girisOlayi);
+            var sonuc = await _girisOlayiServis.Guncelle(girisOlayi);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(GirisOlayi girisOlayi)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] GirisOlayi girisOlayi)
         {
-            var sonuc = _girisOlayiServis.Sil(girisOlayi);
+            var sonuc = await _girisOlayiServis.Sil(girisOlayi);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

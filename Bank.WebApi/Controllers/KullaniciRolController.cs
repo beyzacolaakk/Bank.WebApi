@@ -16,46 +16,46 @@ namespace Banka.WebApi.Controllers
             _kullaniciRolServis = kullaniciRolServis;
         }
 
-        [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        [HttpGet("hepsinigetir")] 
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _kullaniciRolServis.HepsiniGetir();
+            var sonuc = await _kullaniciRolServis.HepsiniGetir();
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _kullaniciRolServis.IdIleGetir(id);
+            var sonuc = await _kullaniciRolServis.IdIleGetir(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(KullaniciRol kullaniciRol)
+        public async Task<IActionResult> Ekle([FromBody] KullaniciRol kullaniciRol)
         {
-            var sonuc = _kullaniciRolServis.Ekle(kullaniciRol);
+            var sonuc =await _kullaniciRolServis.Ekle(kullaniciRol);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(KullaniciRol kullaniciRol)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] KullaniciRol kullaniciRol)
         {
-            var sonuc = _kullaniciRolServis.Guncelle(kullaniciRol);
+            var sonuc = await _kullaniciRolServis.Guncelle(kullaniciRol);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(KullaniciRol kullaniciRol)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] KullaniciRol kullaniciRol)
         {
-            var sonuc = _kullaniciRolServis.Sil(kullaniciRol);
+            var sonuc = await _kullaniciRolServis.Sil(kullaniciRol);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IKayitServis
     {
-        IDataResult<List<Kayit>> HepsiniGetir();
+        Task<IDataResult<List<Kayit>>> HepsiniGetir();
 
-        IResult Ekle(Kayit kayit);
+        Task<IResult> Ekle(Kayit kayit);
 
-        IResult Guncelle(Kayit kayit);
+        Task<IResult> Guncelle(Kayit kayit);
 
-        IResult Sil(Kayit kayit);
+        Task<IResult> Sil(Kayit kayit);
 
-        IDataResult<Kayit> IdIleGetir(int id);
+        Task<IDataResult<Kayit>> IdIleGetir(int id);
     }
 }

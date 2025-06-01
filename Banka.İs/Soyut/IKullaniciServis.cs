@@ -12,18 +12,18 @@ namespace Banka.İs.Soyut
 {
     public interface IKullaniciServis
     {
-        IDataResult<List<Kullanici>> HepsiniGetir();
+        Task<IDataResult<List<Kullanici>>> HepsiniGetir();
 
-        IResult Ekle(Kullanici kullanici);
+        Task<IResult> Ekle(Kullanici kullanici);
 
-        IResult Guncelle(Kullanici kullanici);
+        Task<IResult> Guncelle(Kullanici kullanici);
 
-        IResult Sil(Kullanici kullanici);
+        Task<IResult> Sil(Kullanici kullanici);
 
-        IDataResult<Kullanici> IdIleGetir(int id);
+        Task<IDataResult<Kullanici>> IdIleGetir(int id);
 
-        Kullanici MaileGoreGetir(string telefon);
+        Task<Kullanici> MaileGoreGetir(string telefon);
 
-        List<Rol> YetkileriGetir(Kullanici kullanici);
+        Task<List<Rol>> YetkileriGetir(Kullanici kullanici);
     }
 }

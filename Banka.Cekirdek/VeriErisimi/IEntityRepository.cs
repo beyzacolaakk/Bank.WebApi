@@ -11,14 +11,14 @@ namespace Banka.Cekirdek.VeriErisimi
 {
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {
-        List<T> HepsiniGetir(Expression<Func<T, bool>> filter = null);
+        Task<List<T>> HepsiniGetir(Expression<Func<T, bool>> filter = null);
 
-        T Getir(Expression<Func<T, bool>> filter = null); 
+        Task<T> Getir(Expression<Func<T, bool>> filter = null);
 
-        void Ekle(T entity);  
+        Task Ekle(T entity);
 
-        void Sil(T entity); 
+        Task Sil(T entity);
 
-        void Guncelle(T entity); 
+        Task Guncelle(T entity); 
     }
 }

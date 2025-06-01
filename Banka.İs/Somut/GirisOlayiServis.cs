@@ -13,39 +13,42 @@ namespace Banka.İs.Somut
 {
     public class GirisOlayiServis : IGirisOlayiServis
     {
-        IGirisOlayiDal _girisOlayiDal;
+        private readonly IGirisOlayiDal _girisOlayiDal;
 
         public GirisOlayiServis(IGirisOlayiDal girisOlayiDal)
         {
             _girisOlayiDal = girisOlayiDal;
         }
 
-        public IResult Ekle(GirisOlayi girisOlayi)
+        public async Task<IResult> Ekle(GirisOlayi girisOlayi)
         {
-            _girisOlayiDal.Ekle(girisOlayi);
+            await _girisOlayiDal.Ekle(girisOlayi);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(GirisOlayi girisOlayi)
+        public async Task<IResult> Guncelle(GirisOlayi girisOlayi)
         {
-            _girisOlayiDal.Guncelle(girisOlayi);
+            await _girisOlayiDal.Guncelle(girisOlayi);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<GirisOlayi>> HepsiniGetir()
+        public async Task<IResult> Sil(GirisOlayi girisOlayi)
         {
-            return new SuccessDataResult<List<GirisOlayi>>(_girisOlayiDal.HepsiniGetir(), Mesajlar.HepsiniGetirmeBasarili);
-        }
-
-        public IDataResult<GirisOlayi> IdIleGetir(int id)
-        {
-            return new SuccessDataResult<GirisOlayi>(_girisOlayiDal.Getir(x => x.Id == id), Mesajlar.IdIleGetirmeBasarili);
-        }
-
-        public IResult Sil(GirisOlayi girisOlayi)
-        {
-            _girisOlayiDal.Sil(girisOlayi);
+            await _girisOlayiDal.Sil(girisOlayi);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
+
+        public async Task<IDataResult<List<GirisOlayi>>> HepsiniGetir()
+        {
+            var liste = await _girisOlayiDal.HepsiniGetir();
+            return new SuccessDataResult<List<GirisOlayi>>(liste, Mesajlar.HepsiniGetirmeBasarili);
+        }
+
+        public async Task<IDataResult<GirisOlayi>> IdIleGetir(int id)
+        {
+            var girisOlayi = await _girisOlayiDal.Getir(x => x.Id == id);
+            return new SuccessDataResult<GirisOlayi>(girisOlayi, Mesajlar.IdIleGetirmeBasarili);
+        }
     }
+
 }

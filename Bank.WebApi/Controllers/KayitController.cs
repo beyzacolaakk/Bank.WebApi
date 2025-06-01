@@ -17,48 +17,49 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _kayitServis.HepsiniGetir();
+            var sonuc = await Task.Run(() => _kayitServis.HepsiniGetir());
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _kayitServis.IdIleGetir(id);
+            var sonuc = await Task.Run(() => _kayitServis.IdIleGetir(id));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(Kayit kayit)
+        public async Task<IActionResult> Ekle([FromBody] Kayit kayit)
         {
-            var sonuc = _kayitServis.Ekle(kayit);
+            var sonuc = await Task.Run(() => _kayitServis.Ekle(kayit));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(Kayit kayit)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] Kayit kayit)
         {
-            var sonuc = _kayitServis.Guncelle(kayit);
+            var sonuc = await Task.Run(() => _kayitServis.Guncelle(kayit));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(Kayit kayit)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] Kayit kayit)
         {
-            var sonuc = _kayitServis.Sil(kayit);
+            var sonuc = await Task.Run(() => _kayitServis.Sil(kayit));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
     }
+
 }

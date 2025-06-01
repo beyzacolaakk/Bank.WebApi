@@ -20,38 +20,35 @@ namespace Banka.İs.Somut
             _subeDal = subeDal;
         }
 
-        public IResult Ekle(Sube sube)
+        public async Task<IResult> Ekle(Sube sube)
         {
-            _subeDal.Ekle(sube);
+            await _subeDal.Ekle(sube);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
 
-        public IResult Guncelle(Sube sube)
+        public async Task<IResult> Guncelle(Sube sube)
         {
-            _subeDal.Guncelle(sube);
+            await _subeDal.Guncelle(sube);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public IDataResult<List<Sube>> HepsiniGetir()
+        public async Task<IDataResult<List<Sube>>> HepsiniGetir()
         {
-            return new SuccessDataResult<List<Sube>>(
-                _subeDal.HepsiniGetir(),
-                Mesajlar.HepsiniGetirmeBasarili
-            );
+            var list = await _subeDal.HepsiniGetir();
+            return new SuccessDataResult<List<Sube>>(list, Mesajlar.HepsiniGetirmeBasarili);
         }
 
-        public IDataResult<Sube> IdIleGetir(int id)
+        public async Task<IDataResult<Sube>> IdIleGetir(int id)
         {
-            return new SuccessDataResult<Sube>(
-                _subeDal.Getir(s => s.Id == id),
-                Mesajlar.IdIleGetirmeBasarili
-            );
+            var entity = await _subeDal.Getir(s => s.Id == id);
+            return new SuccessDataResult<Sube>(entity, Mesajlar.IdIleGetirmeBasarili);
         }
 
-        public IResult Sil(Sube sube)
+        public async Task<IResult> Sil(Sube sube)
         {
-            _subeDal.Sil(sube);
+            await _subeDal.Sil(sube);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
     }
+
 }

@@ -10,14 +10,14 @@ namespace Banka.İs.Soyut
 {
     public interface IKullaniciRolServis
     {
-        IDataResult<List<KullaniciRol>> HepsiniGetir();
+        Task<IDataResult<List<KullaniciRol>>> HepsiniGetir();
 
-        IResult Ekle(KullaniciRol kullaniciRol);
+        Task<IResult> Ekle(KullaniciRol kullaniciRol);
 
-        IResult Guncelle(KullaniciRol kullaniciRol);
+        Task<IResult> Guncelle(KullaniciRol kullaniciRol);
 
-        IResult Sil(KullaniciRol kullaniciRol);
+        Task<IResult> Sil(KullaniciRol kullaniciRol);
 
-        IDataResult<KullaniciRol> IdIleGetir(int id);
+        Task<IDataResult<KullaniciRol>> IdIleGetir(int id);
     }
 }

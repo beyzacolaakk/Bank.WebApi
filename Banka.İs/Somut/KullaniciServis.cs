@@ -13,47 +13,52 @@ namespace Banka.İs.Somut
 {
     public class KullaniciServis : IKullaniciServis
     {
-        IKullaniciDal _kullaniciDal; 
+        private readonly IKullaniciDal _kullaniciDal;
 
-        public KullaniciServis(IKullaniciDal kullaniciDal)  
+        public KullaniciServis(IKullaniciDal kullaniciDal)
         {
             _kullaniciDal = kullaniciDal;
         }
 
-        public IResult Ekle(Kullanici kullanici)
+        public async Task<IResult> Ekle(Kullanici kullanici)
         {
-            _kullaniciDal.Ekle(kullanici);
+            await _kullaniciDal.Ekle(kullanici);
             return new SuccessResult(Mesajlar.KullaniciEklemeBasarili);
         }
-        public IResult Sil(Kullanici kullanici)
+
+        public async Task<IResult> Sil(Kullanici kullanici)
         {
-            _kullaniciDal.Sil(kullanici);
+            await _kullaniciDal.Sil(kullanici);
             return new SuccessResult(Mesajlar.KullaniciSilmeBasarili);
         }
 
-        public IResult Guncelle(Kullanici kullanici)
+        public async Task<IResult> Guncelle(Kullanici kullanici)
         {
-            _kullaniciDal.Guncelle(kullanici);
+            await _kullaniciDal.Guncelle(kullanici);
             return new SuccessResult(Mesajlar.KullaniciGuncellemeBasarili);
         }
-        public Kullanici MaileGoreGetir(string telefon) 
+
+        public async Task<Kullanici> MaileGoreGetir(string telefon)
         {
-            var result = _kullaniciDal.Getir(u => u.Telefon == telefon);
-            return result;
-        }
-        public IDataResult<List<Kullanici>> HepsiniGetir()
-        {
-            return new SuccessDataResult<List<Kullanici>>(_kullaniciDal.HepsiniGetir(), "Kullanıcılar Getirildi");
+            return await _kullaniciDal.Getir(u => u.Telefon == telefon);
         }
 
-        public IDataResult<Kullanici> IdIleGetir(int id)
+        public async Task<IDataResult<List<Kullanici>>> HepsiniGetir()
         {
-            return new SuccessDataResult<Kullanici>( _kullaniciDal.Getir(u => u.Id == id), "Kullanıcı Getirildi");
+            var kullanicilar = await _kullaniciDal.HepsiniGetir();
+            return new SuccessDataResult<List<Kullanici>>(kullanicilar, "Kullanıcılar Getirildi");
         }
 
-        public List<Rol> YetkileriGetir(Kullanici kullanici)
+        public async Task<IDataResult<Kullanici>> IdIleGetir(int id)
         {
-            return _kullaniciDal.YetkileriGetir(kullanici);
+            var kullanici = await _kullaniciDal.Getir(u => u.Id == id);
+            return new SuccessDataResult<Kullanici>(kullanici, "Kullanıcı Getirildi");
+        }
+
+        public async Task<List<Rol>> YetkileriGetir(Kullanici kullanici)
+        {
+            return await _kullaniciDal.YetkileriGetir(kullanici);
         }
     }
+
 }

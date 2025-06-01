@@ -17,48 +17,49 @@ namespace Banka.WebApi.Controllers
         }
 
         [HttpGet("hepsinigetir")]
-        public IActionResult HepsiniGetir()
+        public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = _kartIslemServis.HepsiniGetir();
+            var sonuc = await Task.Run(() => _kartIslemServis.HepsiniGetir());
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpGet("idilegetir")]
-        public IActionResult IdIleGetir(int id)
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = _kartIslemServis.IdIleGetir(id);
+            var sonuc = await Task.Run(() => _kartIslemServis.IdIleGetir(id));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
         [HttpPost("ekle")]
-        public IActionResult Ekle(KartIslem kartIslem)
+        public async Task<IActionResult> Ekle([FromBody] KartIslem kartIslem)
         {
-            var sonuc = _kartIslemServis.Ekle(kartIslem);
+            var sonuc = await Task.Run(() => _kartIslemServis.Ekle(kartIslem));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("guncelle")]
-        public IActionResult Guncelle(KartIslem kartIslem)
+        [HttpPut("guncelle")]
+        public async Task<IActionResult> Guncelle([FromBody] KartIslem kartIslem)
         {
-            var sonuc = _kartIslemServis.Guncelle(kartIslem);
+            var sonuc = await Task.Run(() => _kartIslemServis.Guncelle(kartIslem));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
 
-        [HttpPost("sil")]
-        public IActionResult Sil(KartIslem kartIslem)
+        [HttpDelete("sil")]
+        public async Task<IActionResult> Sil([FromBody] KartIslem kartIslem)
         {
-            var sonuc = _kartIslemServis.Sil(kartIslem);
+            var sonuc = await Task.Run(() => _kartIslemServis.Sil(kartIslem));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
     }
+
 }

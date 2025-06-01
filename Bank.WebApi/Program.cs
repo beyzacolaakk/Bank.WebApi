@@ -1,6 +1,8 @@
-﻿using Banka.Cekirdek.YardımcıHizmetler.Güvenlik;
+﻿using Banka.Cekirdek.Uzantılar;
+using Banka.Cekirdek.YardımcıHizmetler.Güvenlik;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.Encryption;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.JWT;
+using Banka.Cekirdek.YardımcıHizmetler.Logger;
 using Banka.İs.Somut;
 using Banka.İs.Soyut;
 using Banka.VeriErisim.Somut.EntityFramework;
@@ -19,7 +21,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddHttpClient();
-
+builder.Services.AddMemoryCache();
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -35,8 +37,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
     });
-// DAL kayıtları
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddMemoryCache();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<BankaContext>();
@@ -51,6 +53,7 @@ builder.Services.AddScoped<IKartServis, KartServis>();
 builder.Services.AddScoped<IKayitServis, KayitServis>();
 builder.Services.AddScoped<IKullaniciRolServis, KullaniciRolServis>();
 builder.Services.AddScoped<IKullaniciServis, KullaniciServis>();
+builder.Services.AddSingleton<IIstekLoguServis, IstekLoguServis>();
 builder.Services.AddScoped<ISubeServis, SubeServis>();
 builder.Services.AddScoped<IKullaniciDal, EfKullaniciDal>();
 builder.Services.AddScoped<IKartDal, EfKartDal>();
@@ -72,9 +75,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<RequestLogMiddleware>();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
