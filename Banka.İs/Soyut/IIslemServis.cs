@@ -1,4 +1,5 @@
 ﻿using Banka.Cekirdek.YardımcıHizmetler.Results;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,7 @@ namespace Banka.İs.Soyut
         Task<IResult> Sil(Islem islem); 
 
         Task<IDataResult<Islem>> IdIleGetir(int id);
+
+        Task<IResult> ParaGonderme(ParaGondermeDto paraGondermeDto);
     }
 }

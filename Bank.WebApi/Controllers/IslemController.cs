@@ -1,5 +1,7 @@
 ﻿using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +9,7 @@ namespace Banka.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IslemController : ControllerBase
+    public class IslemController :BaseController
     {
         private readonly IIslemServis _islemServis;
 
@@ -15,7 +17,7 @@ namespace Banka.WebApi.Controllers
         {
             _islemServis = islemServis;
         }
-
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
@@ -24,7 +26,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -33,7 +35,17 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
+        [HttpPost("paragonderme")] 
+        public async Task<IActionResult> ParaGonderme([FromBody] ParaGondermeDto paraGondermeDto) 
+        {
+            paraGondermeDto.KullaniciId = TokendanIdAl();
+            var sonuc = await Task.Run(() => _islemServis.ParaGonderme(paraGondermeDto));
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Islem islem)
         {
@@ -42,7 +54,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Islem islem)
         {
@@ -51,7 +63,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Islem islem)
         {

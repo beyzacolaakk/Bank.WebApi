@@ -1,4 +1,5 @@
 ﻿using Banka.Cekirdek.Varlıklar.Somut;
+using Banka.Varlıklar.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Banka.İs.Sabitler
 {
     public static class Mesajlar 
     {
+        public static string ParaGondermeBasarisiz = "Para Gönderme İşlemi Başarısız.";
+        public static string   BilgilerHatalı= "Bilgiler Hatalı.";
         public static string EklemeBasarili = "Ekleme Başarılı"; 
         public static string SilmeBasarili = "Silme Başarılı";
         public static string GuncellemeBasarili= "Güncelleme Başarılı";
@@ -29,5 +32,10 @@ namespace Banka.İs.Sabitler
         public static string ZatenVar = "Zaten Mevcut!";
 
         public static string HataliEkleme= "Başarısız Ekleme";
+
+        public static string KayitBasarili = "Kayıt işlemi başarılı";
+
+        public static string ParaBasariilegonde = "Para transfer işleminiz başarı ile gerçekleşti";
+        internal static string IslemKaydedilmedi=" Paratransferi çekleşti ancak islem kaydedilemedi"; 
     }
 }

@@ -27,7 +27,7 @@ namespace Banka.Cekirdek.Uzantılar
         public async Task InvokeAsync(HttpContext context)
         {
             var yontem = context.Request.Method;
-            var yol = context.Request.Path;
+            var yol = context.Request.Path.Value?.ToLower(); // path küçük harfe çevrildi
             var sorguParametreleri = context.Request.Query.Any()
                ? "?" + string.Join("&", context.Request.Query.Select(p => $"{p.Key}={p.Value}"))
                : "";
@@ -46,6 +46,12 @@ namespace Banka.Cekirdek.Uzantılar
                 }
             }
 
+            // Eğer yol giriş veya kayıt ise loglama!
+            if (yol.Contains("/giris") || yol.Contains("/kayit"))
+            {
+                await _next(context);
+                return;
+            }
 
             int parsedId = TokendanIdAl(context);
 
@@ -62,8 +68,8 @@ namespace Banka.Cekirdek.Uzantılar
 
             try
             {
-                if(parsedId!=null && parsedId!=0)
-                await _istekLoguServis.LogIstekAsync(log);
+                if (parsedId != 0)
+                    await _istekLoguServis.LogIstekAsync(log);
             }
             catch (Exception ex)
             {
@@ -72,6 +78,7 @@ namespace Banka.Cekirdek.Uzantılar
 
             await _next(context);
         }
+
         private int TokendanIdAl(HttpContext context)
         {
             var token = context.Request.Cookies["AuthToken"];

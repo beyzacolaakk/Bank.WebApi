@@ -1,5 +1,6 @@
 ﻿using Banka.İs.Soyut;
 using Banka.Varlıklar.Somut;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Banka.WebApi.Controllers
         {
             _kayitServis = kayitServis;
         }
-
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
@@ -24,7 +25,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -33,7 +34,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Kayit kayit)
         {
@@ -42,7 +43,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Kayit kayit)
         {
@@ -51,7 +52,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Kayit kayit)
         {

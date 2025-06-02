@@ -1,6 +1,7 @@
 ﻿using Banka.Cekirdek.YardımcıHizmetler.Results;
 using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Soyut;
 using System;
@@ -22,6 +23,7 @@ namespace Banka.İs.Somut
 
         public async Task<IResult> Ekle(Kart kart)
         {
+            
             await _kartDal.Ekle(kart);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
@@ -31,7 +33,21 @@ namespace Banka.İs.Somut
             await _kartDal.Guncelle(kart);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
+        public async Task<IResult> OtomatikKartOlustur(KartOlusturDto kartOlusturDto)
+        {
+            var kart = new Kart
+            {
+                KullaniciId = kartOlusturDto.KullaniciId,
+                KartNumarasi = KartNumarasiUret(),
+                CVV = CvvUret(),
+                KartTipi = kartOlusturDto.KartTipi,
+                SonKullanma = DateTime.UtcNow.AddYears(3),
+                Limit = kartOlusturDto.KartTipi == "Kredi Kartı" ? 5000 : (int?)null
+            };
 
+            await _kartDal.Ekle(kart);
+            return new SuccessResult("Kart otomatik olarak oluşturuldu.");
+        }
         public async Task<IDataResult<List<Kart>>> HepsiniGetir()
         {
             var veriler = await _kartDal.HepsiniGetir();
@@ -48,6 +64,19 @@ namespace Banka.İs.Somut
         {
             await _kartDal.Sil(kart);
             return new SuccessResult(Mesajlar.SilmeBasarili);
+        }
+        private string KartNumarasiUret()
+        {
+            var random = new Random();
+            // 16 haneli rastgele kart numarası
+            return string.Concat(Enumerable.Range(0, 16).Select(_ => random.Next(0, 10).ToString()));
+        }
+
+        private string CvvUret()
+        {
+            var random = new Random();
+            // 3 haneli CVV
+            return random.Next(100, 1000).ToString();
         }
     }
 

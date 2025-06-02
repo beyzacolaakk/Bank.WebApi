@@ -1,5 +1,8 @@
-﻿using Banka.İs.Soyut;
+﻿using Banka.İs.Somut;
+using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +10,7 @@ namespace Banka.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class KartIslemController : ControllerBase
+    public class KartIslemController :BaseController
     {
         private readonly IKartIslemServis _kartIslemServis;
 
@@ -15,7 +18,7 @@ namespace Banka.WebApi.Controllers
         {
             _kartIslemServis = kartIslemServis;
         }
-
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
@@ -24,7 +27,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -33,7 +36,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] KartIslem kartIslem)
         {
@@ -42,7 +45,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] KartIslem kartIslem)
         {
@@ -51,11 +54,21 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] KartIslem kartIslem)
         {
             var sonuc = await Task.Run(() => _kartIslemServis.Sil(kartIslem));
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpPost("kartileislemyap")]
+        public async Task<IActionResult> KartIleIslemYap([FromBody] KartIleIslemDto kartIleIslemDto)
+        {
+            kartIleIslemDto.KullaniciId = TokendanIdAl();
+            var sonuc = await Task.Run(() => _kartIslemServis.KartIleIslemYap(kartIleIslemDto));
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

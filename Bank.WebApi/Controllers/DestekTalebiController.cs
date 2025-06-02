@@ -1,4 +1,5 @@
 ﻿using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +17,7 @@ namespace Banka.WebApi.Controllers
         {
             _destekTalebiServis = destekTalebiServis;
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
@@ -25,7 +26,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -34,7 +35,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] DestekTalebi destekTalebi)
         {
@@ -43,7 +44,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] DestekTalebi destekTalebi)
         {
@@ -52,7 +53,26 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Yönetici")]
+        [HttpPut("destektalebiguncelle/{id}")]
+        public async Task<IActionResult> DestekTalebiGuncelle([FromRoute] int id) 
+        {
+            var sonuc = await _destekTalebiServis.DestekTalebiGuncelle(id);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpPost("destektalebiolustur")]
+        public async Task<IActionResult> DestekTalebiOlustur([FromBody] DestekTalebiOlusturDto destekTalebiOlusturDto) 
+        {
+            destekTalebiOlusturDto.KullaniciId = TokendanIdAl();
+            var sonuc = await _destekTalebiServis.DestekTalebiOlustur(destekTalebiOlusturDto);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] DestekTalebi destekTalebi)
         {

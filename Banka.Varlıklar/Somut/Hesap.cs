@@ -18,7 +18,7 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Hesap numarası boş olamaz.")]
         [StringLength(20, ErrorMessage = "Hesap numarası en fazla 20 karakter olabilir.")]
-        public string HesapNo { get; set; }
+        public int HesapNo { get; set; } 
 
         [Required(ErrorMessage = "Hesap tipi boş olamaz.")]
         [StringLength(30, ErrorMessage = "Hesap tipi en fazla 30 karakter olabilir.")]

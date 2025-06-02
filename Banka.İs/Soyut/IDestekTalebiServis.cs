@@ -1,4 +1,5 @@
 ﻿using Banka.Cekirdek.YardımcıHizmetler.Results;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,10 @@ namespace Banka.İs.Soyut
 
         Task<IResult> Guncelle(DestekTalebi destekTalebi);  
 
-        Task<IResult> Sil(DestekTalebi destekTalebi);  
+        Task<IResult> Sil(DestekTalebi destekTalebi);
 
-        Task<IDataResult<DestekTalebi>> IdIleGetir(int id); 
-
+        Task<IResult> DestekTalebiOlustur(DestekTalebiOlusturDto destekTalebiOlusturDto);
+        Task<IDataResult<DestekTalebi>> IdIleGetir(int id);
+        Task<IResult> DestekTalebiGuncelle(int id);
     }
 }

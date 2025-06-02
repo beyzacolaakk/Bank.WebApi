@@ -1,5 +1,7 @@
 ﻿using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +9,7 @@ namespace Banka.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HesapController : ControllerBase
+    public class HesapController : BaseController
     {
         private readonly IHesapServis _hesapServis;
 
@@ -15,7 +17,7 @@ namespace Banka.WebApi.Controllers
         {
             _hesapServis = hesapServis;
         }
-
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
@@ -24,7 +26,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -33,7 +35,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Hesap hesap)
         {
@@ -42,7 +44,17 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
+        [HttpPost("otomatikhesapolustur")]
+        public async Task<IActionResult> Ekle(HesapOlusturDto hesapOlusturDto)
+        {
+            hesapOlusturDto.KullaniciId = TokendanIdAl();
+            var sonuc = await _hesapServis.OtomatikHesapOlustur(hesapOlusturDto);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Hesap hesap)
         {
@@ -51,7 +63,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Hesap hesap)
         {

@@ -1,5 +1,7 @@
 ﻿using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +9,7 @@ namespace Banka.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class KartController : ControllerBase
+    public class KartController : BaseController
     {
         private readonly IKartServis _kartServis;
 
@@ -15,7 +17,7 @@ namespace Banka.WebApi.Controllers
         {
             _kartServis = kartServis;
         }
-
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
@@ -24,7 +26,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -33,7 +35,19 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
+        [HttpPost("otomatikkartolustur")]
+        public async Task<IActionResult> OtomatikKartOlustur(KartOlusturDto kartOlusturDto)
+        {
+             kartOlusturDto.KullaniciId= TokendanIdAl();
+            var sonuc=await _kartServis.OtomatikKartOlustur(kartOlusturDto);
+            if (sonuc.Success)
+            {
+                return Ok(sonuc);
+            }
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Kart kart)
         {
@@ -42,7 +56,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Kart kart)
         {
@@ -51,7 +65,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Kart kart)
         {

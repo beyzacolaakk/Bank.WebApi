@@ -21,8 +21,8 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
             {
                 var result = from rol in context.Roller
                              join kullaniciRol in context.KullaniciRolleri
-                                 on rol.Id equals kullaniciRol.RolId  // burada muhtemelen join id eşleşmesi RolId olmalı
-                             where kullaniciRol.KullaniciId == kullanici.Id  // doğru karşılaştırma için
+                                 on rol.Id equals kullaniciRol.RolId  
+                             where kullaniciRol.KullaniciId == kullanici.Id  
                              select new Rol { Id = rol.Id, RolAdi = rol.RolAdi };
 
                 return await result.ToListAsync();

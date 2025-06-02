@@ -12,13 +12,11 @@ namespace Banka.İs.Soyut
 {
     public interface IAuthServis   
     {
-        Task<IDataResult<Kullanici>> Kayit(KullaniciKayitDto kullaniciKayitDto, string sifre);
-        Task<IDataResult<Kullanici>> Giris(KullaniciGirisDto kullaniciGirisDto);  
         Task<IResult> KullaniciMevcut(string email); 
         Task<IDataResult<AccessToken>> ErisimTokenOlustur(IDataResult<Kullanici> kullanici);    
         Task<IResult> KullaniciRolEkle(IDataResult<Kullanici> kullanici);
         Task<IDataResult<KullaniciVeTokenDto>> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto);
 
-        Task<IDataResult<AccessToken>> KayitIslemi(KullaniciKayitDto kullaniciKayitDto);
+        Task<IResult> KayitIslemi(KullaniciKayitDto kullaniciKayitDto);
     }
 }

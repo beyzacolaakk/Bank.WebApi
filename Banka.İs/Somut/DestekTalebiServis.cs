@@ -3,6 +3,7 @@ using Banka.Cekirdek.Varlıklar.Somut;
 using Banka.Cekirdek.YardımcıHizmetler.Results;
 using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
@@ -46,7 +47,24 @@ namespace Banka.İs.Somut
             await _destekTalebiDal.Sil(destekTalebi);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
-
+        public async Task<IResult> DestekTalebiOlustur(DestekTalebiOlusturDto destekTalebiOlusturDto)
+        {
+            var destekTalebi= new DestekTalebi{
+                Durum="Bekleniyor",
+                Konu=destekTalebiOlusturDto.Konu,
+                KullaniciId=destekTalebiOlusturDto.KullaniciId,
+                OlusturmaTarihi=DateTime.Now,
+                Mesaj=destekTalebiOlusturDto.Mesaj,
+                
+            };
+            await _destekTalebiDal.Ekle(destekTalebi);
+            return new SuccessResult(Mesajlar.EklemeBasarili);
+        }
+        public async Task<IResult> DestekTalebiGuncelle(int id) 
+        {
+            await _destekTalebiDal.DurumuGuncelle(id, "Tamamlandı"); 
+            return new SuccessResult(Mesajlar.GuncellemeBasarili);
+        }
         public async Task<IDataResult<List<DestekTalebi>>> HepsiniGetir()
         {
             string key = "tum_destek_talepleri";

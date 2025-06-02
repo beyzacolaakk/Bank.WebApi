@@ -55,7 +55,7 @@ public class ExceptionMiddleware
         var error = new ErrorDetails
         {
             StatusCode = context.Response.StatusCode,
-            Message = "Bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+            Message = $"InnerException: {ex.InnerException.Message}"
         };
 
         return context.Response.WriteAsync(JsonSerializer.Serialize(error));

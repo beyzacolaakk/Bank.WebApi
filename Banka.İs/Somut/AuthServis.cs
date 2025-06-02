@@ -24,141 +24,120 @@ namespace Banka.İs.Somut
         private IKullaniciRolServis _kullaniciRolServis;   
         private IGirisOlayiServis _girisOlayiServis;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AuthServis(IKullaniciServis kullaniciServis, ITokenHelper tokenHelper, IHttpContextAccessor httpContextAccessor,IKullaniciRolServis kullaniciRolServis, IGirisOlayiServis girisOlayiServis) 
+        private IGirisTokenServis _girisTokenServis;
+        public AuthServis(IKullaniciServis kullaniciServis, IGirisTokenServis girisTokenServis, ITokenHelper tokenHelper, IHttpContextAccessor httpContextAccessor,IKullaniciRolServis kullaniciRolServis, IGirisOlayiServis girisOlayiServis) 
         {
             _kullaniciServis = kullaniciServis;
             _tokenHelper = tokenHelper;
             _kullaniciRolServis = kullaniciRolServis;
             _girisOlayiServis = girisOlayiServis;
             _httpContextAccessor = httpContextAccessor;
+            _girisTokenServis = girisTokenServis;
         }
         public async Task<IDataResult<AccessToken>> ErisimTokenOlustur(IDataResult<Kullanici> kullanici) 
         {
             var claims = await _kullaniciServis.YetkileriGetir(kullanici.Data);
             var accessToken =  _tokenHelper.TokenOlustur(kullanici.Data, claims);
+            await _girisTokenServis.Ekle(new GirisToken
+            {
+                KullaniciId = kullanici.Data.Id,
+                GecerlilikBitis= accessToken.Expiration,
+                Token=accessToken.Token,
+                OlusturmaTarihi = DateTime.UtcNow,
 
+            });
+       
             return new SuccessDataResult<AccessToken>(accessToken, kullanici.Message);
         }
 
-        public async Task<IDataResult<Kullanici>> Giris(KullaniciGirisDto kullaniciGirisDto)
+
+        public async Task<IResult> KayitIslemi(KullaniciKayitDto dto)
         {
-            var kontrolEdilenTelefon = await _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);  
-            if (kontrolEdilenTelefon == null)
+   
+            var mevcutMu = await KullaniciMevcut(dto.Telefon);
+            if (!mevcutMu.Success)
+                return new ErrorDataResult<AccessToken>(mevcutMu.Message);
+
+   
+            HashingHelper.HashSifreOlustur(dto.Sifre, out byte[] sifreHash, out byte[] sifreSalt);
+
+    
+            var yeniKullanici = new Kullanici
             {
-                return new ErrorDataResult<Kullanici>(Mesajlar.KullanıcıBulunamadı);
-            }
+                Email = dto.Email,
+                AdSoyad = dto.AdSoyad,
+                Telefon = dto.Telefon,
+                SubeId = dto.Sube,
+                SifreHash = sifreHash,
+                SifreSalt = sifreSalt,
+                KayitTarihi = DateTime.UtcNow,
+                Aktif = true
+            };
 
-            if (!HashingHelper.HashSifreDogrula(kullaniciGirisDto.Sifre, kontrolEdilenTelefon.SifreHash, kontrolEdilenTelefon.SifreSalt))
-            {
-                return new ErrorDataResult<Kullanici>(Mesajlar.HatalıGiris); 
-            }
+ 
+            var eklemeSonucu = await _kullaniciServis.Ekle(yeniKullanici);
+            if (!eklemeSonucu.Success)
+                return new ErrorDataResult<AccessToken>(Mesajlar.KullaniciEklemeBasarisiz);
 
-            return new SuccessDataResult<Kullanici>(kontrolEdilenTelefon, Mesajlar.GirisBasarili);
-        }
-        public async Task<IDataResult<AccessToken>> KayitIslemi(KullaniciKayitDto kullaniciKayitDto)
-        {
-            var kullaniciMevcut =await  KullaniciMevcut(kullaniciKayitDto.Telefon);
-            if (!kullaniciMevcut.Success)
-                return new ErrorDataResult<AccessToken>(kullaniciMevcut.Message);
 
-            var kayitSonuc = await  Kayit(kullaniciKayitDto, kullaniciKayitDto.Sifre);
-            if (!kayitSonuc.Success)
-                return new ErrorDataResult<AccessToken>(kayitSonuc.Message);
+            var rolSonucu = await KullaniciRolEkle(new SuccessDataResult<Kullanici>(yeniKullanici));
+            if (!rolSonucu.Success)
+                return new ErrorDataResult<AccessToken>(rolSonucu.Message);
 
-            var tokenSonuc = await ErisimTokenOlustur(kayitSonuc);
-            if (!tokenSonuc.Success)
-                return new ErrorDataResult<AccessToken>(tokenSonuc.Message);
 
-            var rolSonuc = await KullaniciRolEkle(kayitSonuc);
-            if (!rolSonuc.Success)
-                return new ErrorDataResult<AccessToken>(rolSonuc.Message);
-
-            return new SuccessDataResult<AccessToken>(tokenSonuc.Data, tokenSonuc.Message);
+            return new SuccessResult(Mesajlar.KayitBasarili);
         }
 
-        public async Task<IDataResult<Kullanici>> Kayit(KullaniciKayitDto kullaniciKayitDto, string sifre)
-        {
-            byte[] sifreHash, sifreSalt; 
-            HashingHelper.HashSifreOlustur(sifre, out sifreHash, out sifreSalt);   
-
-
-          
-                var kullanici = new Kullanici 
-                {
-                    Email = kullaniciKayitDto.Email,
-                    AdSoyad = kullaniciKayitDto.AdSoyad,
-                    SifreHash = sifreHash,
-                    SifreSalt = sifreSalt,
-                    KayitTarihi = DateTime.UtcNow,
-                    Aktif= true,
-                    Telefon=kullaniciKayitDto.Telefon,
-                    SubeId=kullaniciKayitDto.Sube,
-                   
-                };
-
-                var number = await _kullaniciServis.Ekle(kullanici);
-                if(number.Success)
-                {
-                    return new SuccessDataResult<Kullanici>(kullanici, Mesajlar.KullaniciEklemeBasarili);
-                }
-
-           
-            return new ErrorDataResult<Kullanici>(Mesajlar.KullaniciEklemeBasarisiz);
-        }
         public async Task<IDataResult<KullaniciVeTokenDto>> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto)
         {
-            var kullaniciGiris = await Giris(kullaniciGirisDto);
-            if (!kullaniciGiris.Success)
+            var kullanici = await _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);
+            if (kullanici == null)
             {
-                // Başarısız giriş, logla ve dön
-                var girisOlayiBasarisiz = new GirisOlayi
-                {
-                    KullaniciId = 0, // kullanıcı yoksa 0 veya -1 verilebilir
-                    IpAdresi = GetClientIp(),
-                    Basarili = false,
-                    Zaman = DateTime.Now
-                };
-                await _girisOlayiServis.Ekle(girisOlayiBasarisiz);
+           
 
-                return new ErrorDataResult<KullaniciVeTokenDto>(kullaniciGiris.Message);
+                return new ErrorDataResult<KullaniciVeTokenDto>(Mesajlar.BilgilerHatalı);
             }
 
-            var tokenResult = await ErisimTokenOlustur(kullaniciGiris);
+            var sifreDogruMu = HashingHelper.HashSifreDogrula(
+                kullaniciGirisDto.Sifre,
+                kullanici.SifreHash,
+                kullanici.SifreSalt
+            );
+
+            if (!sifreDogruMu)
+            {
+                await GirisTakip(kullanici,false);
+
+                return new ErrorDataResult<KullaniciVeTokenDto>(Mesajlar.BilgilerHatalı);
+            }
+
+            var tokenResult = await ErisimTokenOlustur(new SuccessDataResult<Kullanici>(kullanici));
             if (!tokenResult.Success)
             {
-                var girisOlayiBasarisizToken = new GirisOlayi
-                {
-                    KullaniciId = kullaniciGiris.Data.Id,
-                    IpAdresi = GetClientIp(),
-                    Basarili = false,
-                    Zaman = DateTime.Now
-                };
-                await _girisOlayiServis.Ekle(girisOlayiBasarisizToken);
+                await GirisTakip(kullanici,false);
 
                 return new ErrorDataResult<KullaniciVeTokenDto>(tokenResult.Message);
             }
 
-            var kullaniciBilgisi = _kullaniciServis.IdIleGetir(kullaniciGiris.Data.Id);
-            if (kullaniciBilgisi == null)
-            {
-                return new ErrorDataResult<KullaniciVeTokenDto>("Kullanıcı bilgileri bulunamadı.");
-            }
+            await GirisTakip(kullanici, true);
 
-            var girisOlayi = new GirisOlayi
-            {
-                KullaniciId = kullaniciGiris.Data.Id,
-                IpAdresi = GetClientIp(),
-                Basarili = true,
-                Zaman = DateTime.Now
-            };
-            await _girisOlayiServis.Ekle(girisOlayi);
-
-            var kullaniciVeTokenDto = new KullaniciVeTokenDto
+            var dto = new KullaniciVeTokenDto
             {
                 Token = tokenResult.Data
             };
 
-            return new SuccessDataResult<KullaniciVeTokenDto>(kullaniciVeTokenDto, "Giriş ve token oluşturma başarılı.");
+            return new SuccessDataResult<KullaniciVeTokenDto>(dto, Mesajlar.GirisBasarili);
+        }
+
+        private async Task GirisTakip(Kullanici kullanici,bool durum)
+        {
+            await _girisOlayiServis.Ekle(new GirisOlayi
+            {
+                KullaniciId = kullanici.Id,
+                IpAdresi = GetClientIp(),
+                Basarili = durum,
+                Zaman = DateTime.Now
+            });
         }
 
         public async Task<IResult> KullaniciMevcut(string email)

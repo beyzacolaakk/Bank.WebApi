@@ -28,6 +28,7 @@ namespace Banka.Varlıklar.Somut
         [StringLength(4, MinimumLength = 3, ErrorMessage = "CVV 3 veya 4 karakter olmalıdır.")]
         public string CVV { get; set; }
 
+        public decimal? Limit { get; set; }
         [Required(ErrorMessage = "Son kullanma tarihi zorunludur.")]
         public DateTime SonKullanma { get; set; }
 

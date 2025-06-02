@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Banka.VeriErisimi.Soyut
 {
     public interface IDestekTalebiDal : IEntityRepository<DestekTalebi>
-
     {
+
+        Task DurumuGuncelle(int id, string yeniDurum);
     }
 }
