@@ -179,3 +179,4 @@ C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\bin\Debug\net8.0\Banka.VeriE
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll

@@ -8,9 +8,9 @@ namespace Banka.WebApi.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
-        protected int TokendanIdAl() 
+        protected int TokendanIdAl()
         {
-            var token = Request.Cookies["AuthToken"];
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Replace("Bearer ", "");
 
             if (string.IsNullOrEmpty(token))
             {
@@ -27,8 +27,7 @@ namespace Banka.WebApi.Controllers
                     return 0;
                 }
 
-
-                var userIdClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                var userIdClaim = jsonToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
                 if (int.TryParse(userIdClaim, out int userId))
                 {
@@ -37,10 +36,11 @@ namespace Banka.WebApi.Controllers
 
                 return 0;
             }
-            catch (Exception)
+            catch
             {
                 return 0;
             }
         }
+
     }
 }

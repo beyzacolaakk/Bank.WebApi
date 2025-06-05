@@ -50,11 +50,12 @@ namespace Banka.İs.Somut
         public async Task<IResult> DestekTalebiOlustur(DestekTalebiOlusturDto destekTalebiOlusturDto)
         {
             var destekTalebi= new DestekTalebi{
-                Durum="Bekleniyor",
+                Durum="Açık",
                 Konu=destekTalebiOlusturDto.Konu,
-                KullaniciId=destekTalebiOlusturDto.KullaniciId,
+                KullaniciId=destekTalebiOlusturDto.KullaniciId, 
                 OlusturmaTarihi=DateTime.Now,
                 Mesaj=destekTalebiOlusturDto.Mesaj,
+                Kategori=destekTalebiOlusturDto.Kategori
                 
             };
             await _destekTalebiDal.Ekle(destekTalebi);
@@ -86,7 +87,11 @@ namespace Banka.İs.Somut
 
             return new SuccessDataResult<List<DestekTalebi>>(liste, Mesajlar.HepsiniGetirmeBasarili);
         }
-
+        public async Task<IDataResult<List<DestekTalebi>>> IdIleHepsiniGetir(int kullaniciId) 
+        {
+            var liste = await _destekTalebiDal.HepsiniGetir(x => x.KullaniciId == kullaniciId);
+            return new SuccessDataResult<List<DestekTalebi>>(liste, Mesajlar.IdIleGetirmeBasarili);
+        }
         public async Task<IDataResult<DestekTalebi>> IdIleGetir(int id)
         {
             string key = $"destek_talebi_{id}";

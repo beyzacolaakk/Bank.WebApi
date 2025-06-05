@@ -14,5 +14,7 @@ namespace Banka.Varlıklar.DTOs
         public string Konu { get; set; }
 
         public string Mesaj { get; set; }
+
+        public string Kategori { get; set; }
     }
 }

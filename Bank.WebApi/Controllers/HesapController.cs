@@ -1,4 +1,5 @@
-﻿using Banka.İs.Soyut;
+﻿using Banka.İs.Somut;
+using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Microsoft.AspNetCore.Authorization;
@@ -36,10 +37,32 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpGet("idilehepsinigetir")]
+        public async Task<IActionResult> IdIleHepsiniGetir()
+        {
+            int KullaniciId = TokendanIdAl();
+            var sonuc = await _hesapServis.IdIleHepsiniGetir(KullaniciId);
+            if (sonuc.Success)
+            {
+                return Ok(sonuc);
+            }
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Hesap hesap)
         {
             var sonuc = await _hesapServis.Ekle(hesap);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpGet("varliklargetir")]
+        public async Task<IActionResult> VarliklarGetir()
+        {
+            int KullaniciId = TokendanIdAl();
+            var sonuc = await _hesapServis.VarliklariGetirAsync(KullaniciId); 
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

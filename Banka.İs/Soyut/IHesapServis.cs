@@ -18,11 +18,15 @@ namespace Banka.İs.Soyut
         Task<IResult> Guncelle(Hesap hesap);
 
         Task<IResult> Sil(Hesap hesap);
-        Task<IDataResult<Hesap>> HesapNoIdIleGetir(int id);
+        Task<IDataResult<Hesap>> HesapNoIdIleGetir(string id);
         Task<IDataResult<Hesap>> IdIleGetir(int id);
-        Task<IResult> ParaTransferi(int gonderenHesapId, int aliciHesapId, decimal miktar);
+        Task<IResult> ParaTransferi(string gonderenHesapId, string aliciHesapId, decimal miktar);
         Task<IResult> OtomatikHesapOlustur(HesapOlusturDto hesapOlusturDto);
 
-        Task<Hesap> KullaniciHesapGetirIlkVadesiz(int kullaniciId); 
+        Task<Hesap> KullaniciHesapGetirIlkVadesiz(int kullaniciId);
+
+        Task<IDataResult<List<Hesap>>> IdIleHepsiniGetir(int id);
+
+        Task<IDataResult<VarlıklarDto>> VarliklariGetirAsync(int kullaniciId);
     }
 }

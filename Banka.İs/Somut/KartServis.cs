@@ -59,7 +59,11 @@ namespace Banka.İs.Somut
             var veri = await _kartDal.Getir(k => k.Id == id);
             return new SuccessDataResult<Kart>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
-
+        public async Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id) 
+        {
+            var veri = await _kartDal.HepsiniGetir(k => k.KullaniciId == id);
+            return new SuccessDataResult<List<Kart>>(veri, Mesajlar.IdIleGetirmeBasarili); 
+        }
         public async Task<IResult> Sil(Kart kart)
         {
             await _kartDal.Sil(kart);
@@ -77,6 +81,11 @@ namespace Banka.İs.Somut
             var random = new Random();
             // 3 haneli CVV
             return random.Next(100, 1000).ToString();
+        }
+        public async Task<IDataResult<List<KartDto>>> GetKartlarByKullaniciIdAsync(int kullaniciId)
+        { 
+            var veri=await _kartDal.GetKartlarByKullaniciIdAsync(kullaniciId); 
+            return new SuccessDataResult<List<KartDto>>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
     }
 

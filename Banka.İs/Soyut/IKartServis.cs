@@ -22,5 +22,9 @@ namespace Banka.İs.Soyut
         Task<IDataResult<Kart>> IdIleGetir(int id);
 
         Task<IResult> OtomatikKartOlustur(KartOlusturDto kartOlusturDto);
+
+        Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id);
+
+        Task<IDataResult<List<KartDto>>> GetKartlarByKullaniciIdAsync(int kullaniciId);
     }
 }

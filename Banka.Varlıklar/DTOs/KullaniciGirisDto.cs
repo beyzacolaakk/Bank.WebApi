@@ -13,7 +13,7 @@ namespace Banka.Varlıklar.DTOs
         [Required(ErrorMessage = "Telefon boş olamaz.")]
         [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
         [StringLength(int.MaxValue, MinimumLength = 11, ErrorMessage = "Telefon numarası en az 11 haneli olmalıdır.")]
-        public string Telefon { get; set; }
+        public string Telefon { get; set; } 
 
         [Required(ErrorMessage = "Şifre boş olamaz.")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "Şifre en az 6 en fazla 100 karakter olmalıdır.")]

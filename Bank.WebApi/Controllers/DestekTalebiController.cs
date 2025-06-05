@@ -17,11 +17,21 @@ namespace Banka.WebApi.Controllers
         {
             _destekTalebiServis = destekTalebiServis;
         }
-        [Authorize(Roles = "Yönetici")]
+        [Authorize(Roles = "Müşteri")]
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
             var sonuc =await _destekTalebiServis.HepsiniGetir();
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpGet("idilehepsinigetir")]
+        public async Task<IActionResult> IdIleHepsiniGetir() 
+        {
+            int KullaniciId = TokendanIdAl();
+            var sonuc = await _destekTalebiServis.IdIleHepsiniGetir(KullaniciId);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

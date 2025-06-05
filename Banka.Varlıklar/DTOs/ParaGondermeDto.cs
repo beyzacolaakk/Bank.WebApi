@@ -10,9 +10,9 @@ namespace Banka.Varlıklar.DTOs
     public class ParaGondermeDto:IDto
     {
         public int KullaniciId { get; set; } 
-        public int GonderenHesapId { get; set; }
+        public string GonderenHesapId { get; set; }
 
-        public int AliciHesapId { get; set; }
+        public string AliciHesapId { get; set; }
 
         public decimal Tutar { get; set; }
 

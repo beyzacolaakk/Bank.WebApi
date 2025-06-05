@@ -3,6 +3,7 @@ using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,11 @@ namespace Banka.İs.Somut
     public class HesapServis : IHesapServis
     {
         private readonly IHesapDal _hesapDal;
-
-        public HesapServis(IHesapDal hesapDal)
+        private readonly IKartServis _kartServis;
+        public HesapServis(IHesapDal hesapDal,IKartServis kartServis)
         {
             _hesapDal = hesapDal;
+            _kartServis=kartServis;
         }
 
         public async Task<IResult> Ekle(Hesap hesap)
@@ -53,7 +55,7 @@ namespace Banka.İs.Somut
             await _hesapDal.Ekle(hesap);
             return new SuccessResult("Hesap başarıyla oluşturuldu.");
         }
-        public async Task<IResult> ParaTransferi(int gonderenHesapId, int aliciHesapId, decimal miktar)
+        public async Task<IResult> ParaTransferi(string gonderenHesapId, string aliciHesapId, decimal miktar)
         {
             if (miktar <= 0)
                 return new ErrorResult("Transfer miktarı sıfırdan büyük olmalıdır.");
@@ -102,10 +104,10 @@ namespace Banka.İs.Somut
             }
         }
 
-        private int HesapNoUret()
+        private string HesapNoUret()
         {
             var random = new Random();
-            return random.Next(100000, 1000000); 
+            return random.Next(100000000, 1000000000).ToString(); 
         }
         public async Task<IDataResult<List<Hesap>>> HepsiniGetir()
         {
@@ -113,12 +115,18 @@ namespace Banka.İs.Somut
             return new SuccessDataResult<List<Hesap>>(hesaplar, Mesajlar.HepsiniGetirmeBasarili);
         }
 
+
+        public async Task<IDataResult<List<Hesap>>> IdIleHepsiniGetir(int id) 
+        {
+            var hesap = await _hesapDal.HepsiniGetir(h => h.KullaniciId== id);
+            return new SuccessDataResult<List<Hesap>>(hesap, Mesajlar.IdIleGetirmeBasarili);
+        }
         public async Task<IDataResult<Hesap>> IdIleGetir(int id)
         {
             var hesap = await _hesapDal.Getir(h => h.Id == id);
             return new SuccessDataResult<Hesap>(hesap, Mesajlar.IdIleGetirmeBasarili);
         }
-        public async Task<IDataResult<Hesap>> HesapNoIdIleGetir(int id) 
+        public async Task<IDataResult<Hesap>> HesapNoIdIleGetir(string id) 
         {
             var hesap = await _hesapDal.Getir(h => h.HesapNo == id);
             return new SuccessDataResult<Hesap>(hesap, Mesajlar.IdIleGetirmeBasarili);
@@ -128,6 +136,23 @@ namespace Banka.İs.Somut
             var sonuclar= await _hesapDal.HepsiniGetir(h => h.KullaniciId == kullaniciId); 
             return sonuclar.FirstOrDefault(h => h.HesapTipi == "Vadesiz")!;
 
+        }
+        public async Task<IDataResult<VarlıklarDto>> VarliklariGetirAsync(int kullaniciId)
+        {
+            var hesaplar = await _hesapDal.GetHesaplarByKullaniciIdAsync(kullaniciId);
+            var kartlar = await _kartServis.GetKartlarByKullaniciIdAsync(kullaniciId);
+
+            decimal toplamPara = hesaplar.Sum(h => h.Bakiye);
+            decimal toplamBorc = kartlar.Data.Sum(k => k.Limit ?? 0);
+            var veri= new VarlıklarDto
+            {
+                Hesaplar = hesaplar,
+                Kartlar = kartlar.Data,
+                ToplamPara = toplamPara,
+                ToplamBorc = (hesaplar.Count*5000)-toplamBorc
+            };
+            return new SuccessDataResult<VarlıklarDto>(veri, Mesajlar.IdIleGetirmeBasarili);
+         
         }
     }
 

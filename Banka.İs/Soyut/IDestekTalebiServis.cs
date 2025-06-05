@@ -23,5 +23,6 @@ namespace Banka.İs.Soyut
         Task<IResult> DestekTalebiOlustur(DestekTalebiOlusturDto destekTalebiOlusturDto);
         Task<IDataResult<DestekTalebi>> IdIleGetir(int id);
         Task<IResult> DestekTalebiGuncelle(int id);
+        Task<IDataResult<List<DestekTalebi>>> IdIleHepsiniGetir(int kullaniciId);
     }
 }
