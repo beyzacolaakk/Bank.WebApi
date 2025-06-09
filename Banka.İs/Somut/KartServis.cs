@@ -3,6 +3,7 @@ using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,11 @@ namespace Banka.İs.Somut
             var veri = await _kartDal.Getir(k => k.Id == id);
             return new SuccessDataResult<Kart>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
+        public async Task<IDataResult<Kart>> KartNoIleGetir(string id) 
+        {
+            var veri = await _kartDal.Getir(k => k.KartNumarasi == id);
+            return new SuccessDataResult<Kart>(veri, Mesajlar.IdIleGetirmeBasarili);
+        }
         public async Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id) 
         {
             var veri = await _kartDal.HepsiniGetir(k => k.KullaniciId == id);
@@ -86,6 +92,49 @@ namespace Banka.İs.Somut
         { 
             var veri=await _kartDal.GetKartlarByKullaniciIdAsync(kullaniciId); 
             return new SuccessDataResult<List<KartDto>>(veri, Mesajlar.IdIleGetirmeBasarili);
+        }
+
+        public async Task<IDataResult<decimal>> ParaCekYatir(ParaCekYatirDto paraCekYatirDto)
+        {
+            var gonderenTask = KartNoIleGetir(paraCekYatirDto.HesapId.ToString());
+
+
+
+            var gonderen = gonderenTask.Result;
+
+            if (!gonderen.Success || gonderen.Data == null)
+                return new ErrorDataResult<decimal>("Gönderen hesap bulunamadı.");
+
+
+
+
+
+
+            try
+            {
+                if (paraCekYatirDto.IslemTipi == "Para Çekme")
+                {
+                    if (gonderen.Data.Limit< paraCekYatirDto.Tutar)
+                        return new ErrorDataResult<decimal>("Gönderen hesapta yeterli bakiye yok.");
+                    gonderen.Data.Limit -= paraCekYatirDto.Tutar;
+                }
+                else if (paraCekYatirDto.IslemTipi == "Para Yatırma")
+                {
+                    gonderen.Data.Limit += paraCekYatirDto.Tutar;
+                }
+
+
+                await _kartDal.Guncelle(gonderen.Data);
+
+
+
+                return new SuccessDataResult<decimal>(gonderen.Data.Limit.Value, "Para transferi başarılı.");
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorDataResult<decimal>($"Transfer sırasında bir hata oluştu: {ex.Message}");
+            }
         }
     }
 

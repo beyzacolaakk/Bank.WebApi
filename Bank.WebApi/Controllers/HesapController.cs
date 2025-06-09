@@ -57,6 +57,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
+
         [Authorize(Roles = "Müşteri")]
         [HttpGet("varliklargetir")]
         public async Task<IActionResult> VarliklarGetir()

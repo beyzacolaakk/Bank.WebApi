@@ -22,5 +22,7 @@ namespace Banka.İs.Soyut
         Task<IDataResult<Islem>> IdIleGetir(int id);
 
         Task<IResult> ParaGonderme(ParaGondermeDto paraGondermeDto);
+
+        Task<IResult> ParaCekYatir(ParaCekYatirDto paraCekYatirDto);
     }
 }

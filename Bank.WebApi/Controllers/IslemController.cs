@@ -55,6 +55,16 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpPost("paracekyatir")]
+        public async Task<IActionResult> ParaCekYatir([FromBody] ParaCekYatirDto paraCekYatirDto) 
+        {
+            paraCekYatirDto.KullaniciId = TokendanIdAl();
+            var sonuc = await Task.Run(() => _islemServis.ParaCekYatir(paraCekYatirDto));
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Islem islem)
         {

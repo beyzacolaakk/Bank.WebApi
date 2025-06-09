@@ -25,6 +25,9 @@ namespace Banka.İs.Soyut
 
         Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id);
 
+        Task<IDataResult<decimal>> ParaCekYatir(ParaCekYatirDto paraCekYatirDto);
         Task<IDataResult<List<KartDto>>> GetKartlarByKullaniciIdAsync(int kullaniciId);
+
+        Task<IDataResult<Kart>> KartNoIleGetir(string id);
     }
 }

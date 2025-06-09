@@ -103,7 +103,51 @@ namespace Banka.İs.Somut
                 return new ErrorResult($"Transfer sırasında bir hata oluştu: {ex.Message}");
             }
         }
+        public async Task<IDataResult<decimal>> ParaCekYatir(ParaCekYatirDto paraCekYatirDto) 
+        {
 
+
+            var gonderenTask = HesapNoIdIleGetir(paraCekYatirDto.HesapId.ToString());
+
+
+
+            var gonderen = gonderenTask.Result;
+
+            if (!gonderen.Success || gonderen.Data == null)
+                return new ErrorDataResult<decimal>("Gönderen hesap bulunamadı.");
+
+
+
+
+
+
+            try
+            {
+                if (paraCekYatirDto.IslemTipi == "Para Çekme")
+                {
+                    if (gonderen.Data.Bakiye < paraCekYatirDto.Tutar)
+                        return new ErrorDataResult<decimal>("Gönderen hesapta yeterli bakiye yok.");
+                    gonderen.Data.Bakiye -= paraCekYatirDto.Tutar;
+                }
+                else if (paraCekYatirDto.IslemTipi == "Para Yatırma") 
+                {
+                    gonderen.Data.Bakiye += paraCekYatirDto.Tutar;
+
+                }
+
+
+                await _hesapDal.Guncelle(gonderen.Data);
+
+
+
+                return new SuccessDataResult<decimal>(gonderen.Data.Bakiye,"Para transferi başarılı.");
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorDataResult<decimal>($"Transfer sırasında bir hata oluştu: {ex.Message}");
+            }
+        }
         private string HesapNoUret()
         {
             var random = new Random();
@@ -141,15 +185,18 @@ namespace Banka.İs.Somut
         {
             var hesaplar = await _hesapDal.GetHesaplarByKullaniciIdAsync(kullaniciId);
             var kartlar = await _kartServis.GetKartlarByKullaniciIdAsync(kullaniciId);
+          
 
             decimal toplamPara = hesaplar.Sum(h => h.Bakiye);
             decimal toplamBorc = kartlar.Data.Sum(k => k.Limit ?? 0);
+            int ustLimit = (int)(Math.Ceiling(toplamBorc / 5000) * 5000);
+
             var veri= new VarlıklarDto
             {
                 Hesaplar = hesaplar,
                 Kartlar = kartlar.Data,
                 ToplamPara = toplamPara,
-                ToplamBorc = (hesaplar.Count*5000)-toplamBorc
+                ToplamBorc = ustLimit - toplamBorc
             };
             return new SuccessDataResult<VarlıklarDto>(veri, Mesajlar.IdIleGetirmeBasarili);
          

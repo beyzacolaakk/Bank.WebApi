@@ -16,8 +16,12 @@ namespace Banka.Varlıklar.Somut
 
         public int? AliciHesapId { get; set; }
 
+        public int? KartId { get; set; } 
+
         [Range(0.01, double.MaxValue, ErrorMessage = "Tutar 0'dan büyük olmalıdır.")]
         public decimal Tutar { get; set; }
+
+        public decimal GuncelBakiye { get; set; } 
 
         [Required(ErrorMessage = "İşlem tipi boş olamaz.")]
         [StringLength(50, ErrorMessage = "İşlem tipi en fazla 50 karakter olabilir.")]
@@ -28,7 +32,7 @@ namespace Banka.Varlıklar.Somut
         public string Durum { get; set; }
 
         [StringLength(200, ErrorMessage = "Açıklama en fazla 200 karakter olabilir.")]
-        public string Aciklama { get; set; }
+        public string? Aciklama { get; set; }
 
         public DateTime IslemTarihi { get; set; } = DateTime.Now;
 

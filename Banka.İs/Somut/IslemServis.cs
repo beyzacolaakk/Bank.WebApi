@@ -16,11 +16,12 @@ namespace Banka.İs.Somut
     {
         private readonly IIslemDal _islemDal;
         private readonly IHesapServis _hesapServis;
-
-        public IslemServis(IIslemDal islemDal, IHesapServis hesapServis)
+        private readonly IKartServis _kartServis;
+        public IslemServis(IIslemDal islemDal, IHesapServis hesapServis,IKartServis kartServis)
         {
             _islemDal = islemDal;
             _hesapServis = hesapServis;
+            _kartServis = kartServis;
         }
 
         public async Task<IResult> Ekle(Islem islem)
@@ -78,7 +79,71 @@ namespace Banka.İs.Somut
                 ? new SuccessResult(Mesajlar.ParaBasariilegonde)
                 : new ErrorResult(Mesajlar.ParaGondermeBasarisiz);
         }
+        public async Task<IResult> ParaCekYatir(ParaCekYatirDto paraCekYatirDto)
+        {
+            IResult transferSonucu;
+            int? gonderenId = null;
 
+            if (paraCekYatirDto.IslemTuru == "kart")
+            {
+                var gonderenKart = await _kartServis.KartNoIleGetir(paraCekYatirDto.HesapId);
+                if (gonderenKart == null || gonderenKart.Data == null)
+                {
+                    return new ErrorResult("Gönderen kart bulunamadı.");
+                }
+
+                gonderenId = gonderenKart.Data.Id;
+                transferSonucu = await _kartServis.ParaCekYatir(paraCekYatirDto);
+            }
+            else
+            {
+                var gonderenHesap = await _hesapServis.HesapNoIdIleGetir(paraCekYatirDto.HesapId.ToString());
+                if (gonderenHesap == null || gonderenHesap.Data == null)
+                {
+                    return new ErrorResult("Gönderen hesap bulunamadı.");
+                }
+
+                gonderenId = gonderenHesap.Data.Id;
+                transferSonucu = await _hesapServis.ParaCekYatir(paraCekYatirDto);
+            }
+
+            if (gonderenId == null || transferSonucu == null)
+            {
+                return new ErrorResult("İşlem gerçekleştirilemedi.");
+            }
+
+            decimal? guncelBakiye = (transferSonucu as IDataResult<decimal>)?.Data;
+
+            var islem = new Islem
+            {
+                Aciklama = null,
+                IslemTarihi = DateTime.Now,
+                Tutar = paraCekYatirDto.Tutar,
+                GuncelBakiye = guncelBakiye ?? 0,
+                IslemTipi = paraCekYatirDto.IslemTipi,
+                Durum = transferSonucu.Success ? "Başarılı Transfer" : "Başarısız Transfer"
+            };
+
+            if (paraCekYatirDto.IslemTuru == "kart")
+            {
+                islem.KartId = gonderenId;
+                islem.GonderenHesapId = null;
+            }
+            else
+            {
+                islem.GonderenHesapId = gonderenId;
+                islem.KartId = null;
+            }
+
+            var islemSonucu = await Ekle(islem);
+
+            if (!islemSonucu.Success)
+                return new ErrorResult(Mesajlar.IslemKaydedilmedi);
+
+            return transferSonucu.Success
+                ? new SuccessResult(Mesajlar.ParaBasariilegonde)
+                : new ErrorResult(Mesajlar.ParaGondermeBasarisiz);
+        }
 
         public async Task<IDataResult<List<Islem>>> HepsiniGetir()
         {
