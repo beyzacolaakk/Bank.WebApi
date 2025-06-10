@@ -16,15 +16,30 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
     {
         public async Task<List<KartDto>> GetKartlarByKullaniciIdAsync(int kullaniciId)
         {
-            using var context = new BankaContext();
-            return await context.Kartlar
-                .Where(k => k.KullaniciId == kullaniciId && k.KartTipi == "Kredi Kartı")
-                .Select(h => new KartDto
-                {
-                    KartNumarasi = h.KartNumarasi,
-                    Limit=h.Limit
-                })
-                .ToListAsync();
+            using (var context = new BankaContext())
+            {
+                return await context.Kartlar
+                    .Where(k => k.KullaniciId == kullaniciId && k.KartTipi == "Kredi Kartı")
+                    .Select(h => new KartDto
+                    {
+                        KartNumarasi = h.KartNumarasi,
+                        Limit = h.Limit
+                    })
+                    .ToListAsync();
+            }
+   
+        }
+        public List<int> GetirKullaniciyaAitKartIdler(int kullaniciId)
+        {
+            using (var context = new BankaContext())
+            {
+                return context.Kartlar
+                  .Where(k => k.KullaniciId == kullaniciId)
+                  .Select(k => k.Id)
+                  .ToList();
+            }
+  
+   
         }
     }
 }

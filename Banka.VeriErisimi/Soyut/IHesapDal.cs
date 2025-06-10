@@ -12,5 +12,7 @@ namespace Banka.VeriErisimi.Soyut
     public interface IHesapDal : IEntityRepository<Hesap>
     {
         Task<List<HesapDto>> GetHesaplarByKullaniciIdAsync(int kullaniciId);
+
+        List<int> GetirKullaniciyaAitHesapIdler(int kullaniciId);
     }
 }

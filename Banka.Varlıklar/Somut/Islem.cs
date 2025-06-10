@@ -21,7 +21,7 @@ namespace Banka.Varlıklar.Somut
         [Range(0.01, double.MaxValue, ErrorMessage = "Tutar 0'dan büyük olmalıdır.")]
         public decimal Tutar { get; set; }
 
-        public decimal GuncelBakiye { get; set; } 
+        public decimal? GuncelBakiye { get; set; } 
 
         [Required(ErrorMessage = "İşlem tipi boş olamaz.")]
         [StringLength(50, ErrorMessage = "İşlem tipi en fazla 50 karakter olabilir.")]

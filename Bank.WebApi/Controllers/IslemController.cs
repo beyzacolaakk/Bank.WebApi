@@ -36,6 +36,16 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpGet("son4islemgetir")]
+        public async Task<IActionResult> Son5IslemGetir() 
+        {
+            var KullaniciId = TokendanIdAl();
+            var sonuc = await _islemServis.KullaniciyaAitSon4KartIslemiGetir(KullaniciId);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("paragonderme")] 
         public async Task<IActionResult> ParaGonderme([FromBody] ParaGondermeDto paraGondermeDto) 
         {

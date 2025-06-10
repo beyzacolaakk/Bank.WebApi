@@ -10,5 +10,6 @@ namespace Banka.VeriErisimi.Soyut
 {
     public interface IIslemDal : IEntityRepository<Islem>
     {
+        List<Islem> GetirIslemleri(List<int> hesapIdler);
     }
 }

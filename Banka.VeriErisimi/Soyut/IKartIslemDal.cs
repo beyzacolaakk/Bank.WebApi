@@ -10,5 +10,7 @@ namespace Banka.VeriErisimi.Soyut
 {
     public interface IKartIslemDal : IEntityRepository<KartIslem>
     {
+        List<KartIslem> GetirKartIslemleri(List<int> kartIdler);
+
     }
 }

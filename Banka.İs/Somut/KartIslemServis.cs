@@ -97,7 +97,20 @@ namespace Banka.İs.Somut
             var veri = await _kartIslemDal.Getir(k => k.Id == id);
             return new SuccessDataResult<KartIslem>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
+        public async Task<IDataResult<List<KartIslem>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId) 
+        {
+            var kartIdler = await Task.Run(() => _kartServis.GetirKullaniciyaAitKartIdler(kullaniciId));
 
+            if (!kartIdler.Any())
+                return new  ErrorDataResult<List<KartIslem>>();
+
+            var veri = await Task.Run(() =>
+                _kartIslemDal.GetirKartIslemleri(kartIdler)
+                             .OrderByDescending(i => i.IslemTarihi)
+                             .Take(4)
+                             .ToList());
+            return new SuccessDataResult<List<KartIslem>>(veri);
+        }
         public async Task<IResult> Sil(KartIslem kartIslem)
         {
             await _kartIslemDal.Sil(kartIslem);

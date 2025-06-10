@@ -29,5 +29,7 @@ namespace Banka.İs.Soyut
         Task<IDataResult<List<KartDto>>> GetKartlarByKullaniciIdAsync(int kullaniciId);
 
         Task<IDataResult<Kart>> KartNoIleGetir(string id);
+
+        Task<List<int>> GetirKullaniciyaAitKartIdler(int kullaniciId);
     }
 }

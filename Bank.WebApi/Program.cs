@@ -3,6 +3,7 @@ using Banka.Cekirdek.YardımcıHizmetler.Güvenlik;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.Encryption;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.JWT;
 using Banka.Cekirdek.YardımcıHizmetler.Logger;
+using Banka.Cekirdek.YardımcıHizmetler.Transaction;
 using Banka.İs.Somut;
 using Banka.İs.Soyut;
 using Banka.VeriErisim.Somut.EntityFramework;
@@ -78,6 +79,7 @@ builder.Services.AddScoped<IDestekTalebiDal, EfDestekTalebiDal>();
 builder.Services.AddScoped<IGirisOlayiDal, EfGirisOlayiDal>();
 builder.Services.AddScoped<IGirisTokenDal, EfGirisTokenDal>();
 builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
+builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

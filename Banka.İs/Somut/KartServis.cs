@@ -65,6 +65,10 @@ namespace Banka.İs.Somut
             var veri = await _kartDal.Getir(k => k.KartNumarasi == id);
             return new SuccessDataResult<Kart>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
+        public async Task<List<int>> GetirKullaniciyaAitKartIdler(int kullaniciId)
+        {
+            return new List<int>(_kartDal.GetirKullaniciyaAitKartIdler(kullaniciId));
+        }
         public async Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id) 
         {
             var veri = await _kartDal.HepsiniGetir(k => k.KullaniciId == id);

@@ -28,5 +28,17 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                 })
                 .ToListAsync();
         }
+        public List<int> GetirKullaniciyaAitHesapIdler(int kullaniciId)
+        { 
+            using (var context = new BankaContext())
+            {
+                return context.Hesaplar
+                  .Where(k => k.KullaniciId == kullaniciId)
+                  .Select(k => k.Id)
+                  .ToList();
+            }
+
+
+        }
     }
 }

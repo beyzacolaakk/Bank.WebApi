@@ -12,5 +12,14 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 {
     public class EfIslemDal : EfEntityRepositoryBase<Islem, BankaContext>, IIslemDal
     {
+        public List<Islem> GetirIslemleri(List<int> hesapIdler)
+        {
+            using (var context = new BankaContext())
+            {
+                return context.Islemler
+                              .Where(ki => ki.GonderenHesapId != null && hesapIdler.Contains(ki.GonderenHesapId.Value))
+                              .ToList();
+            }
+        }
     }
 }

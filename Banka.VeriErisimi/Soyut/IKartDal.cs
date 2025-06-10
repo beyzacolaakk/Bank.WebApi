@@ -12,5 +12,7 @@ namespace Banka.VeriErisimi.Soyut
     public interface IKartDal : IEntityRepository<Kart>
     {
         Task<List<KartDto>> GetKartlarByKullaniciIdAsync(int kullaniciId);
+
+        List<int> GetirKullaniciyaAitKartIdler(int kullaniciId);
     }
 }

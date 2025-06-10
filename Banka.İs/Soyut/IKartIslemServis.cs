@@ -19,7 +19,9 @@ namespace Banka.İs.Soyut
 
         Task<IResult> Sil(KartIslem kartIslem);
 
-        Task<IDataResult<KartIslem>> IdIleGetir(int id);
+        Task<IDataResult<KartIslem>> IdIleGetir(int id); 
         Task<IResult> KartIleIslemYap(KartIleIslemDto kartIleIslemDto);
+
+        Task<IDataResult<List<KartIslem>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId);
     }
 }

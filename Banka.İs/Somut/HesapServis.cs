@@ -201,6 +201,12 @@ namespace Banka.İs.Somut
             return new SuccessDataResult<VarlıklarDto>(veri, Mesajlar.IdIleGetirmeBasarili);
          
         }
+        public async Task<List<int>> GetirKullaniciyaAitHesapIdler(int kullaniciId) 
+        {
+            return new List<int>(_hesapDal.GetirKullaniciyaAitHesapIdler(kullaniciId));
+        }
+
+
     }
 
 }

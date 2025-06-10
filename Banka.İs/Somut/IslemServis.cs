@@ -3,6 +3,7 @@ using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
+using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace Banka.İs.Somut
         private readonly IIslemDal _islemDal;
         private readonly IHesapServis _hesapServis;
         private readonly IKartServis _kartServis;
-        public IslemServis(IIslemDal islemDal, IHesapServis hesapServis,IKartServis kartServis)
+        private readonly IKartIslemServis _kartIslemServis;
+        public IslemServis(IIslemDal islemDal, IHesapServis hesapServis,IKartServis kartServis,IKartIslemServis kartIslemServis)
         {
             _islemDal = islemDal;
             _hesapServis = hesapServis;
             _kartServis = kartServis;
+            _kartIslemServis = kartIslemServis;
         }
 
         public async Task<IResult> Ekle(Islem islem)
@@ -106,7 +109,7 @@ namespace Banka.İs.Somut
                 gonderenId = gonderenHesap.Data.Id;
                 transferSonucu = await _hesapServis.ParaCekYatir(paraCekYatirDto);
             }
-
+        
             if (gonderenId == null || transferSonucu == null)
             {
                 return new ErrorResult("İşlem gerçekleştirilemedi.");
@@ -128,6 +131,15 @@ namespace Banka.İs.Somut
             {
                 islem.KartId = gonderenId;
                 islem.GonderenHesapId = null;
+                var kartıslem = new KartIslem
+                {
+                    Aciklama = null,
+                    IslemTarihi = DateTime.Now,
+                    KartId = gonderenId.Value,
+                    Tutar=paraCekYatirDto.Tutar,
+                    
+                };
+                await _kartIslemServis.Ekle(kartıslem);
             }
             else
             {
@@ -150,11 +162,24 @@ namespace Banka.İs.Somut
             var islemler = await _islemDal.HepsiniGetir();
             return new SuccessDataResult<List<Islem>>(islemler, Mesajlar.HepsiniGetirmeBasarili);
         }
-
+   
         public async Task<IDataResult<Islem>> IdIleGetir(int id)
         {
             var islem = await _islemDal.Getir(i => i.Id == id);
             return new SuccessDataResult<Islem>(islem, Mesajlar.IdIleGetirmeBasarili);
+        }
+        public async Task<IDataResult<List<Islem>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId) 
+        {
+            var hesapIdler = await Task.Run(() => _hesapServis.GetirKullaniciyaAitHesapIdler(kullaniciId));
+
+            if (!hesapIdler.Any())
+                return new ErrorDataResult<List<Islem>>();
+            var veri = await Task.Run(() =>
+                _islemDal.GetirIslemleri(hesapIdler)
+                             .OrderByDescending(i => i.IslemTarihi)
+                             .Take(4)
+                             .ToList());
+            return new SuccessDataResult<List<Islem>>(veri);
         }
     }
 

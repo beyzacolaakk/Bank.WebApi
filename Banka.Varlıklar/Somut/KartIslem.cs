@@ -19,7 +19,7 @@ namespace Banka.Varlıklar.Somut
         public decimal Tutar { get; set; }
 
         [StringLength(200, ErrorMessage = "Açıklama en fazla 200 karakter olabilir.")]
-        public string Aciklama { get; set; }
+        public string? Aciklama { get; set; }
 
         public DateTime IslemTarihi { get; set; } = DateTime.Now;
 
