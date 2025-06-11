@@ -15,11 +15,17 @@ namespace Banka.Varlıklar.Somut
         [Required(ErrorMessage = "Kart bilgisi zorunludur.")]
         public int KartId { get; set; }
 
+        public decimal GuncelBakiye { get; set; }
+
         [Range(0.01, double.MaxValue, ErrorMessage = "Tutar 0'dan büyük olmalıdır.")]
         public decimal Tutar { get; set; }
 
         [StringLength(200, ErrorMessage = "Açıklama en fazla 200 karakter olabilir.")]
         public string? Aciklama { get; set; }
+
+        public string Durum { get; set; }
+
+        public string IslemTuru { get; set; } 
 
         public DateTime IslemTarihi { get; set; } = DateTime.Now;
 

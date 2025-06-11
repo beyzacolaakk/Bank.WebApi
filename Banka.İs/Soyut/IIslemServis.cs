@@ -25,6 +25,6 @@ namespace Banka.İs.Soyut
 
         Task<IResult> ParaCekYatir(ParaCekYatirDto paraCekYatirDto);
 
-        Task<IDataResult<List<Islem>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId);
+        Task<IDataResult<List<SonHareketlerDto>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId);
     }
 }

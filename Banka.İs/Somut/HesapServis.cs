@@ -55,54 +55,73 @@ namespace Banka.İs.Somut
             await _hesapDal.Ekle(hesap);
             return new SuccessResult("Hesap başarıyla oluşturuldu.");
         }
-        public async Task<IResult> ParaTransferi(string gonderenHesapId, string aliciHesapId, decimal miktar)
+        public async Task<IDataResult<decimal>> ParaTransferi(string gonderenId, string aliciHesapId, decimal miktar)
         {
             if (miktar <= 0)
-                return new ErrorResult("Transfer miktarı sıfırdan büyük olmalıdır.");
-             
-            if (gonderenHesapId == aliciHesapId)
-                return new ErrorResult("Kendinize para transferi yapamazsınız.");
-
-            // Hesapları paralel al (performans için)
-            var gonderenTask = HesapNoIdIleGetir(gonderenHesapId);
-            var aliciTask = HesapNoIdIleGetir(aliciHesapId);
-
-            await Task.WhenAll(gonderenTask, aliciTask);
-
-            var gonderen = gonderenTask.Result;
-            var alici = aliciTask.Result;
-
-            if (!gonderen.Success || gonderen.Data == null)
-                return new ErrorResult("Gönderen hesap bulunamadı.");
-
-            if (!alici.Success || alici.Data == null)
-                return new ErrorResult("Alıcı hesap bulunamadı.");
-
-            if (gonderen.Data.ParaBirimi != alici.Data.ParaBirimi)
-                return new ErrorResult("Hesaplar farklı para birimi kullanıyor.");
-
-            if (gonderen.Data.Bakiye < miktar)
-                return new ErrorResult("Gönderen hesapta yeterli bakiye yok.");
+                return new ErrorDataResult<decimal>("Transfer miktarı sıfırdan büyük olmalıdır.");
 
             try
             {
-  
-                gonderen.Data.Bakiye -= miktar;
-                alici.Data.Bakiye += miktar;
+                // Alici hesabı getir
+                var aliciResult = await HesapNoIdIleGetir(aliciHesapId);
+                if (!aliciResult.Success || aliciResult.Data == null)
+                    return new ErrorDataResult<decimal>("Alıcı hesap bulunamadı.");
 
-                await _hesapDal.Guncelle(gonderen.Data);
-                await _hesapDal.Guncelle(alici.Data);
+                // Gönderen hesap mı kart mı belirle
+                var gonderenHesapResult = await HesapNoIdIleGetir(gonderenId);
+                bool gonderenHesapVar = gonderenHesapResult.Success && gonderenHesapResult.Data != null;
 
-        
+                if (gonderenHesapVar)
+                {
+                    var gonderen = gonderenHesapResult.Data;
+                    var alici = aliciResult.Data;
 
-                return new SuccessResult("Para transferi başarılı.");
+                    if (gonderen.Id == alici.Id)
+                        return new ErrorDataResult<decimal>("Kendinize para transferi yapamazsınız.");
+
+                    if (gonderen.ParaBirimi != alici.ParaBirimi)
+                        return new ErrorDataResult<decimal>("Hesaplar farklı para birimi kullanıyor.");
+
+                    if (gonderen.Bakiye < miktar)
+                        return new ErrorDataResult<decimal>("Gönderen hesapta yeterli bakiye yok.");
+
+                    gonderen.Bakiye -= miktar;
+                    alici.Bakiye += miktar;
+
+                    await _hesapDal.Guncelle(gonderen);
+                    await _hesapDal.Guncelle(alici);
+
+                    return new SuccessDataResult<decimal>(gonderen.Bakiye, "Hesaptan hesaba transfer başarılı.");
+                }
+                else
+                {
+                    // Gönderen kart mı diye kontrol et
+                    var gonderenKartResult = await _kartServis.KartNoIleGetir(gonderenId);
+                    if (!gonderenKartResult.Success || gonderenKartResult.Data == null)
+                        return new ErrorDataResult<decimal>("Gönderen hesap veya kart bulunamadı.");
+
+                    var gonderenKart = gonderenKartResult.Data;
+                    var alici = aliciResult.Data;
+
+                    if (gonderenKart.Limit < miktar)
+                        return new ErrorDataResult<decimal>("Kartta yeterli bakiye yok.");
+
+                    gonderenKart.Limit -= miktar;
+                    alici.Bakiye += miktar;
+
+                    await _kartServis.Guncelle(gonderenKart);
+                    await _hesapDal.Guncelle(alici);
+
+                    return new SuccessDataResult<decimal>(gonderenKart.Limit!.Value, "Karttan hesaba transfer başarılı.");
+                }
             }
             catch (Exception ex)
             {
-      
-                return new ErrorResult($"Transfer sırasında bir hata oluştu: {ex.Message}");
+                return new ErrorDataResult<decimal>($"Transfer sırasında bir hata oluştu: {ex.Message}");
             }
         }
+
+
         public async Task<IDataResult<decimal>> ParaCekYatir(ParaCekYatirDto paraCekYatirDto) 
         {
 

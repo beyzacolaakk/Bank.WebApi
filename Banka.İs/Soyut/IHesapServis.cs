@@ -19,8 +19,8 @@ namespace Banka.İs.Soyut
 
         Task<IResult> Sil(Hesap hesap);
         Task<IDataResult<Hesap>> HesapNoIdIleGetir(string id);
-        Task<IDataResult<Hesap>> IdIleGetir(int id); 
-        Task<IResult> ParaTransferi(string gonderenHesapId, string aliciHesapId, decimal miktar);
+        Task<IDataResult<Hesap>> IdIleGetir(int id);
+        Task<IDataResult<decimal>> ParaTransferi(string gonderenHesapId, string aliciHesapId, decimal miktar);
 
         Task<IDataResult<decimal>> ParaCekYatir(ParaCekYatirDto paraCekYatirDto);
         Task<IResult> OtomatikHesapOlustur(HesapOlusturDto hesapOlusturDto);

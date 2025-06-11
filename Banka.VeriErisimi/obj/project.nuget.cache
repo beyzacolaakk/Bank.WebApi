@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "F1ggEMgnc2k=",
+  "dgSpecHash": "sXcp0ipgVks=",
   "success": true,
   "projectFilePath": "C:\\Users\\fb_go\\source\\repos\\Bank.WebApi\\Banka.VeriErisimi\\Banka.VeriErisimi.csproj",
   "expectedPackageFiles": [
@@ -86,7 +86,9 @@
     "C:\\Users\\fb_go\\.nuget\\packages\\system.text.json\\9.0.5\\system.text.json.9.0.5.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\fb_go\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\fb_go\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\fb_go\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.17\\microsoft.windowsdesktop.app.ref.8.0.17.nupkg.sha512",
+    "C:\\Users\\fb_go\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.17\\microsoft.aspnetcore.app.ref.8.0.17.nupkg.sha512"
   ],
   "logs": []
 }

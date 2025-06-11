@@ -22,6 +22,6 @@ namespace Banka.İs.Soyut
         Task<IDataResult<KartIslem>> IdIleGetir(int id); 
         Task<IResult> KartIleIslemYap(KartIleIslemDto kartIleIslemDto);
 
-        Task<IDataResult<List<KartIslem>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId);
+        Task<IDataResult<List<SonHareketlerDto>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId);
     }
 }

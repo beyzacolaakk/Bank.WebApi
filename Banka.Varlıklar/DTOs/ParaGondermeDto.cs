@@ -20,5 +20,7 @@ namespace Banka.Varlıklar.DTOs
 
         public string Aciklama { get; set; }
 
+        public string OdemeAraci { get; set; } 
+
     }
 }

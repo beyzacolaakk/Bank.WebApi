@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Banka.İs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d92e88a56f9d30b0fd39bb0dc4cf88ed971cc6a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0b63fd316e8c3930e00ccc7ac1fc93f81915e42")]
 [assembly: System.Reflection.AssemblyProductAttribute("Banka.İs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Banka.İs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

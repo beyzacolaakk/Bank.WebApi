@@ -37,7 +37,7 @@ namespace Banka.WebApi.Controllers
         }
         [Authorize(Roles = "Müşteri")]
         [HttpGet("son4islemgetir")]
-        public async Task<IActionResult> Son5IslemGetir() 
+        public async Task<IActionResult> Son4IslemGetir()  
         {
             var KullaniciId = TokendanIdAl();
             var sonuc = await _islemServis.KullaniciyaAitSon4KartIslemiGetir(KullaniciId);

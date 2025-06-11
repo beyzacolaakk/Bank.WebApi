@@ -33,6 +33,8 @@ namespace Banka.İs.Sabitler
 
         public static string HataliEkleme= "Başarısız Ekleme";
 
+        public static string BasariliGetirme = "Getirme İşlemi Başarılı";
+        public static string BasarisizGetirme = "Getirme İşlemi Başarısız";  
         public static string KayitBasarili = "Kayıt işlemi başarılı";
 
         public static string ParaBasariilegonde = "Para transfer işleminiz başarı ile gerçekleşti";

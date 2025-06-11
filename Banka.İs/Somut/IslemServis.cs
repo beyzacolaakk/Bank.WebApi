@@ -47,41 +47,81 @@ namespace Banka.İs.Somut
 
         public async Task<IResult> ParaGonderme(ParaGondermeDto paraGondermeDto)
         {
- 
-            var gonderenHesap = await _hesapServis.HesapNoIdIleGetir(paraGondermeDto.GonderenHesapId);
-            var aliciHesap = await _hesapServis.HesapNoIdIleGetir(paraGondermeDto.AliciHesapId);
+            // Alıcı hesap bilgisi alınır
+            var aliciHesapResult = await _hesapServis.HesapNoIdIleGetir(paraGondermeDto.AliciHesapId);
+            if (!aliciHesapResult.Success || aliciHesapResult.Data == null)
+                return new ErrorResult("Alıcı hesap bulunamadı.");
 
-            if (gonderenHesap == null || aliciHesap == null)
+            Hesap gonderenHesap = null;
+            Kart gonderenKart = null;
+
+            if (paraGondermeDto.OdemeAraci == "hesap")
             {
-                return new ErrorResult("Gönderen veya alıcı hesap bulunamadı.");
+                var gonderenHesapResult = await _hesapServis.HesapNoIdIleGetir(paraGondermeDto.GonderenHesapId);
+                if (!gonderenHesapResult.Success || gonderenHesapResult.Data == null)
+                    return new ErrorResult("Gönderen hesap bulunamadı.");
+
+                gonderenHesap = gonderenHesapResult.Data;
+            }
+            else
+            {
+                var gonderenKartResult = await _kartServis.KartNoIleGetir(paraGondermeDto.GonderenHesapId);
+                if (!gonderenKartResult.Success || gonderenKartResult.Data == null)
+                    return new ErrorResult("Gönderen kart bulunamadı.");
+
+                gonderenKart = gonderenKartResult.Data;
             }
 
+            // Para transferi işlemi
             var transferSonucu = await _hesapServis.ParaTransferi(
                 paraGondermeDto.GonderenHesapId,
                 paraGondermeDto.AliciHesapId,
                 paraGondermeDto.Tutar
             );
 
+            // Güncel bakiye döndüyse al
+            decimal? guncelBakiye = (transferSonucu as IDataResult<decimal>)?.Data;
+            if (paraGondermeDto.OdemeAraci == "kart")
+            {
+                var kartIslem = new KartIslem
+                {
+                    Aciklama = paraGondermeDto.Aciklama,
+                    Durum = transferSonucu.Success ? "Başarılı Transfer" : "Başarısız Transfer",
+                    IslemTarihi = DateTime.Now,
+                    GuncelBakiye = guncelBakiye!.Value,
+                    IslemTuru = paraGondermeDto.IslemTipi,
+                    KartId = gonderenKart.Id,
+                    Tutar = paraGondermeDto.Tutar,
+
+                };
+                var islemkartSonucu = await _kartIslemServis.Ekle(kartIslem);
+                if (!islemkartSonucu.Success)
+                    return new ErrorResult(Mesajlar.IslemKaydedilmedi);
+            }
+      
             var islem = new Islem
             {
                 Aciklama = paraGondermeDto.Aciklama,
-                AliciHesapId = aliciHesap.Data.Id,
-                GonderenHesapId = gonderenHesap.Data.Id,
+                AliciHesapId = aliciHesapResult.Data.Id,
+                GonderenHesapId = gonderenHesap?.Id, // hesap varsa
+                 KartId= gonderenKart?.Id,   // kart varsa
                 IslemTarihi = DateTime.Now,
                 Tutar = paraGondermeDto.Tutar,
                 IslemTipi = paraGondermeDto.IslemTipi,
+                GuncelBakiye = guncelBakiye,
                 Durum = transferSonucu.Success ? "Başarılı Transfer" : "Başarısız Transfer"
             };
-
+          
             var islemSonucu = await Ekle(islem);
-
-            if (!islemSonucu.Success)
+            if (!islemSonucu.Success )
                 return new ErrorResult(Mesajlar.IslemKaydedilmedi);
 
             return transferSonucu.Success
                 ? new SuccessResult(Mesajlar.ParaBasariilegonde)
                 : new ErrorResult(Mesajlar.ParaGondermeBasarisiz);
         }
+
+
         public async Task<IResult> ParaCekYatir(ParaCekYatirDto paraCekYatirDto)
         {
             IResult transferSonucu;
@@ -137,7 +177,12 @@ namespace Banka.İs.Somut
                     IslemTarihi = DateTime.Now,
                     KartId = gonderenId.Value,
                     Tutar=paraCekYatirDto.Tutar,
+                    GuncelBakiye=guncelBakiye ?? 0,
+                    IslemTuru= paraCekYatirDto.IslemTipi,
+                    Durum= transferSonucu.Success ? "Başarılı Transfer" : "Başarısız Transfer",
                     
+
+
                 };
                 await _kartIslemServis.Ekle(kartıslem);
             }
@@ -168,18 +213,29 @@ namespace Banka.İs.Somut
             var islem = await _islemDal.Getir(i => i.Id == id);
             return new SuccessDataResult<Islem>(islem, Mesajlar.IdIleGetirmeBasarili);
         }
-        public async Task<IDataResult<List<Islem>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId) 
+        public async Task<IDataResult<List<SonHareketlerDto>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId) 
         {
             var hesapIdler = await Task.Run(() => _hesapServis.GetirKullaniciyaAitHesapIdler(kullaniciId));
 
             if (!hesapIdler.Any())
-                return new ErrorDataResult<List<Islem>>();
+                return new ErrorDataResult<List<SonHareketlerDto>>(Mesajlar.BasarisizGetirme);
+
             var veri = await Task.Run(() =>
                 _islemDal.GetirIslemleri(hesapIdler)
-                             .OrderByDescending(i => i.IslemTarihi)
-                             .Take(4)
-                             .ToList());
-            return new SuccessDataResult<List<Islem>>(veri);
+                         .OrderByDescending(i => i.IslemTarihi)
+                         .Take(4)
+                         .ToList());
+
+            var sonHareketlerListesi = veri.Select(i => new SonHareketlerDto
+            {
+                Aciklama = i.Aciklama,
+                Durum = i.Durum,
+                GuncelBakiye = i.GuncelBakiye!.Value,
+                IslemTipi = i.IslemTipi,
+                Tarih = i.IslemTarihi,
+                Tutar = i.Tutar
+            }).ToList();
+            return new SuccessDataResult<List<SonHareketlerDto>>(sonHareketlerListesi,Mesajlar.BasariliGetirme);
         }
     }
 
