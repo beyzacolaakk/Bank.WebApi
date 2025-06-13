@@ -27,7 +27,7 @@ namespace Banka.VeriErisim.Somut.EntityFramework
         public DbSet<Kayit> Kayıtlar { get; set; }
         public DbSet<Rol> Roller { get; set; }
         public DbSet<KullaniciRol> KullaniciRolleri { get; set; }
-
+        public DbSet<LimitArtirma> LimitArtirma { get; set; } 
         public DbSet<IstekLogu> IstekLoglari { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,6 @@
-﻿using Banka.Cekirdek.VeriErisimi.EntityFramework;
+﻿using Banka.Cekirdek.Varlıklar.Somut;
+using Banka.Cekirdek.VeriErisimi.EntityFramework;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisim.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
@@ -25,5 +27,28 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
             }
        
         }
+        public async Task<List<DestekTalebiOlusturDto>> DestekTalebleriGetir()
+        {
+            using (var context = new BankaContext())
+            {
+                var result = await (from destek in context.DestekTalepleri
+                                    join kullanici in context.Kullanicilar
+                                    on destek.KullaniciId equals kullanici.Id
+                                    select new DestekTalebiOlusturDto
+                                    {
+                                        Tarih = destek.OlusturmaTarihi,
+                                        AdSoyad = kullanici.AdSoyad,
+                                        Durum = destek.Durum,
+                                        Kategori = destek.Kategori,
+                                        Konu = destek.Konu,
+                                        Mesaj = destek.Mesaj,
+                                        KullaniciId=kullanici.Id,
+                                        Id = destek.Id,
+                                    }).ToListAsync();
+
+                return result;
+            }
+        }
+
     }
 }

@@ -31,5 +31,9 @@ namespace Banka.İs.Soyut
         Task<IDataResult<Kart>> KartNoIleGetir(string id);
 
         Task<List<int>> GetirKullaniciyaAitKartIdler(int kullaniciId);
+
+        Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir(int id);
+
+
     }
 }

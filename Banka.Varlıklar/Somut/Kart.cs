@@ -32,6 +32,7 @@ namespace Banka.Varlıklar.Somut
         [Required(ErrorMessage = "Son kullanma tarihi zorunludur.")]
         public DateTime SonKullanma { get; set; }
 
+        public string? Durum { get; set; } 
         public bool Aktif { get; set; } = true;
 
         public Kullanici? Kullanici { get; set; }

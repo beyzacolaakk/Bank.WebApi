@@ -32,5 +32,8 @@ namespace Banka.İs.Soyut
         Task<IDataResult<VarlıklarDto>> VarliklariGetirAsync(int kullaniciId);
 
         Task<List<int>> GetirKullaniciyaAitHesapIdler(int kullaniciId);
+
+        Task<IDataResult<List<HesapIstekleriDto>>> HesapIstekleriGetir(int kullaniciId);
+        Task<IDataResult<IstekSayilariDto>> IsteklSayilariGetir();
     }
 }

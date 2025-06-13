@@ -2,6 +2,7 @@
 using Banka.Cekirdek.YardımcıHizmetler.Results;
 using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.VeriErisimi.Soyut;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,11 @@ namespace Banka.İs.Somut
         public async Task<List<Rol>> YetkileriGetir(Kullanici kullanici)
         {
             return await _kullaniciDal.YetkileriGetir(kullanici);
+        }
+
+        public async Task<IDataResult<KullaniciBilgileriDto>> KullaniciBilgileriGetir(int id) 
+        {
+            return new SuccessDataResult<KullaniciBilgileriDto>(await _kullaniciDal.KullaniciGetir(id),Mesajlar.BasariliGetirme); 
         }
     }
 

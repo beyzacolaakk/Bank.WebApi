@@ -114,7 +114,6 @@ C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\Banka.WebAp
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\Banka.WebApi.AssemblyInfoInputs.cache
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\Banka.WebApi.AssemblyInfo.cs
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\Banka.WebApi.csproj.CoreCompileInputs.cache
-C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\Banka.WebApi.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\Banka.WebApi.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\fb_go\source\repos\Bank.WebApi\Bank.WebApi\obj\Debug\net8.0\staticwebassets.development.json

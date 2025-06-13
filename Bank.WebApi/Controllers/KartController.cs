@@ -60,6 +60,19 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpGet("kartistekgetir")]
+        public async Task<IActionResult> KartIstekGetir() 
+        {
+            int KullaniciId = TokendanIdAl();
+            var sonuc = await _kartServis.KartIstekleriGetir(KullaniciId);
+            if (sonuc.Success)
+            {
+                return Ok(sonuc);
+            }
+            return BadRequest(sonuc);
+        }
+
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Kart kart)
         {

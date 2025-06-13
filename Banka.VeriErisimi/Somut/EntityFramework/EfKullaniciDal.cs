@@ -1,5 +1,6 @@
 ﻿using Banka.Cekirdek.Varlıklar.Somut;
 using Banka.Cekirdek.VeriErisimi.EntityFramework;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisim.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
@@ -47,6 +48,22 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                                     .Where(k => k.Id == id)
                                     .Select(k => k.Telefon)
                                     .FirstOrDefaultAsync();
+            }
+        }
+        public async Task<KullaniciBilgileriDto> KullaniciGetir(int id) 
+        {
+            using (var context = new BankaContext())
+            {
+                return await (from k in context.Kullanicilar
+                              join s in context.Subeler on k.SubeId equals s.Id
+                              where k.Id == id
+                              select new KullaniciBilgileriDto
+                              {
+                                  AdSoyad = k.AdSoyad,
+                                  Email = k.Email,
+                                  Telefon = k.Telefon,
+                                  Sube = s.SubeAdi 
+                              }).FirstOrDefaultAsync();
             }
         }
 

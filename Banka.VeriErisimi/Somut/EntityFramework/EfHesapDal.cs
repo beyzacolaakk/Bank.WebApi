@@ -28,6 +28,57 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                 })
                 .ToListAsync();
         }
+
+        public async Task<List<HesapIstekleriDto>> HesapIstekleriGetir()
+        {
+            using var context = new BankaContext();
+
+            var result = await (from hesap in context.Hesaplar
+                                join kullanici in context.Kullanicilar
+                                on hesap.KullaniciId equals kullanici.Id
+                                select new HesapIstekleriDto
+                                {
+                                    AdSoyad = kullanici.AdSoyad,
+                                    Telefon = kullanici.Telefon,
+                                    BasvuruTarihi = hesap.OlusturmaTarihi, // Eğer bu alan varsa
+                                    Durum = hesap.Durum,
+                                    HesapNo = hesap.HesapNo,
+                                    Id = hesap.Id,
+                                    Eposta=kullanici.Email,
+                                    
+                                }).ToListAsync();
+
+            return result;
+        }
+
+
+        public async Task<IstekSayilariDto> IstekSayilariGetir()
+        {
+            using var context = new BankaContext();
+
+            var hesapIstekleri = await context.Hesaplar
+                .CountAsync(h => h.Durum == "Beklemede");
+
+            var kartIstekleri = await context.Kartlar
+                .CountAsync(k => k.Durum == "Beklemede");
+
+            var destekIstekleri = await context.DestekTalepleri
+                .CountAsync(d => d.Durum == "Açık"  );
+            var destekIstekleriisl = await context.DestekTalepleri
+             .CountAsync(d => d.Durum == "Islemde");
+
+            var limitArtirtma = await context.LimitArtirma
+              .CountAsync(d => d.Durum == "Beklemede");
+
+            return new IstekSayilariDto
+            {
+                HesapIstekleri = hesapIstekleri,
+                KartIstekleri = kartIstekleri,
+                DestekIsdekleri = destekIstekleri+ destekIstekleriisl,
+                LimitArtirmaIstekleri = limitArtirtma
+            };
+        }
+
         public List<int> GetirKullaniciyaAitHesapIdler(int kullaniciId)
         { 
             using (var context = new BankaContext())

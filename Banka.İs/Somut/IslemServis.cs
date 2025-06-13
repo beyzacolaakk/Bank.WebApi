@@ -164,6 +164,7 @@ namespace Banka.İs.Somut
                 Tutar = paraCekYatirDto.Tutar,
                 GuncelBakiye = guncelBakiye ?? 0,
                 IslemTipi = paraCekYatirDto.IslemTipi,
+                
                 Durum = transferSonucu.Success ? "Başarılı Transfer" : "Başarısız Transfer"
             };
 

@@ -1,5 +1,6 @@
 ﻿using Banka.Cekirdek.Varlıklar.Somut;
 using Banka.Cekirdek.YardımcıHizmetler.Results;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,7 @@ namespace Banka.İs.Soyut
         Task<Kullanici> MaileGoreGetir(string telefon);
 
         Task<List<Rol>> YetkileriGetir(Kullanici kullanici);
+
+        Task<IDataResult<KullaniciBilgileriDto>> KullaniciBilgileriGetir(int id);
     }
 }

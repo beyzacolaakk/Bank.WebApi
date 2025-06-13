@@ -14,5 +14,9 @@ namespace Banka.VeriErisimi.Soyut
         Task<List<HesapDto>> GetHesaplarByKullaniciIdAsync(int kullaniciId);
 
         List<int> GetirKullaniciyaAitHesapIdler(int kullaniciId);
+
+        Task<List<HesapIstekleriDto>> HesapIstekleriGetir();
+
+        Task<IstekSayilariDto> IstekSayilariGetir();
     }
 }

@@ -29,9 +29,7 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Durum boş olamaz.")]
         [StringLength(20, ErrorMessage = "Durum en fazla 20 karakter olabilir.")]
-        public string Durum { get; set; }
-
-        [StringLength(200, ErrorMessage = "Açıklama en fazla 200 karakter olabilir.")]
+        public string Durum { get; set; } 
         public string? Aciklama { get; set; }
 
         public DateTime IslemTarihi { get; set; } = DateTime.Now;

@@ -1,4 +1,5 @@
 ﻿using Banka.Cekirdek.VeriErisimi;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace Banka.VeriErisimi.Soyut
     {
 
         Task DurumuGuncelle(int id, string yeniDurum);
+
+        Task<List<DestekTalebiOlusturDto>> DestekTalebleriGetir();
     }
 }

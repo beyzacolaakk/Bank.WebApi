@@ -80,5 +80,7 @@ namespace Banka.WebApi.Controllers
             var result = new SuccessResult("Çıkış İşemi Gerçekleşti");
             return Ok(result);
         }
+
+
     }
 }

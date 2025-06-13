@@ -29,7 +29,9 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Para birimi boş olamaz.")]
         [StringLength(5, ErrorMessage = "Para birimi en fazla 5 karakter olabilir.")]
-        public string ParaBirimi { get; set; } = "TRY";
+        public string ParaBirimi { get; set; } = "TL";
+
+        public string? Durum { get; set; }
 
         public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 

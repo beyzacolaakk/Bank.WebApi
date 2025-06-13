@@ -69,6 +69,25 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpGet("hesapistekgetir")]
+        public async Task<IActionResult> HesapIstekGetir()  
+        {
+            int KullaniciId = TokendanIdAl();
+            var sonuc = await _hesapServis.HesapIstekleriGetir(KullaniciId);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpGet("Isteksayilarigetir")]
+        public async Task<IActionResult> IstekSayilariGetir() 
+        {
+            var sonuc = await _hesapServis.IsteklSayilariGetir();
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("otomatikhesapolustur")]
         public async Task<IActionResult> Ekle(HesapOlusturDto hesapOlusturDto)
         {

@@ -14,5 +14,7 @@ namespace Banka.VeriErisimi.Soyut
         Task<List<KartDto>> GetKartlarByKullaniciIdAsync(int kullaniciId);
 
         List<int> GetirKullaniciyaAitKartIdler(int kullaniciId);
+
+        Task<List<KartIstekleriDto>> KartIstekleriGetir();
     }
 }

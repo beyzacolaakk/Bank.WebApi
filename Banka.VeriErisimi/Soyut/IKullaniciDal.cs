@@ -1,5 +1,6 @@
 ﻿using Banka.Cekirdek.Varlıklar.Somut;
 using Banka.Cekirdek.VeriErisimi;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Banka.VeriErisimi.Soyut
 
 
         Task<Kullanici> EkleVeIdGetirAsync(Kullanici kullanici);
-
+        Task<KullaniciBilgileriDto> KullaniciGetir(int id); 
 
     }
 }

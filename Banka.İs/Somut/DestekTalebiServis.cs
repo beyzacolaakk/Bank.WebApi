@@ -92,6 +92,11 @@ namespace Banka.İs.Somut
             var liste = await _destekTalebiDal.HepsiniGetir(x => x.KullaniciId == kullaniciId);
             return new SuccessDataResult<List<DestekTalebi>>(liste, Mesajlar.IdIleGetirmeBasarili);
         }
+        public async Task<IDataResult<List<DestekTalebiOlusturDto>>> DestekIstekleriGetir() 
+        {
+            var liste = await _destekTalebiDal.DestekTalebleriGetir();
+            return new SuccessDataResult<List<DestekTalebiOlusturDto>>(liste, Mesajlar.IdIleGetirmeBasarili);
+        }
         public async Task<IDataResult<DestekTalebi>> IdIleGetir(int id)
         {
             string key = $"destek_talebi_{id}";

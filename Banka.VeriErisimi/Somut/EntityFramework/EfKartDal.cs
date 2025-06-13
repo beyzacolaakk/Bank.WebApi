@@ -41,5 +41,30 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
   
    
         }
+        public async Task<List<KartIstekleriDto>> KartIstekleriGetir()
+        {
+            using (var context = new BankaContext())
+            {
+                var result = await (from kart in context.Kartlar
+                                    join kullanici in context.Kullanicilar
+                                    on kart.KullaniciId equals kullanici.Id
+                                    select new KartIstekleriDto
+                                    {
+                                        AdSoyad = kullanici.AdSoyad,
+                                        Tarih = DateTime.Now,
+                                        Durum = kart.Durum,
+                                        KartTipi = kart.KartTipi,
+                                        Id = kart.Id,
+                                        Limit = kart.Limit.HasValue ? kart.Limit.Value : 0 // Null kontrolü
+                                    }).ToListAsync();
+
+                return result;
+            }
+        }
+
+
+   
+
+
     }
 }

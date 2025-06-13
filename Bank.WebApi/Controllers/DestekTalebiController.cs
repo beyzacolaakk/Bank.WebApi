@@ -46,6 +46,15 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpGet("destekisteklerigetir")]
+        public async Task<IActionResult> DestekIstekleriGetir() 
+        {
+            var sonuc = await _destekTalebiServis.DestekIstekleriGetir();
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] DestekTalebi destekTalebi)
         {

@@ -21,6 +21,11 @@ namespace Banka.İs.Somut
         {
             _kartDal = kartDal;
         }
+        public async Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir(int id)
+        {
+            var kartIstekleri = await _kartDal.KartIstekleriGetir(); 
+            return new SuccessDataResult<List<KartIstekleriDto>>(kartIstekleri, Mesajlar.HepsiniGetirmeBasarili);
+        }
 
         public async Task<IResult> Ekle(Kart kart)
         {
