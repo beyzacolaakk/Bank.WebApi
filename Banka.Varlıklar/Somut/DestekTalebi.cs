@@ -28,6 +28,8 @@ namespace Banka.Varlıklar.Somut
         [StringLength(30, ErrorMessage = "Durum en fazla 30 karakter olabilir.")]
         public string Durum { get; set; }
 
+        public string? Yanit { get; set; } 
+
         public string? Kategori {  get; set; }
         public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 

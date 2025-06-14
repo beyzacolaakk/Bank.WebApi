@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Banka.Cekirdek")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a7496b66de20a34b8a98bed14c2f2159a487c4fe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c456d96cd1c92e7c409139ae0f3f162f95644bcd")]
 [assembly: System.Reflection.AssemblyProductAttribute("Banka.Cekirdek")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Banka.Cekirdek")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -61,9 +61,39 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                 return result;
             }
         }
+        public async Task<bool> KartLimitGuncelle(int kartId, decimal yeniLimit)
+        {
+            using (var context = new BankaContext())
+            {
+                var kart = await context.Kartlar.FindAsync(kartId);
+                if (kart == null)
+                {
+                    return false; // Kart bulunamadı
+                }
+
+                kart.Limit = yeniLimit;
+                await context.SaveChangesAsync();
+                return true; // Başarıyla güncellendi
+            }
+        }
+        public async Task<bool> KartDurumGuncelle(int Id, string yeniDurum) 
+        {
+            using (var context = new BankaContext())
+            {
+                var kartguncelle = await context.Kartlar.FindAsync(Id); 
+                if (kartguncelle == null)
+                {
+                    return false;
+                }
+
+                kartguncelle.Durum = yeniDurum;
+                await context.SaveChangesAsync();
+                return true;
+            }
+        }
 
 
-   
+
 
 
     }

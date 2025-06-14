@@ -23,5 +23,9 @@ namespace Banka.İs.Soyut
         Task<IDataResult<LimitArtirma>> IdIleGetir(int id);
 
         Task<IDataResult<List<LimitArtirmaDto>>> KartLimitIstekleriGetir();
+
+        Task<IResult> LimitArtirmEkle(LimitArtirmaEkleDto limitArtirmaEkle);
+
+        Task<IResult> KartLimitIstekGuncelle(LimitArtirmaEkleDto limitArtirmaEkleDto);
     }
 }

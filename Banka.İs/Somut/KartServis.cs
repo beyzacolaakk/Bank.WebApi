@@ -48,7 +48,8 @@ namespace Banka.İs.Somut
                 CVV = CvvUret(),
                 KartTipi = kartOlusturDto.KartTipi,
                 SonKullanma = DateTime.UtcNow.AddYears(3),
-                Limit = kartOlusturDto.KartTipi == "Kredi Kartı" ? 5000 : (int?)null
+                Limit = kartOlusturDto.KartTipi == "Kredi Kartı" ? 5000 : (int?)null,
+                Durum= "Beklemede",
             };
 
             await _kartDal.Ekle(kart);
@@ -74,9 +75,10 @@ namespace Banka.İs.Somut
         {
             return new List<int>(_kartDal.GetirKullaniciyaAitKartIdler(kullaniciId));
         }
+
         public async Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id) 
         {
-            var veri = await _kartDal.HepsiniGetir(k => k.KullaniciId == id);
+            var veri = await _kartDal.HepsiniGetir(k => k.KullaniciId == id && k.Durum != "Beklemede" && k.Durum != "Reddedildi");
             return new SuccessDataResult<List<Kart>>(veri, Mesajlar.IdIleGetirmeBasarili); 
         }
         public async Task<IResult> Sil(Kart kart)
@@ -102,7 +104,11 @@ namespace Banka.İs.Somut
             var veri=await _kartDal.GetKartlarByKullaniciIdAsync(kullaniciId); 
             return new SuccessDataResult<List<KartDto>>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
-
+        public async Task<IDataResult<bool>> KartLimitGuncelle(int kartId,decimal yenlimit)   
+        {
+            var veri = await _kartDal.KartLimitGuncelle(kartId,yenlimit);
+            return new SuccessDataResult<bool>(veri);
+        }
         public async Task<IDataResult<decimal>> ParaCekYatir(ParaCekYatirDto paraCekYatirDto)
         {
             var gonderenTask = KartNoIleGetir(paraCekYatirDto.HesapId.ToString());
@@ -143,6 +149,18 @@ namespace Banka.İs.Somut
             {
 
                 return new ErrorDataResult<decimal>($"Transfer sırasında bir hata oluştu: {ex.Message}");
+            }
+        }
+        public async Task<IResult> KartDurumGuncelle(DurumuGuncelleDto durumuGuncelleDto) 
+        {
+            var veri = await _kartDal.KartDurumGuncelle(durumuGuncelleDto.Id!.Value, durumuGuncelleDto.Durum!);
+            if (veri)
+            {
+                return new SuccessResult(Mesajlar.GuncellemeBasarili);
+            }
+            else
+            {
+                return new ErrorResult(Mesajlar.GuncellemeBasarisiz);
             }
         }
     }

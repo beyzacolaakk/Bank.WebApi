@@ -34,6 +34,8 @@ namespace Banka.İs.Soyut
 
         Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir(int id);
 
+        Task<IDataResult<bool>> KartLimitGuncelle(int kartId, decimal yenlimit);
+        Task<IResult> KartDurumGuncelle(DurumuGuncelleDto durumuGuncelleDto); 
 
     }
 }

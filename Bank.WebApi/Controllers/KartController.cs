@@ -1,4 +1,5 @@
-﻿using Banka.İs.Soyut;
+﻿using Banka.İs.Somut;
+using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Microsoft.AspNetCore.Authorization;
@@ -95,6 +96,15 @@ namespace Banka.WebApi.Controllers
         public async Task<IActionResult> Sil([FromBody] Kart kart)
         {
             var sonuc = await Task.Run(() => _kartServis.Sil(kart));
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpPut("kartdurumguncelle")] 
+        public async Task<IActionResult> KartDurumGuncelle([FromBody] DurumuGuncelleDto durumGuncelleDto) 
+        {
+            var sonuc = await _kartServis.KartDurumGuncelle(durumGuncelleDto);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

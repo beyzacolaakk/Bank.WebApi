@@ -12,5 +12,7 @@ namespace Banka.VeriErisimi.Soyut
     public interface ILimitArtirmaDal:IEntityRepository<LimitArtirma>
     {
         Task<List<LimitArtirmaDto>> KartLimitIstekleriGetir();
+
+        Task<bool> LimitDurumGuncelle(int Id, string yeniDurum);
     }
 }

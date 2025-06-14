@@ -27,6 +27,22 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
             }
        
         }
+        public async Task<bool> DestekTalebiDurumGuncelle(int Id, string yeniDurum, string yanit) 
+        {
+            using (var context = new BankaContext())
+            {
+                var destektalebiguncelle = await context.DestekTalepleri.FindAsync(Id);
+                if (destektalebiguncelle == null) 
+                {
+                    return false;
+                }
+
+                destektalebiguncelle.Durum = yeniDurum;
+                destektalebiguncelle.Yanit = yanit;
+                await context.SaveChangesAsync();
+                return true;
+            }
+        }
         public async Task<List<DestekTalebiOlusturDto>> DestekTalebleriGetir()
         {
             using (var context = new BankaContext())

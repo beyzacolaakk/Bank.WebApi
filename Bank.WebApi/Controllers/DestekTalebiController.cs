@@ -1,4 +1,5 @@
-﻿using Banka.İs.Soyut;
+﻿using Banka.İs.Somut;
+using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Microsoft.AspNetCore.Authorization;
@@ -74,7 +75,7 @@ namespace Banka.WebApi.Controllers
         }
         [Authorize(Roles = "Yönetici")]
         [HttpPut("destektalebiguncelle/{id}")]
-        public async Task<IActionResult> DestekTalebiGuncelle([FromRoute] int id) 
+        public async Task<IActionResult> DestekTalebiGuncelle([FromRoute] int id)  
         {
             var sonuc = await _destekTalebiServis.DestekTalebiGuncelle(id);
             if (sonuc.Success)
@@ -96,6 +97,15 @@ namespace Banka.WebApi.Controllers
         public async Task<IActionResult> Sil([FromBody] DestekTalebi destekTalebi)
         {
             var sonuc = await _destekTalebiServis.Sil(destekTalebi);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
+        [HttpPut("destektalebiguncelle")]
+        public async Task<IActionResult> DestekTalebiDurumGuncelle([FromBody] DestekTalebiGuncelleDto destekTalebiGuncelle)  
+        {
+            var sonuc = await _destekTalebiServis.DestekTalebiDurumGuncelle(destekTalebiGuncelle);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

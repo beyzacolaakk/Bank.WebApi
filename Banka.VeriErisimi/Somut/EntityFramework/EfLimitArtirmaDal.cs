@@ -38,6 +38,21 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                 return result;
             }
         }
+        public async Task<bool> LimitDurumGuncelle(int Id, string yeniDurum)  
+        {
+            using (var context = new BankaContext())
+            { 
+                var limitDurum = await context.LimitArtirma.FindAsync(Id);
+                if (limitDurum == null)
+                {
+                    return false; // Kart bulunamadı
+                }
+
+                limitDurum.Durum = yeniDurum;
+                await context.SaveChangesAsync();
+                return true;
+            }
+        }
 
     }
 }

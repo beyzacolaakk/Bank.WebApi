@@ -107,6 +107,15 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Müşteri")]
+        [HttpPut("hesapdurumguncelle")]
+        public async Task<IActionResult> HesapDurumGuncelle([FromBody] DurumuGuncelleDto durumGuncelleDto)  
+        {
+            var sonuc = await _hesapServis.HesapDurumGuncelle(durumGuncelleDto); 
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Hesap hesap)
         {

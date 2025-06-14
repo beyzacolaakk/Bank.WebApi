@@ -55,7 +55,8 @@ namespace Banka.İs.Somut
                 KullaniciId=destekTalebiOlusturDto.KullaniciId, 
                 OlusturmaTarihi=DateTime.Now,
                 Mesaj=destekTalebiOlusturDto.Mesaj,
-                Kategori=destekTalebiOlusturDto.Kategori
+                Kategori=destekTalebiOlusturDto.Kategori,
+                
                 
             };
             await _destekTalebiDal.Ekle(destekTalebi);
@@ -120,6 +121,18 @@ namespace Banka.İs.Somut
             }
 
             return new SuccessDataResult<DestekTalebi>(destekTalebi, Mesajlar.IdIleGetirmeBasarili);
+        }
+        public async Task<IResult> DestekTalebiDurumGuncelle(DestekTalebiGuncelleDto destekTalebiGuncelle)  
+        {
+            var veri = await _destekTalebiDal.DestekTalebiDurumGuncelle(destekTalebiGuncelle.Id!.Value, destekTalebiGuncelle.Durum!,destekTalebiGuncelle.Yanit);
+            if (veri)
+            {
+                return new SuccessResult(Mesajlar.GuncellemeBasarili);
+            }
+            else
+            {
+                return new ErrorResult(Mesajlar.GuncellemeBasarisiz);
+            }
         }
     }
 

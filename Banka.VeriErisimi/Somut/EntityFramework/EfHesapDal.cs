@@ -91,5 +91,20 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 
 
         }
+        public async Task<bool> HesapDurumGuncelle(int Id, string yeniDurum) 
+        {
+            using (var context = new BankaContext())
+            {
+                var hesapguncelle = await context.Hesaplar.FindAsync(Id); 
+                if (hesapguncelle == null)
+                {
+                    return false; 
+                }
+
+                hesapguncelle.Durum = yeniDurum;
+                await context.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

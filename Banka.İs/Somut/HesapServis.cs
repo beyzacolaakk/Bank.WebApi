@@ -57,7 +57,7 @@ namespace Banka.İs.Somut
                 HesapNo = HesapNoUret(),
                 HesapTipi = hesapOlusturDto.HesapTipi,
                 Bakiye = 0,
-
+                Durum= "Beklemede",
                 OlusturmaTarihi = DateTime.Now
             };
 
@@ -192,9 +192,10 @@ namespace Banka.İs.Somut
 
         public async Task<IDataResult<List<Hesap>>> IdIleHepsiniGetir(int id)
         {
-            var hesap = await _hesapDal.HepsiniGetir(h => h.KullaniciId == id);
+            var hesap = await _hesapDal.HepsiniGetir(h => h.KullaniciId == id && h.Durum != "Beklemede" && h.Durum != "Reddedildi");
             return new SuccessDataResult<List<Hesap>>(hesap, Mesajlar.IdIleGetirmeBasarili);
         }
+
         public async Task<IDataResult<Hesap>> IdIleGetir(int id)
         {
             var hesap = await _hesapDal.Getir(h => h.Id == id);
@@ -235,7 +236,18 @@ namespace Banka.İs.Somut
         {
             return new List<int>(_hesapDal.GetirKullaniciyaAitHesapIdler(kullaniciId));
         }
-
+        public async Task<IResult> HesapDurumGuncelle(DurumuGuncelleDto durumGuncelleDto)  
+        {
+             var veri = await _hesapDal.HesapDurumGuncelle(durumGuncelleDto.Id!.Value, durumGuncelleDto.Durum!);
+             if (veri)
+             {
+                  return new SuccessResult(Mesajlar.GuncellemeBasarili);
+             }
+             else
+             {
+                  return new ErrorResult(Mesajlar.GuncellemeBasarisiz);
+             }
+        }
 
     }
 }
