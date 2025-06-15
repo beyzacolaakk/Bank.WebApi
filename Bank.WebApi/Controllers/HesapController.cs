@@ -27,7 +27,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -36,7 +36,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("idilehepsinigetir")]
         public async Task<IActionResult> IdIleHepsiniGetir()
         {
@@ -48,7 +48,7 @@ namespace Banka.WebApi.Controllers
             }
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Hesap hesap)
         {
@@ -58,7 +58,7 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
 
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("varliklargetir")]
         public async Task<IActionResult> VarliklarGetir()
         {
@@ -68,7 +68,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("hesapistekgetir")]
         public async Task<IActionResult> HesapIstekGetir()  
         {
@@ -78,7 +78,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("Isteksayilarigetir")]
         public async Task<IActionResult> IstekSayilariGetir() 
         {
@@ -87,7 +87,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("otomatikhesapolustur")]
         public async Task<IActionResult> Ekle(HesapOlusturDto hesapOlusturDto)
         {
@@ -97,7 +97,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Hesap hesap)
         {
@@ -106,7 +106,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpPut("hesapdurumguncelle")]
         public async Task<IActionResult> HesapDurumGuncelle([FromBody] DurumuGuncelleDto durumGuncelleDto)  
         {
@@ -115,7 +115,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Hesap hesap)
         {

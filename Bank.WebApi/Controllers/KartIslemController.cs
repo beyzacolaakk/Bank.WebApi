@@ -27,7 +27,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -36,7 +36,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] KartIslem kartIslem)
         {
@@ -45,7 +45,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] KartIslem kartIslem)
         {
@@ -54,7 +54,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] KartIslem kartIslem)
         {
@@ -63,7 +63,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("son4islemgetir")]
         public async Task<IActionResult> Son4IslemGetir()  
         {
@@ -73,7 +73,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("kartileislemyap")]
         public async Task<IActionResult> KartIleIslemYap([FromBody] KartIleIslemDto kartIleIslemDto)
         {

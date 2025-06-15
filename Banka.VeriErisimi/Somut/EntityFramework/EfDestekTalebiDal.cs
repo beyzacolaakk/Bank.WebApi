@@ -60,6 +60,7 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                                         Mesaj = destek.Mesaj,
                                         KullaniciId=kullanici.Id,
                                         Id = destek.Id,
+                                        Yanit=destek.Yanit,
                                     }).ToListAsync();
 
                 return result;

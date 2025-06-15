@@ -27,7 +27,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
@@ -36,7 +36,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("otomatikkartolustur")]
         public async Task<IActionResult> OtomatikKartOlustur(KartOlusturDto kartOlusturDto)
         {
@@ -48,7 +48,7 @@ namespace Banka.WebApi.Controllers
             }
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("idilehepsinigetir")]
         public async Task<IActionResult> IdIleHepsiniGetir() 
         {
@@ -60,7 +60,7 @@ namespace Banka.WebApi.Controllers
             }
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("kartistekgetir")]
         public async Task<IActionResult> KartIstekGetir() 
         {
@@ -73,7 +73,7 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
 
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("ekle")]
         public async Task<IActionResult> Ekle([FromBody] Kart kart)
         {
@@ -82,7 +82,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPut("guncelle")]
         public async Task<IActionResult> Guncelle([FromBody] Kart kart)
         {
@@ -91,7 +91,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpDelete("sil")]
         public async Task<IActionResult> Sil([FromBody] Kart kart)
         {
@@ -100,7 +100,7 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpPut("kartdurumguncelle")] 
         public async Task<IActionResult> KartDurumGuncelle([FromBody] DurumuGuncelleDto durumGuncelleDto) 
         {

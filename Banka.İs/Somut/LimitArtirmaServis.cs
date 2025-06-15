@@ -29,15 +29,15 @@ namespace Banka.İs.Somut
             await _limitArtirmaDal.Ekle(limitArtirma);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
-        public async Task<IResult> LimitArtirmEkle(LimitArtirmaEkleDto limitArtirmaEkle)  
+        public async Task<IResult> LimitArtirmEkle(LimitArtirmaTalepDto limitArtirma)  
         {
-            var data=await _kartServis.KartNoIleGetir(limitArtirmaEkle.KartNo);
+            var data=await _kartServis.IdIleGetir(limitArtirma.KartId);
             var veri = new LimitArtirma{ 
                 BaşvuruTarihi=DateTime.Now,
                 Durum= "Beklemede",
-                MevcutLimit= limitArtirmaEkle.MevcutLimit.Value,
+                MevcutLimit= limitArtirma.MevcutLimit,
                 KartId= data.Data.Id,
-                TalepEdilenLimit= limitArtirmaEkle.TalepEdilenLimit,
+                TalepEdilenLimit= limitArtirma.YeniLimit,
                 
             };
             await _limitArtirmaDal.Ekle(veri);
@@ -75,6 +75,10 @@ namespace Banka.İs.Somut
         {
             if (limitArtirmaEkleDto.Durum == "Onaylandi")
             {
+                decimal mevcutLimit = Convert.ToDecimal(limitArtirmaEkleDto.MevcutLimit);
+
+                decimal yuvarlanmisLimit = Math.Ceiling(mevcutLimit / 5000) * 5000;
+                limitArtirmaEkleDto.TalepEdilenLimit = (limitArtirmaEkleDto.TalepEdilenLimit) -(yuvarlanmisLimit-(decimal)limitArtirmaEkleDto.MevcutLimit); 
                 var kart = await _kartServis.KartNoIleGetir(limitArtirmaEkleDto.KartNo!);
                 var guncelleResult = await _kartServis.KartLimitGuncelle(kart.Data.Id, limitArtirmaEkleDto.TalepEdilenLimit);
 

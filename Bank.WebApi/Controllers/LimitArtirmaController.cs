@@ -18,7 +18,7 @@ namespace Banka.WebApi.Controllers
         }
 
 
-        [Authorize(Roles = "Müşteri")] 
+        [Authorize(Roles = "Yönetici")]
         [HttpGet("kartlimitisteklerigetir")]
         public async Task<IActionResult> KullaniciGetir()
         {
@@ -28,16 +28,16 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
 
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("limitartirmaekle")]
-        public async Task<IActionResult> LimitArtirmaEkle([FromBody] LimitArtirmaEkleDto limitArtirma) 
+        public async Task<IActionResult> LimitArtirmaEkle([FromBody] LimitArtirmaTalepDto limitArtirma) 
         {
             var sonuc = await _limitArtirmaServis.LimitArtirmEkle(limitArtirma);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Yönetici")]
         [HttpPost("limitguncelle")] 
         public async Task<IActionResult> LimitGuncelle([FromBody] LimitArtirmaEkleDto limitArtirma) 
         {

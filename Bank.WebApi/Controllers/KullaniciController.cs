@@ -20,7 +20,7 @@ namespace Banka.WebApi.Controllers
         }
 
 
-        [Authorize(Roles = "Müşteri")]
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("kullanicigetir")]
         public async Task<IActionResult> KullaniciGetir()  
         {

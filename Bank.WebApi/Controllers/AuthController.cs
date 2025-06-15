@@ -1,6 +1,7 @@
 ﻿using Banka.Cekirdek.YardımcıHizmetler.Results;
 using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,6 +65,7 @@ namespace Banka.WebApi.Controllers
             var result = new SuccessResult("Giriş başarılı.");
             return Ok(result);
         }
+        [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("cikis")]
         public async Task<ActionResult> Cikis() 
         {

@@ -22,6 +22,8 @@ namespace Banka.Varlıklar.DTOs
 
         public DateTime? Tarih { get; set; }
 
+        public string? Yanit { get; set; }  
+
         public string? Durum { get; set; } 
     }
 }
