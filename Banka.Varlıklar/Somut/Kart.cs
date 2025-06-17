@@ -18,25 +18,30 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Kart numarası boş olamaz.")]
         [StringLength(16, MinimumLength = 13, ErrorMessage = "Kart numarası 13 ile 16 karakter arasında olmalıdır.")]
-        public string KartNumarasi { get; set; }
+        public string KartNumarasi { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Kart tipi boş olamaz.")]
         [StringLength(20, ErrorMessage = "Kart tipi en fazla 20 karakter olabilir.")]
-        public string KartTipi { get; set; }
+        public string KartTipi { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "CVV boş olamaz.")]
         [StringLength(4, MinimumLength = 3, ErrorMessage = "CVV 3 veya 4 karakter olmalıdır.")]
-        public string CVV { get; set; }
+        public string CVV { get; set; } = string.Empty;
 
+        [Range(0, double.MaxValue, ErrorMessage = "Limit negatif olamaz.")]
         public decimal? Limit { get; set; }
+
         [Required(ErrorMessage = "Son kullanma tarihi zorunludur.")]
         public DateTime SonKullanma { get; set; }
 
-        public string? Durum { get; set; } 
+        [StringLength(30, ErrorMessage = "Durum en fazla 30 karakter olabilir.")]
+        public string? Durum { get; set; }
+
         public bool Aktif { get; set; } = true;
 
         public Kullanici? Kullanici { get; set; }
 
         public ICollection<KartIslem>? KartIslemleri { get; set; }
     }
+
 }

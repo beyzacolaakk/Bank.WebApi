@@ -18,13 +18,13 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "IP adresi boş olamaz.")]
         [StringLength(45, ErrorMessage = "IP adresi en fazla 45 karakter olabilir.")]
-        public string IpAdresi { get; set; }
+        public string IpAdresi { get; set; } = string.Empty;
 
         public bool Basarili { get; set; }
 
         public DateTime Zaman { get; set; } = DateTime.Now;
 
- 
         public Kullanici? Kullanici { get; set; }
     }
+
 }

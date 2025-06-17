@@ -18,11 +18,11 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Hesap numarası boş olamaz.")]
         [StringLength(20, ErrorMessage = "Hesap numarası en fazla 20 karakter olabilir.")]
-        public string HesapNo { get; set; } 
+        public string HesapNo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Hesap tipi boş olamaz.")]
         [StringLength(30, ErrorMessage = "Hesap tipi en fazla 30 karakter olabilir.")]
-        public string HesapTipi { get; set; }
+        public string HesapTipi { get; set; } = string.Empty;
 
         [Range(0, double.MaxValue, ErrorMessage = "Bakiye negatif olamaz.")]
         public decimal Bakiye { get; set; }
@@ -31,6 +31,7 @@ namespace Banka.Varlıklar.Somut
         [StringLength(5, ErrorMessage = "Para birimi en fazla 5 karakter olabilir.")]
         public string ParaBirimi { get; set; } = "TL";
 
+        [StringLength(30, ErrorMessage = "Durum en fazla 30 karakter olabilir.")]
         public string? Durum { get; set; }
 
         public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
@@ -41,4 +42,5 @@ namespace Banka.Varlıklar.Somut
 
         public ICollection<Islem>? AliciIslemler { get; set; }
     }
+
 }

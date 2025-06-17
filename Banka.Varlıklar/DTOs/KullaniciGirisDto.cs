@@ -18,5 +18,7 @@ namespace Banka.Varlıklar.DTOs
         [Required(ErrorMessage = "Şifre boş olamaz.")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "Şifre en az 6 en fazla 100 karakter olmalıdır.")]
         public string Sifre { get; set; }
+
+        public string IpAdres { get; set; } 
     }
 }

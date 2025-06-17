@@ -15,16 +15,17 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Şube adı boş olamaz.")]
         [StringLength(100, ErrorMessage = "Şube adı en fazla 100 karakter olabilir.")]
-        public string SubeAdi { get; set; }
+        public string SubeAdi { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Adres boş olamaz.")]
         [StringLength(200, ErrorMessage = "Adres en fazla 200 karakter olabilir.")]
-        public string Adres { get; set; }
+        public string Adres { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Telefon boş olamaz.")]
         [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
-        public string Telefon { get; set; }
+        public string Telefon { get; set; } = string.Empty;
 
         public ICollection<Kullanici>? Kullanicilar { get; set; }
     }
+
 }

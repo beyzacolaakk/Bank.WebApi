@@ -124,7 +124,7 @@ namespace Banka.İs.Somut
         }
         public async Task<IResult> DestekTalebiDurumGuncelle(DestekTalebiGuncelleDto destekTalebiGuncelle)  
         {
-            var veri = await _destekTalebiDal.DestekTalebiDurumGuncelle(destekTalebiGuncelle.Id!.Value, destekTalebiGuncelle.Durum!,destekTalebiGuncelle.Yanit);
+            var veri = await _destekTalebiDal.DestekTalebiDurumGuncelle(destekTalebiGuncelle.Id, destekTalebiGuncelle.Durum!,destekTalebiGuncelle.Yanit);
             if (veri)
             {
                 return new SuccessResult(Mesajlar.GuncellemeBasarili);

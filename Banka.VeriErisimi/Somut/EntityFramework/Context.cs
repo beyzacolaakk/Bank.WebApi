@@ -24,7 +24,6 @@ namespace Banka.VeriErisim.Somut.EntityFramework
         public DbSet<GirisToken> GirisTokenlari { get; set; }
         public DbSet<Sube> Subeler { get; set; }
         public DbSet<DestekTalebi> DestekTalepleri { get; set; }
-        public DbSet<Kayit> Kayıtlar { get; set; }
         public DbSet<Rol> Roller { get; set; }
         public DbSet<KullaniciRol> KullaniciRolleri { get; set; }
         public DbSet<LimitArtirma> LimitArtirma { get; set; } 

@@ -74,7 +74,7 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
             {
                 HesapIstekleri = hesapIstekleri,
                 KartIstekleri = kartIstekleri,
-                DestekIsdekleri = destekIstekleri+ destekIstekleriisl,
+                DestekIstekleri = destekIstekleri + destekIstekleriisl,
                 LimitArtirmaIstekleri = limitArtirtma
             };
         }

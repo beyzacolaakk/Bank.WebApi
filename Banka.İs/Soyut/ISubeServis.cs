@@ -1,4 +1,5 @@
 ﻿using Banka.Cekirdek.YardımcıHizmetler.Results;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace Banka.İs.Soyut
 
         Task<IResult> Sil(Sube sube);
 
-        Task<IDataResult<Sube>> IdIleGetir(int id); 
+        Task<IDataResult<Sube>> IdIleGetir(int id);
+
+        Task<IDataResult<List<SubeDto>>> SubeGetir();
     }
 }

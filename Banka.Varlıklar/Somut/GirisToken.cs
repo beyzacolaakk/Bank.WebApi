@@ -18,7 +18,7 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Token boş olamaz.")]
         [StringLength(500, ErrorMessage = "Token en fazla 500 karakter olabilir.")]
-        public string Token { get; set; }
+        public string Token { get; set; } = string.Empty;
 
         public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 
@@ -27,4 +27,5 @@ namespace Banka.Varlıklar.Somut
 
         public Kullanici? Kullanici { get; set; }
     }
+
 }

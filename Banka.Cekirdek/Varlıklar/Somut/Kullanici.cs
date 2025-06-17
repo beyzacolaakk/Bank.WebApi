@@ -7,26 +7,29 @@ using System.Threading.Tasks;
 
 namespace Banka.Cekirdek.Varlıklar.Somut
 {
-    public class Kullanici:IEntity
+    public class Kullanici : IEntity
     {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Ad Soyad boş olamaz.")]
         [StringLength(100, ErrorMessage = "Ad Soyad en fazla 100 karakter olabilir.")]
-        public string AdSoyad { get; set; }
+        public string AdSoyad { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email boş olamaz.")]
         [EmailAddress(ErrorMessage = "Geçerli bir email adresi giriniz.")]
-        public string Email { get; set; }
+        [StringLength(100, ErrorMessage = "Email en fazla 100 karakter olabilir.")]
+        public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Telefon boş olamaz.")]
         [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
         [StringLength(15, MinimumLength = 10, ErrorMessage = "Telefon numarası 10 ile 15 karakter arasında olmalıdır.")]
-        public string Telefon { get; set; }
+        public string Telefon { get; set; } = string.Empty;
 
-        public byte[] SifreHash { get; set; }
+        [Required(ErrorMessage = "Şifre hash zorunludur.")]
+        public byte[] SifreHash { get; set; } = Array.Empty<byte>();
 
-        public byte[] SifreSalt { get; set; }
+        [Required(ErrorMessage = "Şifre salt zorunludur.")]
+        public byte[] SifreSalt { get; set; } = Array.Empty<byte>();
 
         public bool Aktif { get; set; } = true;
 
@@ -35,4 +38,5 @@ namespace Banka.Cekirdek.Varlıklar.Somut
 
         public DateTime KayitTarihi { get; set; } = DateTime.Now;
     }
+
 }

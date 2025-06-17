@@ -1,6 +1,7 @@
 ﻿using Banka.Cekirdek.YardımcıHizmetler.Results;
 using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
+using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Soyut;
 using System;
@@ -36,6 +37,18 @@ namespace Banka.İs.Somut
         {
             var list = await _subeDal.HepsiniGetir();
             return new SuccessDataResult<List<Sube>>(list, Mesajlar.HepsiniGetirmeBasarili);
+        }
+        public async Task<IDataResult<List<SubeDto>>> SubeGetir()
+        {
+            var list = await _subeDal.HepsiniGetir();
+
+            var dtoList = list.Select(s => new SubeDto
+            {
+                Id = s.Id,
+                SubeAdi = s.SubeAdi
+            }).ToList();
+
+            return new SuccessDataResult<List<SubeDto>>(dtoList, Mesajlar.HepsiniGetirmeBasarili);
         }
 
         public async Task<IDataResult<Sube>> IdIleGetir(int id)

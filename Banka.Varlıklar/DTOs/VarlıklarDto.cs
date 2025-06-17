@@ -2,20 +2,25 @@
 using Banka.Varlıklar.Somut;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Banka.Varlıklar.DTOs
 {
-    public class VarlıklarDto:IDto
+    public class VarlıklarDto : IDto 
     {
+        [Range(0, double.MaxValue, ErrorMessage = "Toplam para negatif olamaz.")]
         public decimal? ToplamPara { get; set; }
 
-        public decimal? ToplamBorc { get; set; } 
+        [Range(0, double.MaxValue, ErrorMessage = "Toplam borç negatif olamaz.")]
+        public decimal? ToplamBorc { get; set; }
 
-        public List<HesapDto> Hesaplar { get; set; }
+        [Required(ErrorMessage = "Hesaplar listesi boş olamaz.")]
+        public List<HesapDto> Hesaplar { get; set; } = new();
 
-        public List<KartDto> Kartlar { get; set; } 
+        [Required(ErrorMessage = "Kartlar listesi boş olamaz.")]
+        public List<KartDto> Kartlar { get; set; } = new();
     }
 }

@@ -9,8 +9,7 @@ namespace Banka.Cekirdek.Varlıklar.Somut
 {
     public class KullaniciRol:IEntity
     {
-
-    public int Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Kullanıcı Id zorunludur.")]
         public int KullaniciId { get; set; }

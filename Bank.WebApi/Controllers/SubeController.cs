@@ -25,6 +25,14 @@ namespace Banka.WebApi.Controllers
                 return Ok(sonuc);
             return BadRequest(sonuc);
         }
+        [HttpGet("subelerigetir")]
+        public async Task<IActionResult> SubeleriGetir() 
+        {
+            var sonuc = await _subeServis.SubeGetir();
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
         [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)

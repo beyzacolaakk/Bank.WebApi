@@ -18,21 +18,25 @@ namespace Banka.Varlıklar.Somut
 
         [Required(ErrorMessage = "Konu alanı boş bırakılamaz.")]
         [StringLength(100, ErrorMessage = "Konu en fazla 100 karakter olabilir.")]
-        public string Konu { get; set; }
+        public string Konu { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mesaj alanı boş bırakılamaz.")]
-        [StringLength(1000, ErrorMessage = "Mesaj en fazla 1000 karakter olabilir.")]
-        public string Mesaj { get; set; }
+        [StringLength(2000, ErrorMessage = "Mesaj en fazla 2000 karakter olabilir.")]
+        public string Mesaj { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Durum bilgisi zorunludur.")]
         [StringLength(30, ErrorMessage = "Durum en fazla 30 karakter olabilir.")]
-        public string Durum { get; set; }
+        public string Durum { get; set; } = "Beklemede";
 
-        public string? Yanit { get; set; } 
+        [StringLength(2000, ErrorMessage = "Yanıt en fazla 2000 karakter olabilir.")] 
+        public string? Yanit { get; set; }
 
-        public string? Kategori {  get; set; }
+        [StringLength(50, ErrorMessage = "Kategori en fazla 50 karakter olabilir.")]
+        public string? Kategori { get; set; }
+
         public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 
         public Kullanici? Kullanici { get; set; }
     }
+
 }

@@ -106,7 +106,7 @@ namespace Banka.İs.Somut
 
             if (!sifreDogruMu)
             {
-                await GirisTakip(kullanici,false);
+                await GirisTakip(kullanici,false, kullaniciGirisDto.IpAdres);
 
                 return new ErrorDataResult<KullaniciVeTokenDto>(Mesajlar.BilgilerHatalı);
             }
@@ -114,12 +114,12 @@ namespace Banka.İs.Somut
             var tokenResult = await ErisimTokenOlustur(new SuccessDataResult<Kullanici>(kullanici));
             if (!tokenResult.Success)
             {
-                await GirisTakip(kullanici,false);
+                await GirisTakip(kullanici,false, kullaniciGirisDto.IpAdres);
 
                 return new ErrorDataResult<KullaniciVeTokenDto>(tokenResult.Message);
             }
 
-            await GirisTakip(kullanici, true);
+            await GirisTakip(kullanici, true, kullaniciGirisDto.IpAdres);
 
             var dto = new KullaniciVeTokenDto
             {
@@ -129,12 +129,12 @@ namespace Banka.İs.Somut
             return new SuccessDataResult<KullaniciVeTokenDto>(dto, Mesajlar.GirisBasarili);
         }
 
-        private async Task GirisTakip(Kullanici kullanici,bool durum)
+        private async Task GirisTakip(Kullanici kullanici,bool durum,string ipadres) 
         {
             await _girisOlayiServis.Ekle(new GirisOlayi
             {
                 KullaniciId = kullanici.Id,
-                IpAdresi = GetClientIp(),
+                IpAdresi =ipadres,
                 Basarili = durum,
                 Zaman = DateTime.Now
             });

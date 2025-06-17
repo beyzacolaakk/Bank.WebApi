@@ -33,7 +33,7 @@ namespace Banka.İs.Somut
         {
             var data=await _kartServis.IdIleGetir(limitArtirma.KartId);
             var veri = new LimitArtirma{ 
-                BaşvuruTarihi=DateTime.Now,
+                BasvuruTarihi=DateTime.Now,
                 Durum= "Beklemede",
                 MevcutLimit= limitArtirma.MevcutLimit,
                 KartId= data.Data.Id,

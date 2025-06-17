@@ -179,7 +179,7 @@ namespace Banka.İs.Somut
         private string HesapNoUret()
         {
             var random = new Random();
-            return random.Next(100000000, 1000000000).ToString();
+            return random.Next(10000000, 100000000).ToString();
         }
 
         public async Task<IDataResult<List<Hesap>>> HepsiniGetir()
