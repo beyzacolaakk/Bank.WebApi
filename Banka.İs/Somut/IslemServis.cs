@@ -120,7 +120,30 @@ namespace Banka.İs.Somut
                 ? new SuccessResult(Mesajlar.ParaBasariilegonde)
                 : new ErrorResult(Mesajlar.ParaGondermeBasarisiz);
         }
+        public async Task<IDataResult<List<SonHareketlerDto>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId)
+        {
+            var hesapIdler = await Task.Run(() => _hesapServis.GetirKullaniciyaAitHesapIdler(kullaniciId));
 
+            if (!hesapIdler.Any())
+                return new ErrorDataResult<List<SonHareketlerDto>>(Mesajlar.BasarisizGetirme);
+
+            var veri = await Task.Run(() =>
+                _islemDal.GetirIslemleri(hesapIdler)
+                         .OrderByDescending(i => i.IslemTarihi)
+                         .Take(4)
+                         .ToList());
+
+            var sonHareketlerListesi = veri.Select(i => new SonHareketlerDto
+            {
+                Aciklama = i.Aciklama,
+                Durum = i.Durum,
+                GuncelBakiye = i.GuncelBakiye!.Value,
+                IslemTipi = i.IslemTipi,
+                Tarih = i.IslemTarihi,
+                Tutar = i.Tutar
+            }).ToList();
+            return new SuccessDataResult<List<SonHareketlerDto>>(sonHareketlerListesi, Mesajlar.BasariliGetirme);
+        }
 
         public async Task<IResult> ParaCekYatir(ParaCekYatirDto paraCekYatirDto)
         {
@@ -214,30 +237,7 @@ namespace Banka.İs.Somut
             var islem = await _islemDal.Getir(i => i.Id == id);
             return new SuccessDataResult<Islem>(islem, Mesajlar.IdIleGetirmeBasarili);
         }
-        public async Task<IDataResult<List<SonHareketlerDto>>> KullaniciyaAitSon4KartIslemiGetir(int kullaniciId) 
-        {
-            var hesapIdler = await Task.Run(() => _hesapServis.GetirKullaniciyaAitHesapIdler(kullaniciId));
-
-            if (!hesapIdler.Any())
-                return new ErrorDataResult<List<SonHareketlerDto>>(Mesajlar.BasarisizGetirme);
-
-            var veri = await Task.Run(() =>
-                _islemDal.GetirIslemleri(hesapIdler)
-                         .OrderByDescending(i => i.IslemTarihi)
-                         .Take(4)
-                         .ToList());
-
-            var sonHareketlerListesi = veri.Select(i => new SonHareketlerDto
-            {
-                Aciklama = i.Aciklama,
-                Durum = i.Durum,
-                GuncelBakiye = i.GuncelBakiye!.Value,
-                IslemTipi = i.IslemTipi,
-                Tarih = i.IslemTarihi,
-                Tutar = i.Tutar
-            }).ToList();
-            return new SuccessDataResult<List<SonHareketlerDto>>(sonHareketlerListesi,Mesajlar.BasariliGetirme);
-        }
+      
     }
 
 }

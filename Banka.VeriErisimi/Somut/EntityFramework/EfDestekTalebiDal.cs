@@ -15,6 +15,9 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 {
     public class EfDestekTalebiDal : EfEntityRepositoryBase<DestekTalebi, BankaContext>, IDestekTalebiDal 
     {
+        public EfDestekTalebiDal(BankaContext context) 
+        {
+        }
         public async Task DurumuGuncelle(int id, string yeniDurum)
         {
             using (var context = new BankaContext())
@@ -66,6 +69,32 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                 return result;
             }
         }
+
+        public async Task<DestekTalebiOlusturDto?> DestekTalebiGetirIdIle(int id)
+        {
+            using (var context = new BankaContext())
+            {
+                var result = await (from destek in context.DestekTalepleri
+                                    join kullanici in context.Kullanicilar
+                                    on destek.KullaniciId equals kullanici.Id
+                                    where destek.Id == id
+                                    select new DestekTalebiOlusturDto
+                                    {
+                                        Tarih = destek.OlusturmaTarihi,
+                                        AdSoyad = kullanici.AdSoyad,
+                                        Durum = destek.Durum,
+                                        Kategori = destek.Kategori,
+                                        Konu = destek.Konu,
+                                        Mesaj = destek.Mesaj,
+                                        KullaniciId = kullanici.Id,
+                                        Id = destek.Id,
+                                        Yanit = destek.Yanit,
+                                    }).FirstOrDefaultAsync();
+
+                return result; // null olabilir, kontrolü çağıran tarafta yapılmalı
+            }
+        }
+
 
     }
 }

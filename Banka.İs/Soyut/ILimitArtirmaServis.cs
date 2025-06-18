@@ -18,7 +18,7 @@ namespace Banka.İs.Soyut
 
         Task<IResult> Guncelle(LimitArtirma limitArtirma);
 
-        Task<IResult> Sil(LimitArtirma limitArtirma); 
+        Task<IResult> Sil(int id); 
 
         Task<IDataResult<LimitArtirma>> IdIleGetir(int id);
 
@@ -27,5 +27,7 @@ namespace Banka.İs.Soyut
         Task<IResult> LimitArtirmEkle(LimitArtirmaTalepDto limitArtirma); 
 
         Task<IResult> KartLimitIstekGuncelle(LimitArtirmaEkleDto limitArtirmaEkleDto);
+
+        Task<IDataResult<LimitArtirmaDto>> KartLimitIstekleriGetirIdIle(int id); 
     }
 }

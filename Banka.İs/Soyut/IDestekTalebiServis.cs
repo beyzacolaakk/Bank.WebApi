@@ -18,7 +18,7 @@ namespace Banka.İs.Soyut
 
         Task<IResult> Guncelle(DestekTalebi destekTalebi);  
 
-        Task<IResult> Sil(DestekTalebi destekTalebi);
+        Task<IResult> Sil(int id);
 
         Task<IResult> DestekTalebiOlustur(DestekTalebiOlusturDto destekTalebiOlusturDto);
         Task<IDataResult<DestekTalebi>> IdIleGetir(int id);
@@ -28,5 +28,9 @@ namespace Banka.İs.Soyut
         Task<IDataResult<List<DestekTalebiOlusturDto>>> DestekIstekleriGetir();
 
         Task<IResult> DestekTalebiDurumGuncelle(DestekTalebiGuncelleDto destekTalebiGuncelle);
+
+        Task<IDataResult<DestekTalebiOlusturDto>> IdIleGetirDestekTalebi(int id);
+
+        Task<IDataResult<List<DestekTalebi>>> DestekTalebiFiltre(int id, string durum, string arama);
     }
 }

@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Banka.VeriErisimi\Banka.VeriErisimi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BirimTestleri\" />
+  </ItemGroup>
+
 </Project>

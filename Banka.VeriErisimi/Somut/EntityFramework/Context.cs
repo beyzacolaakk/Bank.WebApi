@@ -11,9 +11,17 @@ namespace Banka.VeriErisim.Somut.EntityFramework
 {
     public class BankaContext : DbContext
     {
+        public BankaContext() { }
+        public BankaContext(DbContextOptions<BankaContext> options) : base(options)
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-DNUIALQ\SQLKOD;Database=BankaDb;integrated Security=true;TrustServerCertificate=True;");
+
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Server=DESKTOP-DNUIALQ\SQLKOD;Database=BankaDb;integrated Security=true;TrustServerCertificate=True;");
+            }
         }
         public DbSet<Kullanici> Kullanicilar { get; set; }
         public DbSet<Hesap> Hesaplar { get; set; }

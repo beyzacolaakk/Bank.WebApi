@@ -5,6 +5,7 @@ using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,14 @@ namespace Banka.İs.Somut
         public KartServis(IKartDal kartDal)
         {
             _kartDal = kartDal;
+
         }
-        public async Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir(int id)
+        public async Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir()
         {
-            var kartIstekleri = await _kartDal.KartIstekleriGetir(); 
+            var kartIstekleri = await _kartDal.KartIstekleriGetir();
             return new SuccessDataResult<List<KartIstekleriDto>>(kartIstekleri, Mesajlar.HepsiniGetirmeBasarili);
         }
+
 
         public async Task<IResult> Ekle(Kart kart)
         {
@@ -60,7 +63,11 @@ namespace Banka.İs.Somut
             var veriler = await _kartDal.HepsiniGetir();
             return new SuccessDataResult<List<Kart>>(veriler, Mesajlar.HepsiniGetirmeBasarili);
         }
-
+        public async Task<IDataResult<KartIstekleriDto>> KartIstekleriIdIleGetir(int id) 
+        {
+            var kartIstekleri = await _kartDal.KartIstekleriGetirIdIle(id); 
+            return new SuccessDataResult<KartIstekleriDto>(kartIstekleri, Mesajlar.BasariliGetirme);
+        }
         public async Task<IDataResult<Kart>> IdIleGetir(int id)
         {
             var veri = await _kartDal.Getir(k => k.Id == id);
@@ -76,11 +83,13 @@ namespace Banka.İs.Somut
             return new List<int>(_kartDal.GetirKullaniciyaAitKartIdler(kullaniciId));
         }
 
-        public async Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id) 
+        public async Task<IDataResult<List<Kart>>> IdIleHepsiniGetir(int id)
         {
             var veri = await _kartDal.HepsiniGetir(k => k.KullaniciId == id && k.Durum != "Beklemede" && k.Durum != "Reddedildi");
-            return new SuccessDataResult<List<Kart>>(veri, Mesajlar.IdIleGetirmeBasarili); 
+            return new SuccessDataResult<List<Kart>>(veri, Mesajlar.IdIleGetirmeBasarili);
         }
+
+
         public async Task<IResult> Sil(Kart kart)
         {
             await _kartDal.Sil(kart);

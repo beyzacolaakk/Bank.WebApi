@@ -5,6 +5,7 @@ using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,24 @@ namespace Banka.İs.Somut
     {
         private readonly IHesapDal _hesapDal;
         private readonly IKartServis _kartServis;
+
         public HesapServis(IHesapDal hesapDal, IKartServis kartServis)
         {
             _hesapDal = hesapDal;
             _kartServis = kartServis;
+
         }
-        public async Task<IDataResult<List<HesapIstekleriDto>>> HesapIstekleriGetir(int kullaniciId) 
-    {
-        var hesapIstekleri = await _hesapDal.HesapIstekleriGetir();
-        return new SuccessDataResult<List<HesapIstekleriDto>>(hesapIstekleri, Mesajlar.BasariliGetirme);
-    }
+        public async Task<IDataResult<List<HesapIstekleriDto>>> HesapIstekleriGetir()
+        {
+            var hesapIstekleri = await _hesapDal.HesapIstekleriGetir();
+            return new SuccessDataResult<List<HesapIstekleriDto>>(hesapIstekleri, Mesajlar.BasariliGetirme);
+        }
+
+        public async Task<IDataResult<HesapIstekleriDto>> HesapIstekleriIdIleGetir(int id) 
+        {
+            var hesapIstekleri = await _hesapDal.HesapIstekleriGetirIdIle(id);
+            return new SuccessDataResult<HesapIstekleriDto>(hesapIstekleri, Mesajlar.BasariliGetirme);
+        }
         public async Task<IDataResult<IstekSayilariDto>> IsteklSayilariGetir() 
         { 
             var istekSayılar = await _hesapDal.IstekSayilariGetir();
@@ -192,9 +201,11 @@ namespace Banka.İs.Somut
 
         public async Task<IDataResult<List<Hesap>>> IdIleHepsiniGetir(int id)
         {
-            var hesap = await _hesapDal.HepsiniGetir(h => h.KullaniciId == id && h.Durum != "Beklemede" && h.Durum != "Reddedildi");
-            return new SuccessDataResult<List<Hesap>>(hesap, Mesajlar.IdIleGetirmeBasarili);
+            var hesaplar = await _hesapDal.HepsiniGetir(h => h.KullaniciId == id && h.Durum != "Beklemede" && h.Durum != "Reddedildi");
+            return new SuccessDataResult<List<Hesap>>(hesaplar, Mesajlar.IdIleGetirmeBasarili);
         }
+
+
 
         public async Task<IDataResult<Hesap>> IdIleGetir(int id)
         {

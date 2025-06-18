@@ -16,6 +16,8 @@ namespace Banka.VeriErisimi.Soyut
 
         Task<List<DestekTalebiOlusturDto>> DestekTalebleriGetir();
 
-        Task<bool> DestekTalebiDurumGuncelle(int Id, string yeniDurum,string yanit); 
+        Task<bool> DestekTalebiDurumGuncelle(int Id, string yeniDurum,string yanit);
+
+        Task<DestekTalebiOlusturDto?> DestekTalebiGetirIdIle(int id);
     }
 }

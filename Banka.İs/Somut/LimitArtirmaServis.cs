@@ -5,6 +5,7 @@ using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Somut.EntityFramework;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,20 +18,23 @@ namespace Banka.İs.Somut
     {
         private readonly ILimitArtirmaDal _limitArtirmaDal; 
         private readonly IKartServis _kartServis;
-
-        public LimitArtirmaServis(ILimitArtirmaDal limitArtirmaDal,IKartServis kartServis)
+        private readonly IMemoryCache _memoryCache;
+        public LimitArtirmaServis(ILimitArtirmaDal limitArtirmaDal,IKartServis kartServis,IMemoryCache memoryCache)
         {
             _limitArtirmaDal = limitArtirmaDal;
             _kartServis = kartServis;
+            _memoryCache = memoryCache;
         }
 
         public async Task<IResult> Ekle(LimitArtirma limitArtirma) 
         {
+            _memoryCache.Remove("kartLimitIstekleriCache");
             await _limitArtirmaDal.Ekle(limitArtirma);
             return new SuccessResult(Mesajlar.EklemeBasarili);
         }
         public async Task<IResult> LimitArtirmEkle(LimitArtirmaTalepDto limitArtirma)  
         {
+            _memoryCache.Remove("kartLimitIstekleriCache");
             var data=await _kartServis.IdIleGetir(limitArtirma.KartId);
             var veri = new LimitArtirma{ 
                 BasvuruTarihi=DateTime.Now,
@@ -45,12 +49,15 @@ namespace Banka.İs.Somut
         }
         public async Task<IResult> Guncelle(LimitArtirma limitArtirma)
         {
+            _memoryCache.Remove("kartLimitIstekleriCache");
             await _limitArtirmaDal.Guncelle(limitArtirma);
             return new SuccessResult(Mesajlar.GuncellemeBasarili);
         }
 
-        public async Task<IResult> Sil(LimitArtirma limitArtirma)
+        public async Task<IResult> Sil(int id)
         {
+            _memoryCache.Remove("kartLimitIstekleriCache");
+            var limitArtirma = IdIleGetir(id).Result.Data;
             await _limitArtirmaDal.Sil(limitArtirma);
             return new SuccessResult(Mesajlar.SilmeBasarili);
         }
@@ -66,13 +73,31 @@ namespace Banka.İs.Somut
             var girisOlayi = await _limitArtirmaDal.Getir(x => x.Id == id);
             return new SuccessDataResult<LimitArtirma>(girisOlayi, Mesajlar.IdIleGetirmeBasarili);
         }
-        public async Task<IDataResult<List<LimitArtirmaDto >>> KartLimitIstekleriGetir()  
+        public async Task<IDataResult<List<LimitArtirmaDto>>> KartLimitIstekleriGetir()
         {
+            var cacheKey = "kartLimitIstekleriCache";
+            var cachedData = _memoryCache.Get<List<LimitArtirmaDto>>(cacheKey);
+
+            if (cachedData != null)
+            {
+                return new SuccessDataResult<List<LimitArtirmaDto>>(cachedData, Mesajlar.HepsiniGetirmeBasarili);
+            }
+
             var liste = await _limitArtirmaDal.KartLimitIstekleriGetir();
+            _memoryCache.Set(cacheKey, liste, TimeSpan.FromMinutes(5));
+
             return new SuccessDataResult<List<LimitArtirmaDto>>(liste, Mesajlar.HepsiniGetirmeBasarili);
+        }
+
+        public async Task<IDataResult<LimitArtirmaDto>> KartLimitIstekleriGetirIdIle(int id) 
+        {
+
+            var liste = await _limitArtirmaDal.KartLimitIstekGetirIdIle(id); 
+            return new SuccessDataResult<LimitArtirmaDto>(liste, Mesajlar.HepsiniGetirmeBasarili);
         }
         public async Task<IResult> KartLimitIstekGuncelle(LimitArtirmaEkleDto limitArtirmaEkleDto)
         {
+            _memoryCache.Remove("kartLimitIstekleriCache");
             if (limitArtirmaEkleDto.Durum == "Onaylandi")
             {
                 decimal mevcutLimit = Convert.ToDecimal(limitArtirmaEkleDto.MevcutLimit);

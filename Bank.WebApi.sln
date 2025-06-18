@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.Cekirdek", "Banka.Cek
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.VeriErisimi", "Banka.VeriErisimi\Banka.VeriErisimi.csproj", "{290F6F3D-445C-44E2-9C03-DCB025A46EDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.Varlıklar", "Banka.Varlıklar\Banka.Varlıklar.csproj", "{7E648AD5-BED1-437E-A825-6E9448777641}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banka.Varlıklar", "Banka.Varlıklar\Banka.Varlıklar.csproj", "{7E648AD5-BED1-437E-A825-6E9448777641}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banka.Test", "Banka.Test\Banka.Test.csproj", "{43D614DE-3C8B-4EFE-94F4-361DFAC7FED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7E648AD5-BED1-437E-A825-6E9448777641}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E648AD5-BED1-437E-A825-6E9448777641}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E648AD5-BED1-437E-A825-6E9448777641}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43D614DE-3C8B-4EFE-94F4-361DFAC7FED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D614DE-3C8B-4EFE-94F4-361DFAC7FED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D614DE-3C8B-4EFE-94F4-361DFAC7FED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D614DE-3C8B-4EFE-94F4-361DFAC7FED3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

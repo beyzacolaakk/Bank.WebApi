@@ -33,9 +33,11 @@ namespace Banka.İs.Soyut
 
         Task<List<int>> GetirKullaniciyaAitHesapIdler(int kullaniciId);
 
-        Task<IDataResult<List<HesapIstekleriDto>>> HesapIstekleriGetir(int kullaniciId);
+        Task<IDataResult<List<HesapIstekleriDto>>> HesapIstekleriGetir(); 
         Task<IDataResult<IstekSayilariDto>> IsteklSayilariGetir();
 
         Task<IResult> HesapDurumGuncelle(DurumuGuncelleDto durumGuncelleDto);
+
+        Task<IDataResult<HesapIstekleriDto>> HesapIstekleriIdIleGetir(int id);
     }
 }

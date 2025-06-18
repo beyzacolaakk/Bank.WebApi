@@ -79,10 +79,22 @@ builder.Services.AddScoped<IDestekTalebiDal, EfDestekTalebiDal>();
 builder.Services.AddScoped<IGirisOlayiDal, EfGirisOlayiDal>();
 builder.Services.AddScoped<IGirisTokenDal, EfGirisTokenDal>();
 builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
-builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Add("X-Frame-Options", "DENY");
+    context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+    context.Response.Headers.Add("Referrer-Policy", "no-referrer");
+
+    context.Response.Headers.Add("Content-Security-Policy",
+        "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:");
+
+    await next();
+});
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

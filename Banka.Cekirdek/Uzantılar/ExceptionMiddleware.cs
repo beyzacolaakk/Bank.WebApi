@@ -18,7 +18,6 @@ public class ExceptionMiddleware
 
     public async Task InvokeAsync(HttpContext httpContext)
     {
-        Console.WriteLine($"Hata oluştu:");
         try
         {
             await _next(httpContext);

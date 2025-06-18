@@ -18,5 +18,7 @@ namespace Banka.İs.Soyut
         Task<IDataResult<KullaniciVeTokenDto>> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto);
 
         Task<IResult> KayitIslemi(KullaniciKayitDto kullaniciKayitDto);
+
+        void Cikis(int id);
     }
 }

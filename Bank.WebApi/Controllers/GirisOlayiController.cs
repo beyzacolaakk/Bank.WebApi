@@ -20,7 +20,7 @@ namespace Banka.WebApi.Controllers
         [HttpGet("hepsinigetir")]
         public async Task<IActionResult> HepsiniGetir()
         {
-            var sonuc = await _girisOlayiServis.HepsiniGetir();
+            var sonuc = await _girisOlayiServis.HepsiniGetir("Zaman",true);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

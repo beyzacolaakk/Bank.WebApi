@@ -67,8 +67,10 @@ namespace Banka.WebApi.Controllers
         }
         [Authorize(Roles = "Müşteri,Yönetici")]
         [HttpPost("cikis")]
-        public async Task<ActionResult> Cikis() 
+        public async Task<ActionResult> Cikis()
         {
+            int id = TokendanIdAl();
+            _authServis.Cikis(id);
             var cookieOptions = new CookieOptions
             {
                 Expires = DateTime.UtcNow.AddDays(-1),

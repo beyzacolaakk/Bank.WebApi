@@ -31,7 +31,7 @@ namespace Banka.WebApi.Controllers
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = await _hesapServis.IdIleGetir(id);
+            var sonuc = await _hesapServis.HesapIstekleriIdIleGetir(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
@@ -72,8 +72,8 @@ namespace Banka.WebApi.Controllers
         [HttpGet("hesapistekgetir")]
         public async Task<IActionResult> HesapIstekGetir()  
         {
-            int KullaniciId = TokendanIdAl();
-            var sonuc = await _hesapServis.HesapIstekleriGetir(KullaniciId);
+
+            var sonuc = await _hesapServis.HesapIstekleriGetir();
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

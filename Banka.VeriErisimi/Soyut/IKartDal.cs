@@ -18,5 +18,7 @@ namespace Banka.VeriErisimi.Soyut
         Task<List<KartIstekleriDto>> KartIstekleriGetir();
         Task<bool> KartLimitGuncelle(int kartId, decimal yeniLimit);
         Task<bool> KartDurumGuncelle(int Id, string yeniDurum);
+
+        Task<KartIstekleriDto?> KartIstekleriGetirIdIle(int id);
     }
 }

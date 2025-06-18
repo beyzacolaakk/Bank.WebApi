@@ -14,6 +14,11 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 {
     public class EfKartDal : EfEntityRepositoryBase<Kart, BankaContext>, IKartDal
     {
+        private readonly BankaContext _context;
+        public EfKartDal(BankaContext context) 
+        {
+            _context = context;
+        }
         public async Task<List<KartDto>> GetKartlarByKullaniciIdAsync(int kullaniciId)
         {
             using (var context = new BankaContext())
@@ -61,6 +66,28 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                 return result;
             }
         }
+        public async Task<KartIstekleriDto?> KartIstekleriGetirIdIle(int id)
+        {
+            using (var context = new BankaContext())
+            {
+                var result = await (from kart in context.Kartlar
+                                    join kullanici in context.Kullanicilar
+                                    on kart.KullaniciId equals kullanici.Id
+                                    where kart.Id == id
+                                    select new KartIstekleriDto
+                                    {
+                                        AdSoyad = kullanici.AdSoyad,
+                                        Tarih = DateTime.Now, // İstersen kart.OlusturmaTarihi yapabilirsin
+                                        Durum = kart.Durum,
+                                        KartTipi = kart.KartTipi,
+                                        Id = kart.Id,
+                                        Limit = kart.Limit ?? 0
+                                    }).FirstOrDefaultAsync();
+
+                return result; // null olabilir, çağıran kontrol etmeli
+            }
+        }
+
         public async Task<bool> KartLimitGuncelle(int kartId, decimal yeniLimit)
         {
             using (var context = new BankaContext())

@@ -13,6 +13,9 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 {
     public class EfKartIslemDal : EfEntityRepositoryBase<KartIslem ,BankaContext>, IKartIslemDal
     {
+        public EfKartIslemDal(BankaContext context) 
+        {
+        }
         public List<KartIslem> GetirKartIslemleri(List<int> kartIdler)
         {
             using (var context = new BankaContext())

@@ -1,4 +1,5 @@
-﻿using Banka.İs.Soyut;
+﻿using Banka.İs.Somut;
+using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +43,25 @@ namespace Banka.WebApi.Controllers
         public async Task<IActionResult> LimitGuncelle([FromBody] LimitArtirmaEkleDto limitArtirma) 
         {
             var sonuc = await _limitArtirmaServis.KartLimitIstekGuncelle(limitArtirma);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Yönetici")]
+        [HttpDelete("sil/{id}")]
+        public async Task<IActionResult> Sil([FromRoute] int id) 
+        {
+            var sonuc = await _limitArtirmaServis.Sil(id);
+            if (sonuc.Success)
+                return Ok(sonuc);
+            return BadRequest(sonuc);
+        }
+
+        [Authorize(Roles = "Müşteri,Yönetici")]
+        [HttpGet("idilegetir/{id}")]
+        public async Task<IActionResult> IdIleGetir([FromRoute] int id)
+        {
+            var sonuc = await _limitArtirmaServis.KartLimitIstekleriGetirIdIle(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Banka.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da12c1914ae4830dcf4afe6efc4dad77fe621dc0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9256ca5125bf7db5ce5cf6acfb3a11c5dcc3b13")]
 [assembly: System.Reflection.AssemblyProductAttribute("Banka.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Banka.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

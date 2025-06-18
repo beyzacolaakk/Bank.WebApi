@@ -15,6 +15,9 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 {
     public class EfHesapDal : EfEntityRepositoryBase<Hesap, BankaContext>, IHesapDal
     {
+        public EfHesapDal(BankaContext context)
+        {
+        }
         public async Task<List<HesapDto>> GetHesaplarByKullaniciIdAsync(int kullaniciId)
         {
             using var context = new BankaContext();
@@ -50,6 +53,28 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
 
             return result;
         }
+        public async Task<HesapIstekleriDto?> HesapIstekleriGetirIdIle(int id) 
+        {
+            using var context = new BankaContext();
+
+            var result = await (from hesap in context.Hesaplar
+                                join kullanici in context.Kullanicilar
+                                on hesap.KullaniciId equals kullanici.Id
+                                where hesap.Id == id
+                                select new HesapIstekleriDto
+                                {
+                                    AdSoyad = kullanici.AdSoyad,
+                                    Telefon = kullanici.Telefon,
+                                    BasvuruTarihi = hesap.OlusturmaTarihi,
+                                    Durum = hesap.Durum,
+                                    HesapNo = hesap.HesapNo,
+                                    Id = hesap.Id,
+                                    Eposta = kullanici.Email
+                                }).FirstOrDefaultAsync(); // sadece bir tane döndürür
+
+            return result;
+        }
+
 
 
         public async Task<IstekSayilariDto> IstekSayilariGetir()

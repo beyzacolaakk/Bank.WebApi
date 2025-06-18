@@ -8,6 +8,7 @@ using Banka.Varlıklar.DTOs;
 using Banka.Varlıklar.Somut;
 using Banka.VeriErisimi.Soyut;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,15 @@ namespace Banka.İs.Somut
     public class AuthServis : IAuthServis
     {
 
-         private IKullaniciServis _kullaniciServis; 
+        private IKullaniciServis _kullaniciServis; 
         private ITokenHelper _tokenHelper;
         private IKullaniciRolServis _kullaniciRolServis;   
         private IGirisOlayiServis _girisOlayiServis;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IGirisTokenServis _girisTokenServis;
-        public AuthServis(IKullaniciServis kullaniciServis, IGirisTokenServis girisTokenServis, ITokenHelper tokenHelper, IHttpContextAccessor httpContextAccessor,IKullaniciRolServis kullaniciRolServis, IGirisOlayiServis girisOlayiServis) 
+
+        private readonly IMemoryCache _memoryCache;
+        public AuthServis(IKullaniciServis kullaniciServis, IGirisTokenServis girisTokenServis, ITokenHelper tokenHelper, IHttpContextAccessor httpContextAccessor,IKullaniciRolServis kullaniciRolServis, IGirisOlayiServis girisOlayiServis, IMemoryCache memoryCache) 
         {
             _kullaniciServis = kullaniciServis;
             _tokenHelper = tokenHelper;
@@ -33,6 +36,7 @@ namespace Banka.İs.Somut
             _girisOlayiServis = girisOlayiServis;
             _httpContextAccessor = httpContextAccessor;
             _girisTokenServis = girisTokenServis;
+            _memoryCache = memoryCache; 
         }
         public async Task<IDataResult<AccessToken>> ErisimTokenOlustur(IDataResult<Kullanici> kullanici) 
         {
@@ -87,7 +91,11 @@ namespace Banka.İs.Somut
 
             return new SuccessResult(Mesajlar.KayitBasarili);
         }
+        public void Cikis(int id)
+        {
+            _memoryCache.Remove($"kullanici_{id}");
 
+        }
         public async Task<IDataResult<KullaniciVeTokenDto>> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto)
         {
             var kullanici = await _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);
@@ -131,6 +139,7 @@ namespace Banka.İs.Somut
 
         private async Task GirisTakip(Kullanici kullanici,bool durum,string ipadres) 
         {
+            _memoryCache.Remove("GirisOlayiListesi");
             await _girisOlayiServis.Ekle(new GirisOlayi
             {
                 KullaniciId = kullanici.Id,

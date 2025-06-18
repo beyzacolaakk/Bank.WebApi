@@ -10,7 +10,7 @@ namespace Banka.İs.Soyut
 {
     public interface IGirisOlayiServis
     {
-        Task<IDataResult<List<GirisOlayi>>> HepsiniGetir();
+        Task<IDataResult<List<GirisOlayi>>> HepsiniGetir(string sortBy = "Zaman", bool desc = false);
 
         Task<IResult> Ekle(GirisOlayi girisOlayi);
 

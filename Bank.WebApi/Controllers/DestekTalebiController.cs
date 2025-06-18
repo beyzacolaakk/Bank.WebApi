@@ -41,7 +41,7 @@ namespace Banka.WebApi.Controllers
         [HttpGet("idilegetir/{id}")]
         public async Task<IActionResult> IdIleGetir([FromRoute] int id)
         {
-            var sonuc = await _destekTalebiServis.IdIleGetir(id);
+            var sonuc = await _destekTalebiServis.IdIleGetirDestekTalebi(id); 
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
@@ -93,10 +93,10 @@ namespace Banka.WebApi.Controllers
             return BadRequest(sonuc);
         }
         [Authorize(Roles = "Yönetici")]
-        [HttpDelete("sil")]
-        public async Task<IActionResult> Sil([FromBody] DestekTalebi destekTalebi)
+        [HttpDelete("sil/{id}")]
+        public async Task<IActionResult> Sil([FromRoute] int id)
         {
-            var sonuc = await _destekTalebiServis.Sil(destekTalebi);
+            var sonuc = await _destekTalebiServis.Sil(id);
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
@@ -109,6 +109,20 @@ namespace Banka.WebApi.Controllers
             if (sonuc.Success)
                 return Ok(sonuc);
             return BadRequest(sonuc);
+        }
+        [Authorize(Roles = "Müşteri,Yönetici")]
+        [HttpGet("filtre")]
+        public async Task<IActionResult> Filtrele([FromQuery] string durum = "tum", [FromQuery] string arama = "")
+        {
+            var id = TokendanIdAl(); 
+            var result = await _destekTalebiServis.DestekTalebiFiltre(id, durum, arama);
+
+            if (result.Success)
+            {
+                return Ok(result.Data); 
+            }
+
+            return BadRequest(result.Message); 
         }
     }
 }

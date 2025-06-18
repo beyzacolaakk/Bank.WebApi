@@ -4,6 +4,7 @@ using Banka.İs.Sabitler;
 using Banka.İs.Soyut;
 using Banka.Varlıklar.DTOs;
 using Banka.VeriErisimi.Soyut;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,11 @@ namespace Banka.İs.Somut
     public class KullaniciServis : IKullaniciServis
     {
         private readonly IKullaniciDal _kullaniciDal;
-
-        public KullaniciServis(IKullaniciDal kullaniciDal)
+        private readonly IMemoryCache _memoryCache;
+        public KullaniciServis(IKullaniciDal kullaniciDal,IMemoryCache memoryCache)
         {
             _kullaniciDal = kullaniciDal;
+            _memoryCache= memoryCache;
         }
 
         public async Task<IResult> Ekle(Kullanici kullanici)
@@ -61,9 +63,20 @@ namespace Banka.İs.Somut
             return await _kullaniciDal.YetkileriGetir(kullanici);
         }
 
-        public async Task<IDataResult<KullaniciBilgileriDto>> KullaniciBilgileriGetir(int id) 
+        public async Task<IDataResult<KullaniciBilgileriDto>> KullaniciBilgileriGetir(int id)
         {
-            return new SuccessDataResult<KullaniciBilgileriDto>(await _kullaniciDal.KullaniciGetir(id),Mesajlar.BasariliGetirme); 
+            string cacheKey = $"kullanici_{id}";
+
+            if (!_memoryCache.TryGetValue(cacheKey, out KullaniciBilgileriDto cachedData))
+            {
+             
+                cachedData = await _kullaniciDal.KullaniciGetir(id);
+
+             
+                _memoryCache.Set(cacheKey, cachedData, TimeSpan.FromMinutes(5));
+            }
+
+            return new SuccessDataResult<KullaniciBilgileriDto>(cachedData, Mesajlar.BasariliGetirme);
         }
     }
 

@@ -20,5 +20,7 @@ namespace Banka.VeriErisimi.Soyut
         Task<IstekSayilariDto> IstekSayilariGetir();
 
         Task<bool> HesapDurumGuncelle(int Id, string yeniDurum);
+
+        Task<HesapIstekleriDto?> HesapIstekleriGetirIdIle(int id);
     }
 }

@@ -17,7 +17,8 @@ namespace Banka.İs.Sabitler
         public static string GuncellemeBasarili= "Güncelleme Başarılı";
         public static string IdIleGetirmeBasarili = "Id Ile Getirme Başarılı";  
         public static string HepsiniGetirmeBasarili = "Hepsini Getirme Başarılı";
-
+        public static string GuncellemeBasarisiz = "Güncelleme Başarısız!!";
+   
 
         public static string KullaniciEklemeBasarili = "Kullanici Eklendi"; 
          
@@ -38,8 +39,7 @@ namespace Banka.İs.Sabitler
         public static string KayitBasarili = "Kayıt işlemi başarılı";
 
         public static string ParaBasariilegonde = "Para transfer işleminiz başarı ile gerçekleşti";
-        internal static string IslemKaydedilmedi=" Paratransferi çekleşti ancak islem kaydedilemedi";
-        internal static string GuncellemeBasarisiz = "Güncelleme Başarısız";
+        public static string IslemKaydedilmedi=" Paratransferi çekleşti ancak islem kaydedilemedi";
 
     }
 }

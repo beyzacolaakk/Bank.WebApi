@@ -32,10 +32,12 @@ namespace Banka.İs.Soyut
 
         Task<List<int>> GetirKullaniciyaAitKartIdler(int kullaniciId);
 
-        Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir(int id);
+        Task<IDataResult<List<KartIstekleriDto>>> KartIstekleriGetir();
 
         Task<IDataResult<bool>> KartLimitGuncelle(int kartId, decimal yenlimit);
-        Task<IResult> KartDurumGuncelle(DurumuGuncelleDto durumuGuncelleDto); 
+        Task<IResult> KartDurumGuncelle(DurumuGuncelleDto durumuGuncelleDto);
+
+        Task<IDataResult<KartIstekleriDto>> KartIstekleriIdIleGetir(int id);
 
     }
 }
