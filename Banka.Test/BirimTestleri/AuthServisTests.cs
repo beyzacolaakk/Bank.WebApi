@@ -1,15 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 using Moq;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using Banka.İs.Soyut;
 using Banka.İs.Somut;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.JWT;
@@ -55,7 +46,7 @@ namespace Banka.Test.BirimTestleri
         [Fact]
         public async Task KayitIslemi_KullaniciZatenVarsa_ErrorDonmeli()
         {
-            _kullaniciServisMock.Setup(k => k.MaileGoreGetir(It.IsAny<string>()))
+            _kullaniciServisMock.Setup(k => k.TelefonaGoreGetir(It.IsAny<string>()))
                 .ReturnsAsync(new Kullanici());
 
             var dto = new KullaniciKayitDto
@@ -86,7 +77,7 @@ namespace Banka.Test.BirimTestleri
                 SifreSalt = new byte[0]
             };
 
-            _kullaniciServisMock.Setup(k => k.MaileGoreGetir(It.IsAny<string>()))
+            _kullaniciServisMock.Setup(k => k.TelefonaGoreGetir(It.IsAny<string>()))
                 .ReturnsAsync(kullanici);
 
             _kullaniciServisMock.Setup(k => k.YetkileriGetir(It.IsAny<Kullanici>()))

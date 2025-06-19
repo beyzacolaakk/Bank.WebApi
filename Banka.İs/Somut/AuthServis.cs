@@ -98,7 +98,7 @@ namespace Banka.İs.Somut
         }
         public async Task<IDataResult<KullaniciVeTokenDto>> GirisVeTokenOlustur(KullaniciGirisDto kullaniciGirisDto)
         {
-            var kullanici = await _kullaniciServis.MaileGoreGetir(kullaniciGirisDto.Telefon);
+            var kullanici = await _kullaniciServis.TelefonaGoreGetir(kullaniciGirisDto.Telefon);
             if (kullanici == null)
             {
            
@@ -151,7 +151,7 @@ namespace Banka.İs.Somut
 
         public async Task<IResult> KullaniciMevcut(string email)
         {
-            if (await _kullaniciServis.MaileGoreGetir(email) != null)
+            if (await _kullaniciServis.TelefonaGoreGetir(email) != null)
             {
                 return new ErrorResult(Mesajlar.ZatenVar);
             }
@@ -173,14 +173,6 @@ namespace Banka.İs.Somut
             }
             return new SuccessResult();
         }
-        private string GetClientIp()
-        {
-            var forwardedHeader = _httpContextAccessor.HttpContext?.Request?.Headers["X-Forwarded-For"].FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(forwardedHeader))
-                return forwardedHeader;
-
-            return _httpContextAccessor?.HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "Bilinmiyor";
-        }
+  
     }
 }

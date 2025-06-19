@@ -23,7 +23,7 @@ namespace Banka.İs.Soyut
 
         Task<IDataResult<Kullanici>> IdIleGetir(int id);
 
-        Task<Kullanici> MaileGoreGetir(string telefon);
+        Task<Kullanici> TelefonaGoreGetir(string telefon); 
 
         Task<List<Rol>> YetkileriGetir(Kullanici kullanici);
 

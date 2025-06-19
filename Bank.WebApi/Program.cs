@@ -3,7 +3,6 @@ using Banka.Cekirdek.YardımcıHizmetler.Güvenlik;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.Encryption;
 using Banka.Cekirdek.YardımcıHizmetler.Güvenlik.JWT;
 using Banka.Cekirdek.YardımcıHizmetler.Logger;
-using Banka.Cekirdek.YardımcıHizmetler.Transaction;
 using Banka.İs.Somut;
 using Banka.İs.Soyut;
 using Banka.VeriErisim.Somut.EntityFramework;

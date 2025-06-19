@@ -41,7 +41,7 @@ namespace Banka.İs.Somut
             return new SuccessResult(Mesajlar.KullaniciGuncellemeBasarili);
         }
 
-        public async Task<Kullanici> MaileGoreGetir(string telefon)
+        public async Task<Kullanici> TelefonaGoreGetir(string telefon) 
         {
             return await _kullaniciDal.Getir(u => u.Telefon == telefon);
         }

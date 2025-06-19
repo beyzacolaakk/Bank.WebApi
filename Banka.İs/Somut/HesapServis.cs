@@ -80,7 +80,6 @@ namespace Banka.İs.Somut
 
             try
             {
-                // Alici hesabı getir
                 var aliciResult = await HesapNoIdIleGetir(aliciHesapId);
                 if (!aliciResult.Success || aliciResult.Data == null)
                     return new ErrorDataResult<decimal>("Alıcı hesap bulunamadı.");

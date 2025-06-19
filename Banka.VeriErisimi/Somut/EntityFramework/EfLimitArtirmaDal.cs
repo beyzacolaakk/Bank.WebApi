@@ -33,7 +33,7 @@ namespace Banka.VeriErisimi.Somut.EntityFramework
                                         KullaniciId=kullanici.Id,
                                         AdSoyad = kullanici.AdSoyad,
                                         Durum = limitArtirma.Durum,
-                                        BasvuruTarihi = limitArtirma.BasvuruTarihi, // doğru bilgi buradan alınır
+                                        BasvuruTarihi = limitArtirma.BasvuruTarihi, 
                                         KartNo = kart.KartNumarasi,
                                         MevcutLimit = kart.Limit ?? 0,
                                         TalepEdilenLimit = limitArtirma.TalepEdilenLimit,
